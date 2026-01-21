@@ -3,26 +3,87 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terms of Use — MICRORETAILX</title>
+  <title data-i18n="title">Terms of Use — MICRORETAILX</title>
 
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
   <meta name="color-scheme" content="dark">
 
   <style>
+    :root{
+      --bg:#000;
+      --fg:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.65);
+      --hair:rgba(255,255,255,.12);
+      --glass:rgba(0,0,0,.78);
+      --px:clamp(14px, 2.5vw, 20px);
+    }
+
+    *{ box-sizing:border-box; }
     body{
       margin:0;
-      background:#000;
-      color:rgba(255,255,255,.92);
+      background:var(--bg);
+      color:var(--fg);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
                    "Liberation Mono","Courier New", monospace;
       -webkit-font-smoothing:antialiased;
     }
+
+    header{
+      border-bottom:1px solid var(--hair);
+      padding:10px var(--px);
+      background:var(--glass);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .brand{
+      font-size:12px;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+    }
+
+    .lang-switch{ position:relative; }
+    .lang-trigger{
+      width:28px;height:28px;
+      background:none;border:0;cursor:pointer;color:#fff;
+    }
+    .lang-rail{
+      position:absolute;
+      top:100%; right:0;
+      margin-top:10px;
+      display:flex; gap:8px;
+      padding:6px 8px;
+      border:1px solid var(--hair);
+      background:rgba(0,0,0,.9);
+      border-radius:999px;
+      opacity:0; pointer-events:none;
+    }
+    .lang-switch.is-open .lang-rail{
+      opacity:1; pointer-events:auto;
+    }
+    .lang-pill{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.15);
+      background:none;
+      color:#fff;
+      cursor:pointer;
+    }
+    .lang-pill:hover{ background:rgba(255,255,255,.1); }
+
     main{
       max-width:900px;
       margin:0 auto;
-      padding:40px 20px 60px;
+      padding:40px var(--px) 60px;
     }
+
     h1,h2{
       text-transform:uppercase;
       letter-spacing:.18em;
@@ -30,154 +91,87 @@
     }
     h1{ font-size:15px; margin-bottom:30px; }
     h2{ font-size:13px; margin-top:36px; }
+
     p,li{
       font-size:13px;
       line-height:1.6;
-      color:rgba(255,255,255,.68);
+      color:var(--muted);
     }
     ul{ margin-left:18px; }
+
     footer{
-      border-top:1px solid rgba(255,255,255,.12);
+      border-top:1px solid var(--hair);
       padding:16px;
       text-align:center;
       font-size:11px;
       letter-spacing:.12em;
       opacity:.6;
     }
-    a{ color:#fff; text-decoration:none; }
   </style>
 </head>
 
 <body>
 
+<header>
+  <div class="topbar">
+    <div class="brand">MICRORETAILX</div>
+
+    <div class="lang-switch" id="lang-switch">
+      <button class="lang-trigger" type="button">🌍</button>
+      <div class="lang-rail">
+        <button class="lang-pill" data-lang="en">EN</button>
+        <button class="lang-pill" data-lang="es">ES</button>
+        <button class="lang-pill" data-lang="ca">CA</button>
+        <button class="lang-pill" data-lang="eu">EU</button>
+        <button class="lang-pill" data-lang="fr">FR</button>
+        <button class="lang-pill" data-lang="ru">RU</button>
+        <button class="lang-pill" data-lang="zh">ZH</button>
+        <button class="lang-pill" data-lang="hi">HI</button>
+        <button class="lang-pill" data-lang="ar">AR</button>
+      </div>
+    </div>
+  </div>
+</header>
+
 <main>
 
-<h1>Terms of Use</h1>
+<h1 data-i18n="h1">Terms of Use</h1>
 
-<p>
-These Terms of Use govern access to and use of the website
-<strong>www.microretailx.com</strong> (the “Website”).
+<p data-i18n="p1">
+These Terms of Use govern access to and use of the website www.microretailx.com.
 </p>
 
-<p>
-By accessing or using the Website, you acknowledge that you have read,
-understood, and agree to be bound by these Terms.
-If you do not agree, you must discontinue use of the Website.
+<h2 data-i18n="h2.entity">Legal Entity</h2>
+<p data-i18n="p.entity">
+This Website is operated by MICRORETAILX LLC, a limited liability company
+incorporated in the State of Delaware, United States.
 </p>
 
-<h2>1. Legal Entity</h2>
-
-<p>
-This Website is operated by:
+<h2 data-i18n="h2.info">Informational Nature</h2>
+<p data-i18n="p.info">
+The Website is provided solely for general informational purposes and does not
+constitute professional advice.
 </p>
 
-<p>
-<strong>MICRORETAILX LLC</strong><br>
-A limited liability company incorporated in the State of Delaware, United States.
-</p>
-
-<p>
-Contact for legal matters: <a href="mailto:legal@microretailx.com">legal@microretailx.com</a>
-</p>
-
-<h2>2. Informational Nature</h2>
-
-<p>
-The Website is provided solely for general informational and corporate
-presentation purposes.
-</p>
-
-<p>
-Nothing on this Website constitutes legal, financial, investment,
-medical, or professional advice of any kind.
-</p>
-
-<h2>3. Permitted Use</h2>
-
-<p>
-You agree to use the Website lawfully and in a manner that does not
-infringe applicable laws or regulations.
-</p>
-
+<h2 data-i18n="h2.use">Permitted Use</h2>
 <ul>
-  <li>No unauthorized access, probing, or interference.</li>
-  <li>No misuse, scraping, or abusive behavior.</li>
-  <li>No use for unlawful, harmful, or deceptive purposes.</li>
+  <li data-i18n="li1">Lawful and respectful use only.</li>
+  <li data-i18n="li2">No misuse, interference, or abuse.</li>
+  <li data-i18n="li3">No unauthorized access or scraping.</li>
 </ul>
 
-<h2>4. Intellectual Property</h2>
-
-<p>
-All content, source code, design elements, trademarks, and materials
-are the exclusive property of MICRORETAILX LLC or its licensors,
-unless expressly stated otherwise.
+<h2 data-i18n="h2.global">Global Applicability</h2>
+<p data-i18n="p.global">
+These Terms apply globally and do not override mandatory local consumer protections.
 </p>
 
-<p>
-No license or right is granted by mere access to the Website.
+<h2 data-i18n="h2.contact">Contact</h2>
+<p data-i18n="p.contact">
+Legal inquiries: legal@microretailx.com
 </p>
 
-<h2>5. Availability and Changes</h2>
-
-<p>
-MICRORETAILX LLC may modify, suspend, restrict, or discontinue
-the Website or any part thereof at any time without notice.
-</p>
-
-<p>
-Terms may be updated periodically.
-Continued use constitutes acceptance of the updated version.
-</p>
-
-<h2>6. Liability Disclaimer</h2>
-
-<p>
-The Website is provided “as is” and “as available”.
-No warranties are made regarding accuracy, availability,
-or fitness for any particular purpose.
-</p>
-
-<p>
-To the maximum extent permitted by applicable law,
-MICRORETAILX LLC shall not be liable for any direct,
-indirect, incidental, or consequential damages arising
-from the use or inability to use the Website.
-</p>
-
-<h2>7. External Links</h2>
-
-<p>
-The Website may contain links to third-party websites.
-MICRORETAILX LLC assumes no responsibility for external content,
-policies, or practices.
-</p>
-
-<h2>8. Global Applicability</h2>
-
-<p>
-These Terms are intended to apply globally.
-Nothing herein shall exclude or limit mandatory consumer
-or user protections provided by the laws of your jurisdiction.
-</p>
-
-<h2>9. Relationship with Other Policies</h2>
-
-<p>
-These Terms operate in conjunction with the Privacy Policy,
-Cookie Policy, and Legal Notice, which together form
-the complete legal framework governing use of the Website.
-</p>
-
-<h2>10. Contact</h2>
-
-<p>
-For legal or compliance inquiries:
-<a href="mailto:legal@microretailx.com">legal@microretailx.com</a>
-</p>
-
-<p>
-<strong>Version:</strong> 1.0<br>
-<strong>Effective date:</strong> 2026-01-21
+<p data-i18n="version">
+Version 1.0 — Effective date: 2026-01-21
 </p>
 
 </main>
@@ -185,6 +179,76 @@ For legal or compliance inquiries:
 <footer>
 © 2023–2026 MICRORETAILX LLC — All rights reserved
 </footer>
+
+<script>
+const I18N = {
+  en:{
+    title:"Terms of Use — MICRORETAILX",
+    h1:"Terms of Use",
+    p1:"These Terms of Use govern access to and use of the website www.microretailx.com.",
+    "h2.entity":"Legal Entity",
+    "p.entity":"This Website is operated by MICRORETAILX LLC, a limited liability company incorporated in the State of Delaware, United States.",
+    "h2.info":"Informational Nature",
+    "p.info":"The Website is provided solely for general informational purposes and does not constitute professional advice.",
+    "h2.use":"Permitted Use",
+    li1:"Lawful and respectful use only.",
+    li2:"No misuse, interference, or abuse.",
+    li3:"No unauthorized access or scraping.",
+    "h2.global":"Global Applicability",
+    "p.global":"These Terms apply globally and do not override mandatory local consumer protections.",
+    "h2.contact":"Contact",
+    "p.contact":"Legal inquiries: legal@microretailx.com",
+    version:"Version 1.0 — Effective date: 2026-01-21"
+  },
+  es:{
+    title:"Términos de uso — MICRORETAILX",
+    h1:"Términos de uso",
+    p1:"Estos Términos regulan el acceso y uso del sitio web www.microretailx.com.",
+    "h2.entity":"Entidad legal",
+    "p.entity":"Este sitio es operado por MICRORETAILX LLC, sociedad registrada en Delaware, Estados Unidos.",
+    "h2.info":"Carácter informativo",
+    "p.info":"El contenido es meramente informativo y no constituye asesoramiento profesional.",
+    "h2.use":"Uso permitido",
+    li1:"Uso lícito y respetuoso.",
+    li2:"Prohibido interferir o abusar del sitio.",
+    li3:"Prohibido el acceso no autorizado.",
+    "h2.global":"Aplicación global",
+    "p.global":"Estos términos se aplican globalmente sin perjuicio de normas imperativas locales.",
+    "h2.contact":"Contacto",
+    "p.contact":"Consultas legales: legal@microretailx.com",
+    version:"Versión 1.0 — Vigente desde 21/01/2026"
+  }
+};
+
+const DEFAULT_LANG="en";
+const store="mx_lang";
+
+function applyLang(l){
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==="ar")?"rtl":"ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n");
+    if(I18N[l] && I18N[l][k]) el.textContent=I18N[l][k];
+  });
+  const t=document.querySelector("title[data-i18n]");
+  if(t && I18N[l]?.title) t.textContent=I18N[l].title;
+}
+
+const saved=localStorage.getItem(store) || DEFAULT_LANG;
+applyLang(saved);
+
+document.querySelectorAll(".lang-pill").forEach(b=>{
+  b.onclick=()=>{
+    const l=b.dataset.lang;
+    localStorage.setItem(store,l);
+    applyLang(l);
+  };
+});
+
+document.getElementById("lang-switch").onclick=()=>{
+  document.getElementById("lang-switch").classList.toggle("is-open");
+};
+</script>
 
 </body>
 </html>
