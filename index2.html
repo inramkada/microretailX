@@ -771,7 +771,6 @@
 
     <main>
       <section class="card">
-        <!-- ✅ long legal text key -->
         <p class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</p>
       </section>
     </main>
@@ -855,6 +854,9 @@
   </div>
 
   <script>
+    // ---------------------------
+    // CMP (unchanged)
+    // ---------------------------
     (function(){
       const CONSENT_KEY = "mx_consent";
       const CMP_VER = 1;
@@ -994,6 +996,9 @@
       }
     })();
 
+    // ---------------------------
+    // I18N + effects + UI (fixed)
+    // ---------------------------
     (function(){
       const I18N = {
         en: {
@@ -1114,8 +1119,9 @@ Legal and compliance notices: legal@microretailx.com`,
           "cmp.reject": "Reject all",
           "cmp.accept": "Accept all",
           "cmp.save": "Save"
-        },  /* ✅ FIX: comma here was missing */
+        },
 
+        // ✅ PASTE your full translations in each "card.terms" below
         es: {
           "nav.about": "Info",
           "nav.verticals": "Verticales",
@@ -1305,6 +1311,7 @@ Legal and compliance notices: legal@microretailx.com`,
       const DEFAULT_LANG = "en";
       const storageKey = "mx_lang";
 
+      // Detect preferred language from the browser (first visit only)
       function detectBrowserLang(){
         const supported = new Set(Object.keys(I18N));
         const prefs = (Array.isArray(navigator.languages) && navigator.languages.length)
@@ -1413,6 +1420,7 @@ Legal and compliance notices: legal@microretailx.com`,
               const val = dict[key] ?? I18N[DEFAULT_LANG][key];
               if (typeof val !== "string") return;
 
+              // keep your scramble animation
               scrambleSmart(el, val, 220, lang);
 
               el.classList.remove("mx-i18n-out");
@@ -1434,8 +1442,327 @@ Legal and compliance notices: legal@microretailx.com`,
         }
       }
 
+      // expose
       window.__mxApplyLang = applyLang;
+
+      // apply initially
       applyLang(getLang());
+
+      // ---------------------------
+      // ✅ TOUCH/PTR safe language selection
+      // ---------------------------
+      (function(){
+        const rail = document.getElementById("lang-rail");
+        if (!rail) return;
+
+        const isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+
+        const TAP_MOVE_PX = 14;
+        const TAP_SCROLL_PX = 6;
+
+        let startX = 0, startY = 0, startScroll = 0;
+        let dragging = false;
+        let pressedBtn = null;
+
+        function ptFromTouch(t){ return { x: t.clientX, y: t.clientY }; }
+
+        rail.addEventListener("touchstart", (e) => {
+          const targetBtn = e.target && e.target.closest ? e.target.closest(".lang-pill") : null;
+          pressedBtn = targetBtn && rail.contains(targetBtn) ? targetBtn : null;
+
+          if (!e.touches || e.touches.length === 0) return;
+          const p = ptFromTouch(e.touches[0]);
+          startX = p.x;
+          startY = p.y;
+          startScroll = rail.scrollLeft;
+          dragging = false;
+
+          if (pressedBtn){
+            e.preventDefault();
+          }
+        }, { passive:false });
+
+        rail.addEventListener("touchmove", (e) => {
+          if (!e.touches || e.touches.length === 0) return;
+
+          const p = ptFromTouch(e.touches[0]);
+          const dx = Math.abs(p.x - startX);
+          const dy = Math.abs(p.y - startY);
+          const ds = Math.abs(rail.scrollLeft - startScroll);
+
+          if (dx > TAP_MOVE_PX || dy > TAP_MOVE_PX || ds > TAP_SCROLL_PX){
+            dragging = true;
+          }
+        }, { passive:true });
+
+        rail.addEventListener("touchend", (e) => {
+          if (dragging){ pressedBtn = null; return; }
+
+          let btn = pressedBtn;
+
+          if (!btn){
+            const ct = e.changedTouches && e.changedTouches[0];
+            if (ct){
+              const p = ptFromTouch(ct);
+              const el = document.elementFromPoint(p.x, p.y);
+              const maybe = el && el.closest ? el.closest(".lang-pill") : null;
+              if (maybe && rail.contains(maybe)) btn = maybe;
+            }
+          }
+
+          if (!btn || btn.hidden){ pressedBtn = null; return; }
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          const lang = btn.getAttribute("data-lang") || DEFAULT_LANG;
+          setLang(lang);
+          window.__mxApplyLang(lang);
+
+          btn.blur();
+          if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+
+          pressedBtn = null;
+        }, { passive:false });
+
+        rail.addEventListener("touchcancel", () => {
+          dragging = false;
+          pressedBtn = null;
+        }, { passive:true });
+
+        rail.addEventListener("click", (e) => {
+          // prevent accidental "click-through" after touch
+          e.preventDefault();
+          e.stopPropagation();
+        }, true);
+
+        if (!isTouch){
+          let downX = 0, downY = 0;
+          let pDragging = false;
+
+          rail.addEventListener("pointerdown", (e) => {
+            const btn = e.target && e.target.closest ? e.target.closest(".lang-pill") : null;
+            if (btn) e.preventDefault();
+            downX = e.clientX; downY = e.clientY;
+            pDragging = false;
+          }, { passive:false });
+
+          rail.addEventListener("pointermove", (e) => {
+            if (Math.abs(e.clientX - downX) > 10 || Math.abs(e.clientY - downY) > 10) pDragging = true;
+          }, { passive:true });
+
+          rail.addEventListener("pointerup", (e) => {
+            if (pDragging) return;
+
+            const el = document.elementFromPoint(e.clientX, e.clientY);
+            const btn = el && el.closest ? el.closest(".lang-pill") : null;
+            if (!btn || !rail.contains(btn) || btn.hidden) return;
+
+            const lang = btn.getAttribute("data-lang") || DEFAULT_LANG;
+            setLang(lang);
+            window.__mxApplyLang(lang);
+
+            btn.blur();
+            if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+          }, { passive:true });
+        }
+      })();
+
+      // ---------------------------
+      // ✅ Globe open/close behavior (hover + click + smart placement)
+      // ---------------------------
+      (function(){
+        const switchEl = document.getElementById('lang-switch');
+        const railEl   = document.getElementById('lang-rail');
+        if (!switchEl || !railEl) return;
+
+        let openTimer = null;
+        let closeTimer = null;
+        let locked = false;
+
+        const OPEN_DELAY_MS  = 250;
+        const CLOSE_DELAY_MS = 2200;
+
+        let firstOpen = true;
+
+        function clearTimers(){
+          if (openTimer)  { clearTimeout(openTimer);  openTimer = null; }
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        }
+
+        function ensureStartVisibleOnce(){
+          if (!firstOpen) return;
+          railEl.scrollLeft = 0;
+          firstOpen = false;
+        }
+
+        function resetShift(){
+          railEl.style.setProperty('--rail-shift', '0px');
+        }
+
+        function clampRailIntoViewport(){
+          const vw = window.innerWidth || document.documentElement.clientWidth;
+          const margin = 8;
+
+          resetShift();
+
+          const rect = railEl.getBoundingClientRect();
+          let shift = 0;
+
+          if (rect.left < margin){
+            shift = (margin - rect.left);
+          } else if (rect.right > (vw - margin)){
+            shift = - (rect.right - (vw - margin));
+          }
+
+          if (shift !== 0){
+            railEl.style.setProperty('--rail-shift', `${Math.round(shift)}px`);
+          }
+        }
+
+        function placeRailSmart(){
+          switchEl.classList.remove('open-right');
+          resetShift();
+
+          const vw = window.innerWidth || document.documentElement.clientWidth;
+          const margin = 8;
+
+          let rect = railEl.getBoundingClientRect();
+
+          if (rect.left < -margin){
+            switchEl.classList.add('open-right');
+            rect = railEl.getBoundingClientRect();
+          }
+
+          if (rect.right > vw + margin){
+            switchEl.classList.remove('open-right');
+          }
+
+          clampRailIntoViewport();
+        }
+
+        function openRail(){
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          requestAnimationFrame(() => window.scrollTo(0, y));
+
+          switchEl.classList.add('is-open');
+
+          requestAnimationFrame(() => {
+            ensureStartVisibleOnce();
+            placeRailSmart();
+          });
+        }
+
+        function closeRail(){
+          locked = false;
+          switchEl.classList.remove('is-open');
+          switchEl.classList.remove('open-right');
+          resetShift();
+        }
+
+        function scheduleOpen(){
+          clearTimers();
+          openTimer = setTimeout(() => openRail(), OPEN_DELAY_MS);
+        }
+        function scheduleClose(){
+          clearTimers();
+          closeTimer = setTimeout(() => closeRail(), CLOSE_DELAY_MS);
+        }
+
+        switchEl.addEventListener('pointerenter', () => {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          if (switchEl.classList.contains('is-open')) return;
+          scheduleOpen();
+        });
+
+        switchEl.addEventListener('pointerleave', () => {
+          if (!switchEl.classList.contains('is-open')) { clearTimers(); return; }
+          if (locked) return;
+          scheduleClose();
+        });
+
+        railEl.addEventListener('pointerenter', () => {
+          locked = true;
+          clearTimers();
+          openRail();
+        });
+
+        railEl.addEventListener('pointerleave', () => {
+          locked = false;
+          scheduleClose();
+        });
+
+        const trigger = switchEl.querySelector('.lang-trigger');
+        let _touchHandled = false;
+
+        function toggleRail(){
+          clearTimers();
+          if (switchEl.classList.contains('is-open')) closeRail();
+          else openRail();
+
+          trigger?.blur();
+          if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        }
+
+        trigger?.addEventListener('touchstart', (e) => {
+          _touchHandled = true;
+          e.preventDefault();
+          toggleRail();
+          setTimeout(() => { _touchHandled = false; }, 450);
+        }, { passive: false });
+
+        trigger?.addEventListener('click', (e) => {
+          if (_touchHandled) return;
+          e.preventDefault();
+          toggleRail();
+        });
+
+        // click outside closes
+        document.addEventListener('click', (e) => {
+          if (!switchEl.classList.contains('is-open')) return;
+          if (!switchEl.contains(e.target)) closeRail();
+        });
+
+        window.addEventListener('resize', () => {
+          if (!switchEl.classList.contains('is-open')) return;
+          requestAnimationFrame(() => placeRailSmart());
+        });
+      })();
+
+    })();
+
+    // ---------------------------
+    // Verticals dropdown (unchanged)
+    // ---------------------------
+    (function(){
+      const v = document.getElementById('verticals');
+      if (!v) return;
+
+      function setOpen(isOpen){
+        v.classList.toggle('is-open', isOpen);
+        v.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+      function isOpen(){ return v.classList.contains('is-open'); }
+
+      v.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (a) return;
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(!isOpen());
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!v.contains(e.target)) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+
+      v.querySelectorAll('a').forEach(a=>{
+        a.addEventListener('click', ()=> setOpen(false));
+      });
     })();
   </script>
 </body>
