@@ -1383,21 +1383,21 @@ footer{
         const base = String(finalText ?? "");
         const pool = poolForLang(lang);
         const isArabic = (lang === "ar");
+        const isLegal = el.classList.contains("legalcopy");
 
-        // Auto-duration: long blocks need longer to be noticeable
-        const auto = Math.min(1200, Math.max(260, Math.round(base.length * 1.4)));
+        const auto = isLegal
+          ? Math.min(6000, Math.max(2500, Math.round(base.length * 0.35)))
+          : Math.min(1600, Math.max(260, Math.round(base.length * 1.4)));
+
         const dur = Number.isFinite(durationMs) ? durationMs : auto;
 
-        // For very long texts, scramble only a moving window to keep it fast
-        const windowSize = base.length > 900 ? 240 : base.length;
-
         const start = performance.now();
+
         const tick = (t) => {
           const p = Math.min(1, (t - start) / dur);
           const reveal = Math.floor(p * base.length);
 
           if (isArabic){
-            // Keep it simple for RTL: reveal progressively without noisy scrambling
             const shown = base.slice(0, reveal);
             const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
             el.textContent = shown + hidden;
@@ -1405,6 +1405,32 @@ footer{
             else el.textContent = base;
             return;
           }
+
+          let out = "";
+          for (let i = 0; i < base.length; i++){
+            const c = base[i];
+
+            if (c === "\n"){ out += "\n"; continue; }
+            if (i < reveal){ out += c; continue; }
+            if (c === " "){ out += " "; continue; }
+
+            if (/[\.,!\?:;\-—–\(\)\[\]\/\&\+%#@€$£"']/.test(c)){
+              out += c;
+              continue;
+            }
+
+            out += pool[(Math.random() * pool.length) | 0];
+          }
+
+          el.textContent = out;
+
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = base;
+        };
+
+        requestAnimationFrame(tick);
+      }
+
 
           let out = "";
           for (let i = 0; i < base.length; i++){
@@ -1471,7 +1497,10 @@ footer{
               const val = dict[key] ?? I18N[DEFAULT_LANG][key];
               if (typeof val !== "string") return;
 
-              const dur = Math.min(1600, Math.max(260, Math.floor(String(val).length * 0.12)));
+              const isLegal = el.classList.contains("legalcopy");
+              const dur = isLegal
+                ? Math.min(6000, Math.max(2500, Math.floor(String(val).length * 0.35)))
+                : Math.min(1600, Math.max(260, Math.floor(String(val).length * 0.12)));
               scrambleSmart(el, val, dur, lang);
 
               el.classList.remove("mx-i18n-out");
