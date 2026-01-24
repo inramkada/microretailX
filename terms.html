@@ -670,46 +670,9 @@
       --a11y-contrast: 0;
     }
 
-    body.mx-a11y-grayscale{ filter: grayscale(1); }
-    body.mx-a11y-high-contrast{
-      --a11y-contrast: 1;
-    }
-    body.mx-a11y-high-contrast .card{
-      border-color: rgba(255,255,255,.28);
-      background: rgba(0,0,0,.68);
-    }
-    body.mx-a11y-negative{
-      background:#fff;
-      color:#111;
-    }
-    body.mx-a11y-negative .page::before{ opacity:0; }
-    body.mx-a11y-negative header,
-    body.mx-a11y-negative footer{
-      background: rgba(255,255,255,.86);
-      border-color: rgba(0,0,0,.12);
-      color:#111;
-    }
-    body.mx-a11y-negative .navlink{ color: rgba(0,0,0,.82); }
-    body.mx-a11y-negative .navlink:hover{ color:#000; }
-    body.mx-a11y-negative .brand{ mix-blend-mode: normal; text-shadow:none; }
-    body.mx-a11y-negative .card{
-      background: rgba(255,255,255,.92);
-      border-color: rgba(0,0,0,.14);
-      box-shadow: 0 18px 60px rgba(0,0,0,.12);
-    }
-    body.mx-a11y-negative .legalcopy{ color: rgba(0,0,0,.88); }
+        body.mx-a11y-readable{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-    body.mx-a11y-lightbg .card{
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
-        rgba(255,255,255,.92);
-      border-color: rgba(0,0,0,.14);
-      box-shadow: 0 18px 60px rgba(0,0,0,.12);
-    }
-    body.mx-a11y-lightbg .legalcopy{ color: rgba(0,0,0,.88); }
-    body.mx-a11y-lightbg .legal-sep{ background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent); }
-
-    body.mx-a11y-readable{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
       text-rendering: optimizeLegibility;
     }
@@ -1106,25 +1069,24 @@ footer{
           </div>
           <div class="tools-switch" id="tools-switch">
             <button class="tools-trigger" aria-label="Accessibility & tools" type="button">
-              <svg class="tools-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <svg class="tools-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="currentColor" d="M12 5a2 2 0 1 1 0 4a2 2 0 0 1 0-4zm-5 6h10v2H7v-2zm2 4h6v4h-2v-2h-2v2H9v-4z"/>
                 <path fill="currentColor" d="M12 2a3 3 0 0 1 3 3c0 1.3-.84 2.4-2 2.82V10h3a1 1 0 0 1 0 2h-3v9a1 1 0 0 1-2 0v-9H9a1 1 0 0 1 0-2h3V7.82A3 3 0 0 1 9 5a3 3 0 0 1 3-3z"/>
               </svg>
             </button>
 
+            
             <div class="tools-rail" id="tools-rail" aria-label="Accessibility and tools">
               <button class="tool-pill" data-action="font-up" data-label="Increase text" type="button">A+</button>
               <button class="tool-pill" data-action="font-down" data-label="Decrease text" type="button">A-</button>
-              <button class="tool-pill" data-action="readable" data-label="Readable font" type="button">FONT</button>
-              <button class="tool-pill" data-action="underline" data-label="Underline links" type="button">LINKS</button>
+              <button class="tool-pill" data-action="readable" data-label="Regulatory font" type="button">FONT</button>
               <button class="tool-pill" data-action="contrast" data-label="High contrast" type="button">HC</button>
-              <button class="tool-pill" data-action="negative" data-label="Invert theme" type="button">INV</button>
               <button class="tool-pill" data-action="lightbg" data-label="Light reader" type="button">LIGHT</button>
-              <button class="tool-pill" data-action="grayscale" data-label="Grayscale" type="button">GRAY</button>
-              <button class="tool-pill" data-action="pdf" data-label="Save as PDF" type="button">PDF</button>
-              <button class="tool-pill" data-action="download" data-label="Download text" type="button">DL</button>
+              <button class="tool-pill" data-action="audio" data-label="Audio reader" type="button">AUDIO</button>
+              <button class="tool-pill" data-action="pdf" data-label="Download PDF" type="button">PDF</button>
               <button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
             </div>
           </div>
+
 
 
           <a class="navlink" href="#/about" data-i18n="nav.about">About</a>
@@ -1507,13 +1469,13 @@ Legal and compliance communications: legal@microretailx.com
           "cmp.save": "Save preferences",
           "tools.fontup": "Increase text",
           "tools.fontdown": "Decrease text",
-          "tools.readable": "Readable font",
+          "tools.readable": "Regulatory font",
           "tools.underline": "Underline links",
           "tools.contrast": "High contrast",
           "tools.negative": "Invert theme",
           "tools.light": "Light reader",
           "tools.gray": "Grayscale",
-          "tools.pdf": "Save as PDF",
+          "tools.pdf": "Download PDF",
           "tools.download": "Download text",
           "tools.reset": "Reset",
         
@@ -1746,13 +1708,13 @@ legal@microretailx.com
           "cmp.save": "Desar preferències",
           "tools.fontup": "Augmentar text",
           "tools.fontdown": "Disminuir text",
-          "tools.readable": "Font llegible",
+          "tools.readable": "Regulatory font",
           "tools.underline": "Subratllar enllaços",
           "tools.contrast": "Alt contrast",
           "tools.negative": "Contrast negatiu",
-          "tools.light": "Fons clar",
+          "tools.light": "Light reader",
           "tools.gray": "Escala de grisos",
-          "tools.pdf": "Desar en PDF",
+          "tools.pdf": "Download PDF",
           "tools.download": "Descarregar text",
           "tools.reset": "Restablir",
         
@@ -1831,13 +1793,13 @@ legal@microretailx.com
           "cmp.save": "Hobespenak gorde",
           "tools.fontup": "Testua handitu",
           "tools.fontdown": "Testua txikitu",
-          "tools.readable": "Iturri irakurgarria",
+          "tools.readable": "Regulatory font",
           "tools.underline": "Estekak azpimarratu",
           "tools.contrast": "Kontraste handia",
           "tools.negative": "Alderantzikatu",
-          "tools.light": "Atzeko plano argia",
+          "tools.light": "Light reader",
           "tools.gray": "Gris eskala",
-          "tools.pdf": "PDF gorde",
+          "tools.pdf": "Download PDF",
           "tools.download": "Testua deskargatu",
           "tools.reset": "Berrezarri",
         
@@ -2454,12 +2416,25 @@ legal@microretailx.com
 
         document.body.classList.toggle("mx-a11y-grayscale", !!state.gray);
         document.body.classList.toggle("mx-a11y-high-contrast", !!state.hc);
-        document.body.classList.toggle("mx-a11y-negative", !!state.inv);
         document.body.classList.toggle("mx-a11y-lightbg", !!state.light);
         document.body.classList.toggle("mx-a11y-readable", !!state.readable);
         document.body.classList.toggle("mx-a11y-underline", !!state.underline);
 
         try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){}
+      }
+
+      
+      function playAudio(){
+        const el = document.querySelector('[data-i18n="card.terms"]');
+        if (!el || !window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+
+        const utter = new SpeechSynthesisUtterance(el.textContent);
+        utter.lang = document.documentElement.lang || "en";
+        utter.rate = 0.95;
+        utter.pitch = 1;
+
+        window.speechSynthesis.speak(utter);
       }
 
       function downloadText(){
@@ -2500,9 +2475,10 @@ legal@microretailx.com
         else if (act === "readable"){ state.readable = !state.readable; }
         else if (act === "underline"){ state.underline = !state.underline; }
         else if (act === "contrast"){ state.hc = !state.hc; }
-        else if (act === "negative"){ state.inv = !state.inv; state.light = false; }
+        
         else if (act === "lightbg"){ state.light = !state.light; state.inv = false; }
-        else if (act === "grayscale"){ state.gray = !state.gray; }
+        
+        else if (act === "audio"){ playAudio(); return; }
         else if (act === "pdf"){ savePdf(); return; }
         else if (act === "download"){ downloadText(); return; }
         else if (act === "reset"){ 
