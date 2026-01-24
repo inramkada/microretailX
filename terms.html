@@ -396,7 +396,86 @@
 
     
 
-    /* ✅ Multi-line legal text */
+    
+    /* ✅ Premium wide container */
+    .card{
+      width: min(1040px, 100%);
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,.06), transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.045), transparent 60%),
+        rgba(0,0,0,.56);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    /* Header line separator inside legal text */
+    .legal-head, .legal-body{
+      white-space: pre-wrap;
+    }
+    .legal-sep{
+      height:1px;
+      margin: 14px 0 16px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      opacity:.9;
+    }
+
+    /* Slightly nicer typography for legal content */
+    .legalcopy{
+      margin:0;
+      font-size: clamp(11.5px, 1.15vw, 13.5px);
+      line-height: 1.62;
+      color: rgba(255,255,255,.90);
+      letter-spacing: .012em;
+    }
+
+    /* Immersive reader mode */
+    .reader-bar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .reader-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.88);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      cursor:pointer;
+      line-height:1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .reader-btn:hover{
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.07);
+      color:#fff;
+    }
+    body.mx-immersive main{
+      padding-top: 28px;
+      place-items: start center;
+    }
+    body.mx-immersive .card{
+      width: min(1100px, 100%);
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 55%),
+        rgba(0,0,0,.48);
+    }
+    body.mx-immersive .legalcopy{
+      font-size: clamp(13px, 1.25vw, 15px);
+      line-height: 1.78;
+      color: rgba(255,255,255,.92);
+      letter-spacing: .015em;
+    }
+    body.mx-immersive header, body.mx-immersive footer{
+      opacity: .92;
+    }
+/* ✅ Multi-line legal text */
     .legalcopy{
       white-space: pre-wrap;
       margin: 0;
@@ -771,7 +850,10 @@ footer{
 
     <main>
       <section class="card">
-        <p class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</p>
+        <div class="reader-bar">
+          <button class="reader-btn" id="mx-reader-toggle" type="button" data-i18n="reader.toggle">Immersive</button>
+        </div>
+        <div class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</div>
       </section>
     </main>
 
@@ -1003,6 +1085,8 @@ footer{
           "footer.privacy": "Privacy",
           "footer.cookies": "Cookies",
           "footer.legal": "Legal",
+          "reader.toggle": "Lectura",
+          "reader.toggle": "Immersive",
           "card.test": "We’re working on it — coming back soon.",
           "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
 
@@ -1284,6 +1368,7 @@ Legal and compliance communications: legal@microretailx.com
           "footer.privacy": "Privacitat",
           "footer.cookies": "Cookies",
           "footer.legal": "Legal",
+          "reader.toggle": "Lectura",
           "card.test": "Estem treballant — tornem aviat.",
           "card.terms": `MICRORETAILX – TERMES D’ÚS GLOBALS
 
@@ -1356,6 +1441,7 @@ legal@microretailx.com
           "footer.privacy": "Prib.",
           "footer.cookies": "Cookies",
           "footer.legal": "Lege-oharra",
+          "reader.toggle": "Irakurketa",
           "card.test": "Lanean ari gara — laster itzuliko gara.",
           "card.terms": `MICRORETAILX – ERABILERA BALDINTZA GLOBALAK
 
@@ -1572,6 +1658,30 @@ legal@microretailx.com
         return POOL_LATIN;
       }
 
+      
+      function escapeHtml(s){
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function formatLegalHTML(text){
+        const raw = String(text ?? "");
+        const split = raw.split(/\n\s*\n(?=1\.)/); // header vs body (starts at "1.")
+        const head = split[0] || raw;
+        const body = split.length > 1 ? split.slice(1).join("\n\n") : "";
+
+        const headHtml = escapeHtml(head);
+        const bodyHtml = escapeHtml(body);
+
+        // Use pre-wrap in CSS; no <br> needed.
+        if (!body) return `<div class="legal-head">${headHtml}</div>`;
+        return `<div class="legal-head">${headHtml}</div><div class="legal-sep" aria-hidden="true"></div><div class="legal-body">${bodyHtml}</div>`;
+      }
+
       function scrambleSmart(el, finalText, durationMs, lang){
         const base = String(finalText ?? "");
         const pool = poolForLang(lang);
@@ -1595,7 +1705,7 @@ legal@microretailx.com
             const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
             el.textContent = shown + hidden;
             if (p < 1) requestAnimationFrame(tick);
-            else el.textContent = base;
+            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
             return;
           }
 
@@ -1618,7 +1728,7 @@ legal@microretailx.com
           el.textContent = out;
 
           if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = base;
+          else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
         };
 
         requestAnimationFrame(tick);
@@ -1686,6 +1796,22 @@ legal@microretailx.com
 
       window.__mxApplyLang = applyLang;
       applyLang(getLang());
+      // Immersive reader toggle
+      (function(){
+        const btn = document.getElementById("mx-reader-toggle");
+        if (!btn) return;
+
+        const KEY = "mx_reader_immersive";
+        const saved = localStorage.getItem(KEY);
+        if (saved === "1") document.body.classList.add("mx-immersive");
+
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.body.classList.toggle("mx-immersive");
+          localStorage.setItem(KEY, document.body.classList.contains("mx-immersive") ? "1" : "0");
+        });
+      })();
+
 
       (function(){
         const rail = document.getElementById("lang-rail");
