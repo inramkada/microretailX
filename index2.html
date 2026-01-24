@@ -313,7 +313,7 @@
       padding: 0 10px;
       border-radius: 999px;
 
-      font-size: 11px;
+      font-size: clamp(12px, 1.2vw, 14px);
       font-weight: 400;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -686,7 +686,7 @@ footer{
       color: rgba(255,255,255,.88);
       border-radius: 999px;
       padding: 10px 14px;
-      font-size: 11px;
+      font-size: clamp(12px, 1.2vw, 14px);
       letter-spacing:.16em;
       text-transform:uppercase;
       cursor:pointer;
@@ -1336,22 +1336,6 @@ footer{
       }
 
 
-          let out = "";
-          for (let i = 0; i < base.length; i++){
-            const c = base[i];
-            if (i < reveal) { out += c; continue; }
-            if (c === " ") { out += " "; continue; }
-            if (/[\.\,\!\?\:\;\-\—\–\(\)\[\]\/\&\+%#@€$£"']/.test(c)) { out += c; continue; }
-            out += pool[(Math.random() * pool.length) | 0];
-          }
-          el.textContent = out;
-
-          if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = base;
-        };
-        requestAnimationFrame(tick);
-      }
-
       function applyLang(lang){
         document.body.classList.add("is-i18n-switching");
 
@@ -1385,7 +1369,8 @@ footer{
               const val = dict[key] ?? I18N[DEFAULT_LANG][key];
               if (typeof val !== "string") return;
 
-              scrambleSmart(el, val, undefined, lang);
+              const dur = Math.min(1600, Math.max(260, Math.floor(String(val).length * 0.12)));
+              scrambleSmart(el, val, dur, lang);
 
               el.classList.remove("mx-i18n-out");
               el.classList.add("mx-i18n-in");
@@ -1709,6 +1694,7 @@ footer{
         a.addEventListener('click', ()=> setOpen(false));
       });
     })();
-  </script>
+  
+</script>
 </body>
 </html>
