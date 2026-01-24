@@ -1432,37 +1432,6 @@ footer{
       }
 
 
-          let out = "";
-          for (let i = 0; i < base.length; i++){
-            const c = base[i];
-
-            // Preserve new lines
-            if (c === "\n"){ out += "\n"; continue; }
-
-            // Already revealed -> final char
-            if (i < reveal){ out += c; continue; }
-
-            // Outside the moving window -> keep spacing (fast + looks clean)
-            if (i > reveal + windowSize){
-              out += (c === " " ? " " : " ");
-              continue;
-            }
-
-            // Preserve spaces and basic punctuation even during scramble
-            if (c === " "){ out += " "; continue; }
-            if (/[\.,!\?:;\-—–\(\)\[\]\/\&\+%#@€$£"']/.test(c)){ out += c; continue; }
-
-            out += pool[(Math.random() * pool.length) | 0];
-          }
-
-          el.textContent = out;
-
-          if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = base;
-        };
-        requestAnimationFrame(tick);
-      }
-
 
       function applyLang(lang){
         document.body.classList.add("is-i18n-switching");
