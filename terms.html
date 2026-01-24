@@ -1046,7 +1046,94 @@ footer{
       .legal-sep{ background: #000 !important; opacity: .2 !important; }
     }
   </style>
+
+<style id="mx-float-scroll-css">
+  .mx-float-scroll{
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+  .mx-float-scroll.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mx-float-btn{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.38);
+    color: rgba(255,255,255,.92);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mx-float-btn:hover{
+    border-color: rgba(255,255,255,.26);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+  }
+  @media (max-width: 640px){
+    .mx-float-scroll{ right: 10px; bottom: 10px; }
+    .mx-float-btn{ width: 46px; height: 46px; border-radius: 16px; }
+  }
+  body.mx-a11y-lightbg .mx-float-btn{
+    border-color: rgba(0,0,0,.16);
+    background: rgba(255,255,255,.72);
+    color: rgba(0,0,0,.85);
+    box-shadow: 0 14px 40px rgba(0,0,0,.18);
+  }
+  body.mx-a11y-lightbg .mx-float-btn:hover{
+    border-color: rgba(0,0,0,.24);
+    background: rgba(255,255,255,.90);
+    color: #000;
+  }
+</style>
+
+<style id="mx-a11y-fix">
+  :root{ --a11y-font-scale: 1; }
+  .legalcopy{ font-size: calc(clamp(11.5px, 1.15vw, 13.5px) * var(--a11y-font-scale)) !important; }
+  body.mx-immersive .legalcopy{ font-size: calc(clamp(13px, 1.25vw, 15px) * var(--a11y-font-scale)) !important; }
+
+  /* Light mode: apply to card + page background safely */
+  body.mx-a11y-lightbg{
+    background: radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.04), transparent 55%), #f6f7fb !important;
+    color: #111 !important;
+  }
+  body.mx-a11y-lightbg .page::before{ opacity: .35; }
+  body.mx-a11y-lightbg header,
+  body.mx-a11y-lightbg footer{
+    background: rgba(255,255,255,.78);
+    border-color: rgba(0,0,0,.10);
+  }
+  body.mx-a11y-lightbg .navlink{ color: rgba(0,0,0,.78); }
+  body.mx-a11y-lightbg .navlink:hover{ color:#000; }
+  body.mx-a11y-lightbg .card{
+    background:
+      radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
+      rgba(255,255,255,.94) !important;
+    border-color: rgba(0,0,0,.14) !important;
+    box-shadow: 0 18px 60px rgba(0,0,0,.12);
+  }
+  body.mx-a11y-lightbg .legalcopy{ color: rgba(0,0,0,.88) !important; }
+  body.mx-a11y-lightbg .legal-sep{ background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent) !important; }
+</style>
 </head>
+
+
 
 
 <body>
@@ -1103,10 +1190,7 @@ footer{
 </button>
 
               <button class="tool-pill" data-action="pdf" data-label="Download PDF" type="button">PDF</button>
-              <button class="tool-pill" data-action="top" data-label="Scroll to top" type="button"><span aria-hidden="true">↑</span></button>
-              <button class="tool-pill" data-action="bottom" data-label="Scroll to bottom" type="button"><span aria-hidden="true">↓</span></button>
-
-              <button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
+<button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
             </div>
           </div>
 
@@ -2432,7 +2516,7 @@ legal@microretailx.com
       function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
       function apply(){
-        const scale = clamp(Number(state.scale ?? 1), 0.9, 1.35);
+        const scale = clamp(Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1, 0.9, 1.35);
         root.style.setProperty("--a11y-font-scale", String(scale));
 
         document.body.classList.toggle("mx-a11y-grayscale", !!state.gray);
@@ -2528,8 +2612,8 @@ legal@microretailx.com
         const act = btn.getAttribute("data-action");
         if (!act) return;
 
-        if (act === "font-up"){ state.scale = (Number(state.scale ?? 1) + 0.08); }
-        else if (act === "font-down"){ state.scale = (Number(state.scale ?? 1) - 0.08); }
+        if (act === "font-up"){ state.scale = (Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1) + 0.08; }
+        else if (act === "font-down"){ state.scale = (Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1) - 0.08; }
         else if (act === "readable"){ state.readable = !state.readable; }
         else if (act === "underline"){ state.underline = !state.underline; }
         else if (act === "contrast"){ state.hc = !state.hc; }
@@ -2733,8 +2817,45 @@ legal@microretailx.com
       });
     })();
   
+
+
+    (function(){
+      const box = document.querySelector(".mx-float-scroll");
+      const topBtn = document.getElementById("mx-scroll-top");
+      const bottomBtn = document.getElementById("mx-scroll-bottom");
+      if (!box || !topBtn || !bottomBtn) return;
+
+      function update(){
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        if (y > 220) box.classList.add("is-visible");
+        else box.classList.remove("is-visible");
+      }
+
+      topBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      bottomBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        window.scrollTo({ top: h, behavior: "smooth" });
+      });
+
+      window.addEventListener("scroll", update, { passive:true });
+      window.addEventListener("resize", update, { passive:true });
+      update();
+    })();
+
 </script>
+
+  <!-- Floating quick scroll buttons -->
+  <div class="mx-float-scroll" aria-label="Quick scroll">
+    <button class="mx-float-btn" id="mx-scroll-top" type="button" aria-label="Scroll to top">↑</button>
+    <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">↓</button>
+  </div>
 </body>
+
 </html>
 
 <style>
