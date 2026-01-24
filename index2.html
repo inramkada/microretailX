@@ -1,254 +1,1473 @@
+Aquí tienes **tu mismo HTML** con el “Estamos trabajando…” sustituido por una **clave nueva** (`card.terms`) y con **huecos exactos** para que pegues el texto largo en **cada idioma**, sin romper nada. 
+
+> Lo único que harás tú: buscar `PASTE TERMS TEXT HERE` dentro de cada idioma y pegar ahí.
+
+```html
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="title">Terms of Use — MICRORETAILX</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>microretailX</title>
 
-  <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MICRORETAILX">
+  <meta property="og:description" content="Advanced biotech and creative technology platforms.">
+  <meta property="og:url" content="https://www.microretailx.com">
+  <meta property="og:image" content="https://www.microretailx.com/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MICRORETAILX">
+  <meta name="twitter:description" content="Advanced biotech and creative technology platforms.">
+  <meta name="twitter:image" content="https://www.microretailx.com/og-image.jpg">
 
   <style>
     :root{
       --bg:#000;
       --fg:rgba(255,255,255,.94);
-      --muted:rgba(255,255,255,.65);
+      --muted:rgba(255,255,255,.62);
       --hair:rgba(255,255,255,.12);
       --glass:rgba(0,0,0,.78);
-      --px:clamp(14px, 2.5vw, 20px);
+
+      --px:clamp(12px, 2vw, 18px);
+      --py:10px;
+
+      --brand-size:clamp(12px, 1.2vw, 13px);
+      --brand-track:0.20em;
+
+      --nav-size:clamp(12px, 1.15vw, 12.5px);
+      --nav-track:0.12em;
+
+      --copy-size:clamp(6.5px, 1.1vw, 7px);
+      --copy-track:0.06em;
+
+      --radius:14px;
+      --blur:10px;
+
+      --menu-bg: rgba(0,0,0,.86);
+      --menu-border: rgba(255,255,255,.14);
     }
 
     *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
     body{
       margin:0;
       background:var(--bg);
       color:var(--fg);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                   "Liberation Mono","Courier New", monospace;
-      -webkit-font-smoothing:antialiased;
+                   "Liberation Mono", "Courier New", monospace;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      font-weight:400;
+      transition: opacity 0.18s ease-in-out;
+    }
+    body.is-i18n-switching{ opacity:0.92; }
+
+    .page{
+      min-height:100%;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      isolation:isolate;
+    }
+
+    .page::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.045;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.07), transparent 46%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.05), transparent 44%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.025), rgba(255,255,255,.025) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode:screen;
+      z-index:-1;
+    }
+
+    header, footer{
+      background:var(--glass);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      overflow: visible;
     }
 
     header{
-      border-bottom:1px solid var(--hair);
-      padding:10px var(--px);
-      background:var(--glass);
-      backdrop-filter: blur(10px);
+      padding: var(--py) var(--px);
+      border-bottom: 1px solid var(--hair);
     }
 
     .topbar{
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
 
     .brand{
-      font-size:12px;
-      letter-spacing:.2em;
-      text-transform:uppercase;
+      font-size: var(--brand-size);
+      font-weight: 400;
+      letter-spacing: var(--brand-track);
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1;
+      opacity:.97;
+      text-shadow: 0 0 10px rgba(255,255,255,.10), 0 0 2px rgba(255,255,255,.18);
+      mix-blend-mode:difference;
     }
 
-    .lang-switch{ position:relative; }
-    .lang-trigger{
-      width:28px;height:28px;
-      background:none;border:0;cursor:pointer;color:#fff;
+    nav{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .lang-rail{
+
+    .navlink{
+      color:rgba(255,255,255,.82);
+      text-decoration:none;
+      font-size:var(--nav-size);
+      font-weight:400;
+      letter-spacing:var(--nav-track);
+      text-transform:uppercase;
+      padding:5px 2px;
+      position:relative;
+    }
+    .navlink:hover{ color:rgba(255,255,255,.96); }
+    .navlink::after{
+      content:"";
       position:absolute;
-      top:100%; right:0;
-      margin-top:10px;
-      display:flex; gap:8px;
-      padding:6px 8px;
-      border:1px solid var(--hair);
-      background:rgba(0,0,0,.9);
-      border-radius:999px;
-      opacity:0; pointer-events:none;
+      left:0; right:0; bottom:0;
+      height:1px;
+      background:rgba(255,255,255,.22);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform 150ms ease;
     }
-    .lang-switch.is-open .lang-rail{
-      opacity:1; pointer-events:auto;
-    }
-    .lang-pill{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.15);
-      background:none;
-      color:#fff;
+    .navlink:hover::after{ transform:scaleX(1); }
+
+    .verticals{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
       cursor:pointer;
     }
-    .lang-pill:hover{ background:rgba(255,255,255,.1); }
+    .verticals > span{ pointer-events:none; }
+
+    .verticals-menu{
+      position:absolute;
+      top:100%;
+      left:0;
+      margin-top:10px;
+
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+
+      padding:0;
+      padding-top:2px;
+      border:0;
+      background:transparent;
+      border-radius:0;
+
+      opacity:0;
+      pointer-events:none;
+      transform: translateY(6px);
+      transition: opacity 160ms ease, transform 160ms ease;
+
+      white-space:nowrap;
+      z-index:50;
+    }
+
+    .verticals-menu .v-item:first-child{ margin-top:2px; }
+
+    .verticals.is-open .verticals-menu{
+      opacity:1;
+      pointer-events:auto;
+      transform: translateY(0);
+    }
+
+    .v-item{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      text-decoration:none;
+      padding:2px 0;
+    }
+
+    .v-main{
+      color:rgba(255,255,255,.92);
+      font-size:12px;
+      font-weight:400;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      line-height:1.05;
+    }
+
+    .v-sub{
+      margin-top:3px;
+      color:rgba(255,255,255,.55);
+      font-size:10px;
+      font-weight:400;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      line-height:1.05;
+    }
+
+    .v-item:hover .v-main{ color:#fff; }
+    .v-item:hover .v-sub{ color:rgba(255,255,255,.72); }
+
+    .lang-switch{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .lang-trigger{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      background:none;
+      border:0;
+      cursor:pointer;
+      padding:0;
+      color:#fff;
+      line-height:1;
+      border-radius:10px;
+      -webkit-user-select:none;
+      user-select:none;
+    }
+    .lang-trigger:hover{ background: rgba(255,255,255,.06); }
+    .lang-trigger:focus{ outline:none; }
+    .globe{ width:18px; height:18px; display:block; }
+
+    .lang-rail{
+      --rail-shift: 0px;
+
+      position:absolute;
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) translateX(var(--rail-shift));
+
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      padding:6px 8px;
+      border:1px solid var(--menu-border);
+      background: var(--menu-bg);
+      border-radius: 999px;
+
+      max-width: min(780px, calc(100vw - (2 * var(--px)) - 80px));
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+
+      direction:ltr;
+      unicode-bidi:isolate;
+
+      opacity:0;
+      pointer-events:none;
+
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      transition: opacity 0.4s ease, transform 0.2s ease;
+
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    .lang-rail::-webkit-scrollbar{ height:0; }
+    .lang-rail{ scrollbar-width:none; -ms-overflow-style:none; }
+
+    .lang-switch.is-open .lang-rail{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .lang-switch.open-right .lang-rail{
+      right:auto;
+      left: calc(100% + 10px);
+    }
+
+    [dir="rtl"] .lang-switch.open-right .lang-rail{
+      left:auto;
+      right: calc(100% + 10px);
+    }
+
+    .lang-pill{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.30);
+      color: rgba(255,255,255,.86);
+
+      height:26px;
+      padding: 0 10px;
+      border-radius: 999px;
+
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+
+      cursor:pointer;
+      user-select:none;
+
+      transform: translateX(10px);
+      opacity: 0;
+      transition: transform 220ms ease, opacity 220ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .lang-pill:focus{ outline:none; }
+    .lang-pill[hidden]{ display:none !important; }
+
+    .lang-switch.is-open .lang-pill{
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .lang-switch.is-open .lang-pill:nth-child(1)  { transition-delay:  0ms; }
+    .lang-switch.is-open .lang-pill:nth-child(2)  { transition-delay: 18ms; }
+    .lang-switch.is-open .lang-pill:nth-child(3)  { transition-delay: 36ms; }
+    .lang-switch.is-open .lang-pill:nth-child(4)  { transition-delay: 54ms; }
+    .lang-switch.is-open .lang-pill:nth-child(5)  { transition-delay: 72ms; }
+    .lang-switch.is-open .lang-pill:nth-child(6)  { transition-delay: 90ms; }
+    .lang-switch.is-open .lang-pill:nth-child(7)  { transition-delay:108ms; }
+    .lang-switch.is-open .lang-pill:nth-child(8)  { transition-delay:126ms; }
+    .lang-switch.is-open .lang-pill:nth-child(9)  { transition-delay:144ms; }
+
+    .lang-pill:hover{
+      color:#fff;
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
+    }
+
+    .lang-pill::after{
+      content: attr(data-label);
+      position:absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+
+      background: rgba(0,0,0,.90);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 6px 8px;
+
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+
+      opacity:0;
+      pointer-events:none;
+      white-space: nowrap;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .lang-pill:hover::after{ opacity:1; }
 
     main{
-      max-width:900px;
-      margin:0 auto;
-      padding:40px var(--px) 60px;
+      display:grid;
+      place-items:center;
+      padding:22px var(--px);
     }
 
-    h1,h2{
-      text-transform:uppercase;
-      letter-spacing:.18em;
+    .card{
+      width:min(720px,100%);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--radius);
+      background:rgba(0,0,0,.55);
+      padding:clamp(16px,2.5vw,24px);
       font-weight:400;
+      text-align:left;
     }
-    h1{ font-size:15px; margin-bottom:30px; }
-    h2{ font-size:13px; margin-top:36px; }
 
-    p,li{
-      font-size:13px;
-      line-height:1.6;
-      color:var(--muted);
+    /* ✅ NEW: multi-line legal text renders nicely */
+    .legalcopy{
+      white-space: pre-wrap;
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.45;
+      color: rgba(255,255,255,.88);
+      letter-spacing: .01em;
     }
-    ul{ margin-left:18px; }
 
     footer{
+      padding:10px var(--px) 12px;
       border-top:1px solid var(--hair);
-      padding:16px;
+    }
+
+    .footer-inner{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:10.5px;
+      font-weight:400;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      opacity:.75;
+      align-items:center;
+    }
+
+    .footer-links a{
+      color:rgba(255,255,255,.85);
+      text-decoration:none;
+    }
+    .footer-links a:hover{ color:#fff; }
+
+    .copyright{
+      font-size:var(--copy-size);
+      letter-spacing:var(--copy-track);
+      opacity:.58;
       text-align:center;
+      line-height:1.3;
+      font-weight:400;
+    }
+
+    .cookie-gear{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:22px;
+      height:22px;
+      margin-left:6px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      cursor:pointer;
+      position:relative;
+      vertical-align:middle;
+    }
+    .cookie-gear:hover{
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.05);
+    }
+    .cookie-gear svg{
+      width:14px;
+      height:14px;
+      display:block;
+      color: rgba(255,255,255,.88);
+    }
+    .cookie-gear::after{
+      content: attr(data-tip);
+      position:absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.90);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+      opacity:0;
+      pointer-events:none;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .cookie-gear:hover::after{ opacity:1; }
+
+    [data-i18n]{
+      display:inline-block;
+      transition: opacity 160ms ease, transform 160ms ease, filter 160ms ease;
+      will-change: opacity, transform, filter;
+    }
+    [data-i18n].mx-i18n-out{
+      opacity:0;
+      transform: translateY(2px);
+      filter: blur(1px);
+    }
+    [data-i18n].mx-i18n-in{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    [dir="rtl"] .topbar{ flex-direction:row-reverse; }
+    [dir="rtl"] nav{ flex-direction:row-reverse; }
+    [dir="rtl"] .navlink::after{ transform-origin:right; }
+    [dir="rtl"] .footer-links{ flex-direction:row-reverse; }
+
+    [dir="rtl"] .verticals-menu{
+      left:auto;
+      right:0;
+      align-items:flex-end;
+      text-align:right;
+    }
+    [dir="rtl"] .v-item{ align-items:flex-end; }
+
+    @media (max-width: 640px){
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      nav{ width:100%; gap:10px; }
+
+      .lang-rail{
+        right:auto;
+        left:0;
+        top:100%;
+        transform: translateY(10px) translateX(var(--rail-shift));
+        max-width: min(92vw, 520px);
+      }
+
+      [dir="rtl"] .lang-rail{
+        left:auto;
+        right:0;
+      }
+    }
+
+    html[dir="rtl"], body{ overflow-x: hidden; }
+    [dir="rtl"] .page{ overflow-x: clip; }
+
+    body.mx-consent-locked{
+      overflow:hidden;
+      touch-action:none;
+    }
+
+    body.mx-consent-locked #app-root{
+      pointer-events:none;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+
+    .mx-cmp{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+               max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .mx-cmp.is-open{ display:flex; }
+
+    .mx-cmp-panel{
+      width:min(560px, 100%);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(0,0,0,.88);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+
+    .mx-cmp-head{
+      padding: 14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .mx-cmp-title{
+      margin:0;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      opacity:.92;
+      line-height:1.25;
+    }
+
+    .mx-cmp-sub{
+      margin:10px 0 0;
       font-size:11px;
-      letter-spacing:.12em;
-      opacity:.6;
+      letter-spacing:.02em;
+      line-height:1.35;
+      color:rgba(255,255,255,.70);
+    }
+
+    .mx-cmp-body{
+      padding: 12px 16px 14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .mx-cmp-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .mx-cmp-row strong{
+      display:block;
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.90);
+    }
+
+    .mx-cmp-row p{
+      margin:6px 0 0;
+      font-size:11px;
+      color:rgba(255,255,255,.65);
+      line-height:1.35;
+    }
+
+    .mx-switch{
+      width:44px;
+      height:24px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      position:relative;
+      cursor:pointer;
+      flex:0 0 auto;
+      padding:0;
+    }
+
+    .mx-switch::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:3px;
+      width:18px;
+      height:18px;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      transition: left 150ms ease, opacity 150ms ease;
+      opacity:.92;
+    }
+
+    .mx-switch[data-on="1"]{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .mx-switch[data-on="1"]::after{ left:23px; }
+
+    .mx-switch[aria-disabled="true"]{
+      cursor:not-allowed;
+      opacity:.55;
+    }
+
+    .mx-cmp-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      padding: 12px 16px 14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      flex-wrap:wrap;
+    }
+
+    .mx-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.88);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      cursor:pointer;
+      line-height:1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mx-btn:hover{
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.07);
+      color:#fff;
+    }
+
+    .mx-btn.primary{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .mx-btn.primary:hover{
+      background: rgba(255,255,255,.14);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    @media (max-width: 560px){
+      .mx-cmp-actions{ justify-content:stretch; }
+      .mx-btn{ flex:1 1 auto; text-align:center; }
+      .mx-cmp-row{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 
 <body>
+  <div class="page" id="app-root">
+    <header id="mx-header">
+      <div class="topbar">
+        <div class="brand">MICRORETAILX</div>
 
-<header>
-  <div class="topbar">
-    <div class="brand">MICRORETAILX</div>
+        <nav>
+          <div class="lang-switch" id="lang-switch">
+            <button class="lang-trigger" aria-label="Language selector" type="button">
+              <svg class="globe" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M3 12h18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 3c3 3 3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </button>
 
-    <div class="lang-switch" id="lang-switch">
-      <button class="lang-trigger" type="button">🌍</button>
-      <div class="lang-rail">
-        <button class="lang-pill" data-lang="en">EN</button>
-        <button class="lang-pill" data-lang="es">ES</button>
-        <button class="lang-pill" data-lang="ca">CA</button>
-        <button class="lang-pill" data-lang="eu">EU</button>
-        <button class="lang-pill" data-lang="fr">FR</button>
-        <button class="lang-pill" data-lang="ru">RU</button>
-        <button class="lang-pill" data-lang="zh">ZH</button>
-        <button class="lang-pill" data-lang="hi">HI</button>
-        <button class="lang-pill" data-lang="ar">AR</button>
+            <div class="lang-rail" id="lang-rail" aria-label="Languages">
+              <button class="lang-pill" data-lang="en" data-label="English" type="button">EN</button>
+              <button class="lang-pill" data-lang="es" data-label="Español" type="button">ES</button>
+              <button class="lang-pill" data-lang="ca" data-label="Català" type="button">CA</button>
+              <button class="lang-pill" data-lang="eu" data-label="Euskara" type="button">EU</button>
+              <button class="lang-pill" data-lang="zh" data-label="中文 (Chinese)" type="button">ZH</button>
+              <button class="lang-pill" data-lang="hi" data-label="हिंदी (Hindi)" type="button">HI</button>
+              <button class="lang-pill" data-lang="ar" data-label="العربية (Arabic)" type="button">AR</button>
+              <button class="lang-pill" data-lang="ru" data-label="Русский" type="button">RU</button>
+              <button class="lang-pill" data-lang="fr" data-label="Français" type="button">FR</button>
+            </div>
+          </div>
+
+          <a class="navlink" href="#/about" data-i18n="nav.about">About</a>
+
+          <div class="navlink verticals" id="verticals" role="button" aria-haspopup="true" aria-expanded="false">
+            <span data-i18n="nav.verticals">Verticals</span>
+            <div class="verticals-menu" aria-label="Verticals">
+              <a class="v-item" href="https://www.microlabsx.com">
+                <span class="v-main">BIOTECH</span>
+                <span class="v-sub">MICROLABSX</span>
+              </a>
+              <a class="v-item" href="https://www.microstudiox.com">
+                <span class="v-main">STUDIO</span>
+                <span class="v-sub">MICROSTUDIOX</span>
+              </a>
+            </div>
+          </div>
+
+          <a class="navlink" href="mailto:info@microretailx.com" data-i18n="nav.contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <!-- ✅ CHANGED: this is now the long legal text key -->
+        <p class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="terms.html" data-i18n="footer.terms">Terms</a>
+          <a href="privacy.html" data-i18n="footer.privacy">Privacy</a>
+
+          <span style="display:inline-flex; align-items:center;">
+            <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            <button
+              type="button"
+              class="cookie-gear"
+              id="cookiePreferencesGear"
+              aria-label="Cookie Preferences"
+              data-tip="Cookie Preferences"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.4.12-.61l-1.92-3.32c-.11-.2-.36-.28-.57-.2l-2.39.96c-.5-.38-1.04-.7-1.64-.94l-.36-2.54A.49.49 0 0 0 13.9 1h-3.8c-.24 0-.44.17-.48.41l-.36 2.54c-.6.24-1.14.56-1.64.94l-2.39-.96c-.21-.08-.46 0-.57.2L1.74 7.45c-.11.21-.06.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23-.4-.12.61l1.92 3.32c.11.2.36.28.57.2l2.39-.96c.5.38 1.04.7 1.64.94l.36 2.54c.04.24.24.41.48.41h3.8c.24 0 .44-.17.48-.41l.36-2.54c.6-.24 1.14-.56 1.64-.94l2.39.96c.21.08.46 0 .57-.2l1.92-3.32c.11-.2.06-.47-.12-.61l-2.03-1.58zM12 15.2A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4z"/>
+              </svg>
+            </button>
+          </span>
+
+          <a href="legal.html" data-i18n="footer.legal">Legal</a>
+        </div>
+
+        <div class="copyright">
+          © 2023–2026 MICRORETAILX LLC — ALL RIGHTS RESERVED
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="mx-cmp" id="mx-cmp" role="dialog" aria-modal="true" aria-labelledby="mx-cmp-title">
+    <div class="mx-cmp-panel">
+      <div class="mx-cmp-head">
+        <h2 class="mx-cmp-title" id="mx-cmp-title" data-i18n="cmp.title">Privacy & Cookies</h2>
+        <p class="mx-cmp-sub" id="mx-cmp-desc" data-i18n="cmp.desc">We respect your privacy. This site does not use advertising or tracking cookies. Necessary cookies are always on for security and basic functionality. You can accept or reject optional cookies.</p>
+      </div>
+
+      <div class="mx-cmp-body">
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.necessary">Necessary</strong>
+            <p data-i18n="cmp.necessary.desc">Security & core functionality.</p>
+          </div>
+          <div>
+            <div class="mx-switch" id="mx-tg-necessary" data-on="1" aria-disabled="true" aria-label="Necessary cookies"></div>
+          </div>
+        </div>
+
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.analytics">Analytics</strong>
+            <p data-i18n="cmp.analytics.desc">Optional, anonymous usage insights to improve the site.</p>
+          </div>
+          <div>
+            <button class="mx-switch" id="mx-tg-analytics" type="button" data-on="0" aria-label="Analytics cookies"></button>
+          </div>
+        </div>
+
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.marketing">Marketing</strong>
+            <p data-i18n="cmp.marketing.desc">Optional personalization and campaign measurement.</p>
+          </div>
+          <div>
+            <button class="mx-switch" id="mx-tg-marketing" type="button" data-on="0" aria-label="Marketing cookies"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-cmp-actions">
+        <button class="mx-btn" id="mx-btn-reject" type="button" data-i18n="cmp.reject">Reject all</button>
+        <button class="mx-btn primary" id="mx-btn-accept" type="button" data-i18n="cmp.accept">Accept all</button>
+        <button class="mx-btn" id="mx-btn-save" type="button" data-i18n="cmp.save">Save preferences</button>
       </div>
     </div>
   </div>
-</header>
 
-<main>
+  <script>
+    (function(){
+      const CONSENT_KEY = "mx_consent";
+      const CMP_VER = 1;
 
-<h1 data-i18n="h1">Terms of Use</h1>
+      const cmpEl = document.getElementById("mx-cmp");
+      const appRoot = document.getElementById("app-root");
 
-<p data-i18n="p1">
-These Terms of Use govern access to and use of the website www.microretailx.com.
-</p>
+      const tgAnalytics = document.getElementById("mx-tg-analytics");
+      const tgMarketing = document.getElementById("mx-tg-marketing");
 
-<h2 data-i18n="h2.entity">Legal Entity</h2>
-<p data-i18n="p.entity">
-This Website is operated by MICRORETAILX LLC, a limited liability company
-incorporated in the State of Delaware, United States.
-</p>
+      const btnAccept = document.getElementById("mx-btn-accept");
+      const btnReject = document.getElementById("mx-btn-reject");
+      const btnSave   = document.getElementById("mx-btn-save");
 
-<h2 data-i18n="h2.info">Informational Nature</h2>
-<p data-i18n="p.info">
-The Website is provided solely for general informational purposes and does not
-constitute professional advice.
-</p>
+      function safeParse(json){
+        try{ return JSON.parse(json); } catch(_){ return null; }
+      }
 
-<h2 data-i18n="h2.use">Permitted Use</h2>
-<ul>
-  <li data-i18n="li1">Lawful and respectful use only.</li>
-  <li data-i18n="li2">No misuse, interference, or abuse.</li>
-  <li data-i18n="li3">No unauthorized access or scraping.</li>
-</ul>
+      function readConsent(){
+        const v = localStorage.getItem(CONSENT_KEY);
+        const obj = safeParse(v);
+        if (!obj || typeof obj !== "object") return null;
+        if (obj.v !== CMP_VER) return null;
+        if (!obj.choices || typeof obj.choices !== "object") return null;
+        return obj;
+      }
 
-<h2 data-i18n="h2.global">Global Applicability</h2>
-<p data-i18n="p.global">
-These Terms apply globally and do not override mandatory local consumer protections.
-</p>
+      function writeConsent(choices){
+        const payload = {
+          v: CMP_VER,
+          ts: Date.now(),
+          choices: {
+            necessary: true,
+            analytics: !!choices.analytics,
+            marketing: !!choices.marketing
+          }
+        };
+        localStorage.setItem(CONSENT_KEY, JSON.stringify(payload));
+        return payload;
+      }
 
-<h2 data-i18n="h2.contact">Contact</h2>
-<p data-i18n="p.contact">
-Legal inquiries: legal@microretailx.com
-</p>
+      function isDecided(){ return !!readConsent(); }
 
-<p data-i18n="version">
-Version 1.0 — Effective date: 2026-01-21
-</p>
+      function lockUI(){
+        document.body.classList.add("mx-consent-locked");
+        if (appRoot) appRoot.setAttribute("aria-hidden", "true");
+      }
 
-</main>
+      function unlockUI(){
+        document.body.classList.remove("mx-consent-locked");
+        if (appRoot) appRoot.removeAttribute("aria-hidden");
+      }
 
-<footer>
-© 2023–2026 MICRORETAILX LLC — All rights reserved
-</footer>
+      function setToggle(btn, on){
+        if (!btn) return;
+        btn.setAttribute("data-on", on ? "1" : "0");
+      }
 
-<script>
-const I18N = {
-  en:{
-    title:"Terms of Use — MICRORETAILX",
-    h1:"Terms of Use",
-    p1:"These Terms of Use govern access to and use of the website www.microretailx.com.",
-    "h2.entity":"Legal Entity",
-    "p.entity":"This Website is operated by MICRORETAILX LLC, a limited liability company incorporated in the State of Delaware, United States.",
-    "h2.info":"Informational Nature",
-    "p.info":"The Website is provided solely for general informational purposes and does not constitute professional advice.",
-    "h2.use":"Permitted Use",
-    li1:"Lawful and respectful use only.",
-    li2:"No misuse, interference, or abuse.",
-    li3:"No unauthorized access or scraping.",
-    "h2.global":"Global Applicability",
-    "p.global":"These Terms apply globally and do not override mandatory local consumer protections.",
-    "h2.contact":"Contact",
-    "p.contact":"Legal inquiries: legal@microretailx.com",
-    version:"Version 1.0 — Effective date: 2026-01-21"
-  },
-  es:{
-    title:"Términos de uso — MICRORETAILX",
-    h1:"Términos de uso",
-    p1:"Estos Términos regulan el acceso y uso del sitio web www.microretailx.com.",
-    "h2.entity":"Entidad legal",
-    "p.entity":"Este sitio es operado por MICRORETAILX LLC, sociedad registrada en Delaware, Estados Unidos.",
-    "h2.info":"Carácter informativo",
-    "p.info":"El contenido es meramente informativo y no constituye asesoramiento profesional.",
-    "h2.use":"Uso permitido",
-    li1:"Uso lícito y respetuoso.",
-    li2:"Prohibido interferir o abusar del sitio.",
-    li3:"Prohibido el acceso no autorizado.",
-    "h2.global":"Aplicación global",
-    "p.global":"Estos términos se aplican globalmente sin perjuicio de normas imperativas locales.",
-    "h2.contact":"Contacto",
-    "p.contact":"Consultas legales: legal@microretailx.com",
-    version:"Versión 1.0 — Vigente desde 21/01/2026"
-  }
-};
+      function getToggle(btn){
+        if (!btn) return 0;
+        return btn.getAttribute("data-on") === "1" ? 1 : 0;
+      }
 
-const DEFAULT_LANG="en";
-const store="mx_lang";
+      function toggle(btn){
+        const on = getToggle(btn);
+        setToggle(btn, on ? 0 : 1);
+      }
 
-function applyLang(l){
-  document.documentElement.lang=l;
-  document.documentElement.dir=(l==="ar")?"rtl":"ltr";
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const k=el.getAttribute("data-i18n");
-    if(I18N[l] && I18N[l][k]) el.textContent=I18N[l][k];
-  });
-  const t=document.querySelector("title[data-i18n]");
-  if(t && I18N[l]?.title) t.textContent=I18N[l].title;
+      function openCMP(forceLock){
+        if (!cmpEl) return;
+
+        const existing = readConsent();
+        setToggle(tgAnalytics, existing?.choices?.analytics ? 1 : 0);
+        setToggle(tgMarketing, existing?.choices?.marketing ? 1 : 0);
+
+        cmpEl.classList.add("is-open");
+        if (forceLock) lockUI();
+        else unlockUI();
+      }
+
+      function closeCMP(){
+        if (!cmpEl) return;
+        cmpEl.classList.remove("is-open");
+        unlockUI();
+      }
+
+      function acceptAll(){
+        writeConsent({ analytics:true, marketing:true });
+        closeCMP();
+      }
+
+      function rejectAll(){
+        writeConsent({ analytics:false, marketing:false });
+        closeCMP();
+      }
+
+      function savePrefs(){
+        writeConsent({
+          analytics: !!getToggle(tgAnalytics),
+          marketing: !!getToggle(tgMarketing)
+        });
+        closeCMP();
+      }
+
+      tgAnalytics?.addEventListener("click", (e) => { e.preventDefault(); toggle(tgAnalytics); });
+      tgMarketing?.addEventListener("click", (e) => { e.preventDefault(); toggle(tgMarketing); });
+
+      btnAccept?.addEventListener("click", (e) => { e.preventDefault(); acceptAll(); });
+      btnReject?.addEventListener("click", (e) => { e.preventDefault(); rejectAll(); });
+      btnSave?.addEventListener("click", (e) => { e.preventDefault(); savePrefs(); });
+
+      const gear = document.getElementById("cookiePreferencesGear");
+      gear?.addEventListener("click", (e) => {
+        e.preventDefault();
+        openCMP(false);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        if (!isDecided() && cmpEl?.classList.contains("is-open")) return;
+        if (cmpEl?.classList.contains("is-open")) closeCMP();
+      });
+
+      window.__mxConsent = {
+        isDecided,
+        getConsent: () => readConsent(),
+        open: () => openCMP(false),
+        openLocked: () => openCMP(true),
+        acceptAll,
+        rejectAll,
+        savePrefs,
+        reset: () => { localStorage.removeItem(CONSENT_KEY); openCMP(true); }
+      };
+
+      if (!isDecided()){
+        openCMP(true);
+      }
+    })();
+
+    (function(){
+      const I18N = {
+        en: {
+  "nav.about": "About",
+  "nav.verticals": "Verticals",
+  "nav.contact": "Contact",
+  "footer.terms": "Terms",
+  "footer.privacy": "Privacy",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Legal",
+
+  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
+
+MICRORETAILX LLC (Delaware, USA)
+MICRORETAILX GROUP – Global Operations Framework
+
+Last updated: 25-12-2025
+Effective date: 25-12-2025
+
+Registered Office and Registered Agent:
+Corporation Trust Center, 1209 Orange Street, Wilmington, DE 19801, United States of America
+
+1. DEFINITIONS
+“MICRORETAILX”, “we”, “us”, “our” means MICRORETAILX LLC, a limited liability company organized under the laws of the State of Delaware, United States of America.
+“Website” means this website and any associated pages, subdomains, interfaces, interactive elements, source code, visuals, and content available through it.
+“MICRORETAILX GROUP” means a conceptual and strategic framework used to describe current and/or future projects and initiatives, and does not constitute a separate legal entity unless expressly identified in writing.
+“Verticals” means thematic domains used solely as a conceptual and strategic classification framework.
+“Content” includes all text, graphics, designs, source code, visualizations, simulations, models, workflows, and documentation.
+“Submissions” means any comment, idea, or proposal submitted by you.
+
+2. OPERATOR, SCOPE AND ACCEPTANCE
+These Terms govern your access to and use of the Website. By accessing it, you agree to be bound by these Terms and represent that you have the legal capacity to accept them.
+
+3. OPERATOR IDENTITY, LEGAL SEAT, AND NOTICES
+This Website is operated and controlled exclusively by MICRORETAILX LLC (Delaware).
+Registered Agent address: Corporation Trust Center, 1209 Orange Street, Wilmington, DE 19801, USA.
+Legal and compliance communications: legal@microretailx.com.
+No reference to “nodes”, “labs”, “regions” or “verticals” shall be construed as creating a branch, office, or tax nexus in any jurisdiction outside Delaware.
+
+4. GLOBAL OPERATING MODEL; NO PARTNERSHIP; NO AGENCY
+MICRORETAILX operates globally through conceptual projects. Unless stated in a signed written agreement: (i) nothing on the Website creates a partnership, joint venture, or employment relationship; (ii) no party is authorized to bind MICRORETAILX LLC; (iii) terms such as “group” or “network” are descriptive only. No permanent establishment is created in any jurisdiction merely by using the Website.
+
+5. WEBSITE STATUS; NO OFFER; NO COMMITMENT
+The Website is provided solely for informational, conceptual, and exploratory purposes. Nothing constitutes an offer, solicitation, investment proposal, or regulated activity.
+
+6. VERTICALS FRAMEWORK (CONCEPTUAL AND NON-OPERATIONAL)
+Verticals are a conceptual framework only and do not constitute business units, services, or regulated activities.
+
+7. ZERO DATA STRATEGY (PRIVACY BY DESIGN)
+The Website is designed under a Zero Data Strategy: no user accounts, no profiling, and no third-party tracking technologies enabled by default.
+
+8. COOKIES AND CONSENT
+By default, only strictly necessary cookies are used. Optional technologies are enabled only after the user’s explicit consent where required by law.
+
+9. HOSTING, DELIVERY AND SECURITY
+The Website is hosted on third-party infrastructure. Limited technical logs are processed only for security and abuse prevention. Accessibility does not constitute commercial activity in other jurisdictions.
+
+10. PERMITTED USE; PROHIBITED CONDUCT
+You must not scrape, reverse engineer, extract algorithms, train AI models, or interfere with the Website infrastructure, except where mandatory law permits.
+
+11. PRESERVATION AND ENFORCEMENT
+MICRORETAILX LLC may take technical and legal measures to protect the Website and preserve evidence of misuse.
+
+12. INTELLECTUAL PROPERTY; TRADE SECRETS
+All rights in the Website and its Content are owned by MICRORETAILX LLC and protected by intellectual property laws worldwide.
+
+13. CONFIDENTIALITY OF NON-PUBLIC MATERIALS
+Restricted materials must not be disclosed without prior written authorization.
+
+14. SUBMISSIONS AND FEEDBACK
+You grant MICRORETAILX LLC a worldwide, royalty-free, non-exclusive license to use and incorporate your Submissions for legitimate business purposes.
+
+15. EXTERNAL LINKS; THIRD-PARTY SERVICES
+MICRORETAILX LLC is not responsible for third-party content or practices. Access is at your own risk.
+
+16. DISCLAIMERS; NO RELIANCE
+The Website does not provide legal, tax, financial, or professional advice. Forward-looking statements are inherently uncertain.
+
+17. AVAILABILITY; “AS IS”
+The Website is provided “as is” and “as available”, without warranties of any kind.
+
+18. LIMITATION OF LIABILITY
+Liability is excluded or limited to the maximum extent permitted by applicable law.
+
+19. INDEMNIFICATION
+You agree to indemnify MICRORETAILX LLC against claims arising from unlawful use of the Website or breach of these Terms.
+
+20. COMPLIANCE; EXPORT CONTROLS; SANCTIONS
+You agree to comply with export and sanctions laws, including U.S. EAR regulations and OFAC regimes.
+
+21. ELECTRONIC COMMUNICATIONS; NOTICES
+Legal notices must be sent to: legal@microretailx.com.
+
+22. COPYRIGHT NOTICE (DMCA)
+Infringement notices may be sent to: legal@microretailx.com.
+
+23. CHANGES TO THESE TERMS
+MICRORETAILX LLC may modify these Terms at any time. Continued use implies acceptance of the updated terms.
+
+24. GOVERNING LAW; EXCLUSIVE JURISDICTION; LANGUAGE
+These Terms are governed by the laws of the State of Delaware, USA. Any dispute shall be subject to the exclusive jurisdiction of the courts of Delaware. The English version shall prevail; translations are provided for convenience only.
+
+25. SEVERABILITY; ENTIRE AGREEMENT
+If any provision is invalid, the remainder remains in effect. These Terms constitute the entire agreement regarding use of the Website.
+
+26. CONTACT
+Legal and compliance notices: legal@microretailx.com`,
+
+  "cookie.prefs": "Cookie Preferences",
+  "cmp.title": "Privacy & Cookies",
+  "cmp.desc": "We respect your privacy. This site does not use advertising or tracking cookies. Necessary cookies are always on for security.",
+  "cmp.necessary": "Necessary",
+  "cmp.necessary.desc": "Security and core functionality.",
+  "cmp.analytics": "Analytics",
+  "cmp.analytics.desc": "Optional, anonymous usage metrics to improve the site.",
+  "cmp.marketing": "Marketing",
+  "cmp.marketing.desc": "Optional personalization.",
+  "cmp.reject": "Reject all",
+  "cmp.accept": "Accept all",
+  "cmp.save": "Save"
 }
 
-const saved=localStorage.getItem(store) || DEFAULT_LANG;
-applyLang(saved);
 
-document.querySelectorAll(".lang-pill").forEach(b=>{
-  b.onclick=()=>{
-    const l=b.dataset.lang;
-    localStorage.setItem(store,l);
-    applyLang(l);
-  };
-});
+        /* ✅ You already have ES: paste your full Spanish block here */
+        es: {
+          "nav.about": "Info",
+          "nav.verticals": "Verticales",
+          "nav.contact": "Contacto",
+          "footer.terms": "Términos",
+          "footer.privacy": "Privacidad",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Legal",
 
-document.getElementById("lang-switch").onclick=()=>{
-  document.getElementById("lang-switch").classList.toggle("is-open");
-};
-</script>
+          /* ✅ PASTE TERMS TEXT HERE (ES) */
+          "card.terms": `PASTE TERMS TEXT HERE (ES)`,
 
+          "cookie.prefs": "Preferencias de Cookies",
+          "cmp.title": "Privacidad y Cookies",
+          "cmp.desc": "Respetamos su privacidad. Este sitio no utiliza cookies publicitarias ni de seguimiento. Las cookies necesarias están siempre activas por seguridad.",
+          "cmp.necessary": "Necesarias",
+          "cmp.necessary.desc": "Seguridad y funcionalidad principal.",
+          "cmp.analytics": "Analíticas",
+          "cmp.analytics.desc": "Opcional, métricas anónimas para mejorar el sitio.",
+          "cmp.marketing": "Marketing",
+          "cmp.marketing.desc": "Personalización opcional.",
+          "cmp.reject": "Rechazar todas",
+          "cmp.accept": "Aceptar todas",
+          "cmp.save": "Guardar"
+        },
+
+        ca: {
+          "nav.about": "Info",
+          "nav.verticals": "Verticals",
+          "nav.contact": "Contacte",
+          "footer.terms": "Termes",
+          "footer.privacy": "Privacitat",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Legal",
+
+          /* ✅ PASTE TERMS TEXT HERE (CA) */
+          "card.terms": `PASTE TERMS TEXT HERE (CA)`,
+
+          "cookie.prefs": "Preferències de cookies",
+          "cmp.title": "Privacitat i cookies",
+          "cmp.desc": "Respectem la vostra privacitat. Aquest lloc no utilitza cookies publicitàries ni de seguiment. Les cookies necessàries sempre estan activades per seguretat i funcionament bàsic. Podeu acceptar o rebutjar cookies opcionals.",
+          "cmp.necessary": "Necessàries",
+          "cmp.necessary.desc": "Seguretat i funcionament bàsic.",
+          "cmp.analytics": "Analítica",
+          "cmp.analytics.desc": "Opcional: estadístiques anònimes per millorar el lloc.",
+          "cmp.marketing": "Màrqueting",
+          "cmp.marketing.desc": "Opcional: personalització i mesura de campanyes.",
+          "cmp.reject": "Rebutjar-ho tot",
+          "cmp.accept": "Acceptar-ho tot",
+          "cmp.save": "Desar preferències"
+        },
+
+        eu: {
+          "nav.about": "Honi buruz",
+          "nav.verticals": "Bertikalak",
+          "nav.contact": "Kontaktua",
+          "footer.terms": "Bald.",
+          "footer.privacy": "Prib.",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Lege-oharra",
+
+          /* ✅ PASTE TERMS TEXT HERE (EU) */
+          "card.terms": `PASTE TERMS TEXT HERE (EU)`,
+
+          "cookie.prefs": "Cookie ezarpenak",
+          "cmp.title": "Pribatutasuna eta cookieak",
+          "cmp.desc": "Zure pribatutasuna errespetatzen dugu. Gune honek ez du publizitateko edo jarraipeneko cookierik erabiltzen. Beharrezko cookieak beti aktibo daude segurtasunerako eta oinarrizko funtziorako. Aukerako cookieak onartu edo baztertu ditzakezu.",
+          "cmp.necessary": "Beharrezkoak",
+          "cmp.necessary.desc": "Segurtasuna eta oinarrizko funtzionamendua.",
+          "cmp.analytics": "Analitika",
+          "cmp.analytics.desc": "Aukerakoa: estatistika anonimoak gunea hobetzeko.",
+          "cmp.marketing": "Marketina",
+          "cmp.marketing.desc": "Aukerakoa: pertsonalizazioa eta kanpainen neurketa.",
+          "cmp.reject": "Guztiak baztertu",
+          "cmp.accept": "Guztiak onartu",
+          "cmp.save": "Hobespenak gorde"
+        },
+
+        fr: {
+          "nav.about": "À propos",
+          "nav.verticals": "Verticales",
+          "nav.contact": "Contact",
+          "footer.terms": "CGU",
+          "footer.privacy": "Conf.",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Légal",
+
+          /* ✅ PASTE TERMS TEXT HERE (FR) */
+          "card.terms": `PASTE TERMS TEXT HERE (FR)`,
+
+          "cookie.prefs": "Préférences cookies",
+          "cmp.title": "Confidentialité et cookies",
+          "cmp.desc": "Nous respectons votre vie privée. Ce site n’utilise pas de cookies publicitaires ou de suivi. Les cookies nécessaires sont toujours activés pour la sécurité et le fonctionnement de base. Vous pouvez accepter ou refuser les cookies optionnels.",
+          "cmp.necessary": "Nécessaires",
+          "cmp.necessary.desc": "Sécurité et fonctionnement de base.",
+          "cmp.analytics": "Analyse",
+          "cmp.analytics.desc": "Optionnel : statistiques anonymes pour améliorer le site.",
+          "cmp.marketing": "Marketing",
+          "cmp.marketing.desc": "Optionnel : personnalisation et mesure de campagne.",
+          "cmp.reject": "Tout refuser",
+          "cmp.accept": "Tout accepter",
+          "cmp.save": "Enregistrer les préférences"
+        },
+
+        ru: {
+          "nav.about": "О нас",
+          "nav.verticals": "Вертикали",
+          "nav.contact": "Контакты",
+          "footer.terms": "Усл.",
+          "footer.privacy": "Конф.",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Право",
+
+          /* ✅ PASTE TERMS TEXT HERE (RU) */
+          "card.terms": `PASTE TERMS TEXT HERE (RU)`,
+
+          "cookie.prefs": "Настройки cookies",
+          "cmp.title": "Конфиденциальность и cookies",
+          "cmp.desc": "Мы уважаем вашу конфиденциальность. Этот сайт не использует рекламные или отслеживающие cookies. Необходимые cookies всегда включены для безопасности и базовой работы. Вы можете принять или отклонить необязательные cookies.",
+          "cmp.necessary": "Необходимые",
+          "cmp.necessary.desc": "Безопасность и базовая функциональность.",
+          "cmp.analytics": "Аналитика",
+          "cmp.analytics.desc": "Необязательно: анонимная статистика для улучшения сайта.",
+          "cmp.marketing": "Маркетинг",
+          "cmp.marketing.desc": "Необязательно: персонализация и измерение кампаний.",
+          "cmp.reject": "Отклонить все",
+          "cmp.accept": "Принять все",
+          "cmp.save": "Сохранить настройки"
+        },
+
+        zh: {
+          "nav.about": "关于",
+          "nav.verticals": "领域",
+          "nav.contact": "联系",
+          "footer.terms": "条款",
+          "footer.privacy": "隐私",
+          "footer.cookies": "Cookies",
+          "footer.legal": "法律",
+
+          /* ✅ PASTE TERMS TEXT HERE (ZH) */
+          "card.terms": `PASTE TERMS TEXT HERE (ZH)`,
+
+          "cookie.prefs": "Cookie 偏好设置",
+          "cmp.title": "隐私与 Cookies",
+          "cmp.desc": "我们尊重您的隐私。本网站不使用广告或追踪 Cookies。为安全与基本功能所必需的 Cookies 始终启用。您可以接受或拒绝可选 Cookies。",
+          "cmp.necessary": "必要",
+          "cmp.necessary.desc": "安全与基本功能。",
+          "cmp.analytics": "分析",
+          "cmp.analytics.desc": "可选：匿名使用数据，用于改进网站。",
+          "cmp.marketing": "营销",
+          "cmp.marketing.desc": "可选：个性化与活动效果衡量。",
+          "cmp.reject": "全部拒绝",
+          "cmp.accept": "全部接受",
+          "cmp.save": "保存偏好"
+        },
+
+        hi: {
+          "nav.about": "परिचय",
+          "nav.verticals": "वर्टिकल्स",
+          "nav.contact": "संपर्क",
+          "footer.terms": "शर्तें",
+          "footer.privacy": "गोपनीयता",
+          "footer.cookies": "Cookies",
+          "footer.legal": "कानूनी",
+
+          /* ✅ PASTE TERMS TEXT HERE (HI) */
+          "card.terms": `PASTE TERMS TEXT HERE (HI)`,
+
+          "cookie.prefs": "कुकी प्राथमिकताएँ",
+          "cmp.title": "गोपनीयता और कुकीज़",
+          "cmp.desc": "हम आपकी गोपनीयता का सम्मान करते हैं। यह साइट विज्ञापन या ट्रैकिंग कुकीज़ का उपयोग नहीं करती। सुरक्षा और मूल कार्यक्षमता के लिए आवश्यक कुकीज़ हमेशा चालू रहती हैं। आप वैकल्पिक कुकीज़ स्वीकार या अस्वीकार कर सकते हैं।",
+          "cmp.necessary": "आवश्यक",
+          "cmp.necessary.desc": "सुरक्षा और मूल कार्यक्षमता।",
+          "cmp.analytics": "विश्लेषण",
+          "cmp.analytics.desc": "वैकल्पिक: साइट सुधार के लिए अनाम आँकड़े।",
+          "cmp.marketing": "मार्केटिंग",
+          "cmp.marketing.desc": "वैकल्पिक: वैयक्तिकरण और अभियान मापन।",
+          "cmp.reject": "सभी अस्वीकार करें",
+          "cmp.accept": "सभी स्वीकार करें",
+          "cmp.save": "प्राथमिकताएँ सहेजें"
+        },
+
+        ar: {
+          "nav.about": "حول",
+          "nav.verticals": "القطاعات",
+          "nav.contact": "تواصل",
+          "footer.terms": "الشروط",
+          "footer.privacy": "الخصوصية",
+          "footer.cookies": "الكوكيز",
+          "footer.legal": "قانوني",
+
+          /* ✅ PASTE TERMS TEXT HERE (AR) */
+          "card.terms": `PASTE TERMS TEXT HERE (AR)`,
+
+          "cookie.prefs": "تفضيلات الكوكيز",
+          "cmp.title": "الخصوصية وملفات تعريف الارتباط",
+          "cmp.desc": "نحن نحترم خصوصيتك. هذا الموقع لا يستخدم ملفات تعريف ارتباط إعلانية أو للتتبع. ملفات تعريف الارتباط الضرورية تكون مفعّلة دائمًا للأمان والوظائف الأساسية. يمكنك قبول أو رفض الملفات الاختيارية.",
+          "cmp.necessary": "ضرورية",
+          "cmp.necessary.desc": "الأمان والوظائف الأساسية.",
+          "cmp.analytics": "تحليلات",
+          "cmp.analytics.desc": "اختياري: إحصاءات مجهولة لتحسين الموقع.",
+          "cmp.marketing": "تسويق",
+          "cmp.marketing.desc": "اختياري: تخصيص وقياس الحملات.",
+          "cmp.reject": "رفض الكل",
+          "cmp.accept": "قبول الكل",
+          "cmp.save": "حفظ الإعدادات"
+        }
+      };
+
+      const RTL_LANGS = new Set(["ar"]);
+      const DEFAULT_LANG = "en";
+      const storageKey = "mx_lang";
+
+      function detectBrowserLang(){
+        const supported = new Set(Object.keys(I18N));
+        const prefs = (Array.isArray(navigator.languages) && navigator.languages.length)
+          ? navigator.languages
+          : [navigator.language || navigator.userLanguage || DEFAULT_LANG];
+
+        for (const raw of prefs){
+          if (!raw) continue;
+          const base = String(raw).toLowerCase().slice(0,2);
+          if (supported.has(base)) return base;
+        }
+        return null;
+      }
+
+      function getLang(){
+        const saved = localStorage.getItem(storageKey);
+        if (saved && I18N[saved]) return saved;
+
+        const detected = detectBrowserLang();
+        if (detected) return detected;
+
+        return DEFAULT_LANG;
+      }
+
+      function setLang(lang){ localStorage.setItem(storageKey, lang); }
+
+      const POOL_LATIN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const POOL_CYR   = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ0123456789";
+      const POOL_DEV   = "अआइईउऊएऐओऔकखगघचछजझटठडढतथदधनपफबभमयरलवशषसह०१२३४५६७८९";
+      const POOL_CJK   = "的一是在不了有人这中大为上个国我以要他时来用们生到作地于出就分对成会可主发年动同工也能下过子说产种面而方后多定行学法所民得经";
+      const POOL_AR    = "ابتثجحخدذرزسشصضطظعغفقكلمنهوي٠١٢٣٤٥٦٧٨٩";
+
+      function poolForLang(lang){
+        if (lang === "ru") return POOL_CYR;
+        if (lang === "hi") return POOL_DEV;
+        if (lang === "zh") return POOL_CJK;
+        if (lang === "ar") return POOL_AR;
+        return POOL_LATIN;
+      }
+
+      function scrambleSmart(el, finalText, durationMs, lang){
+        const base = String(finalText ?? "");
+        const pool = poolForLang(lang);
+        const isArabic = (lang === "ar");
+
+        const start = performance.now();
+        const tick = (t) => {
+          const p = Math.min(1, (t - start) / durationMs);
+          const reveal = Math.floor(p * base.length);
+
+          if (isArabic){
+            const shown = base.slice(0, reveal);
+            const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
+            el.textContent = shown + hidden;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = base;
+            return;
+          }
+
+          let out = "";
+          for (let i = 0; i < base.length; i++){
+            const c = base[i];
+            if (i < reveal) { out += c; continue; }
+            if (c === " ") { out += " "; continue; }
+            if (/[\.\,\!\?\:\;\-\—\–\(\)\[\]\/\&\+%#@€$£"']/.test(c)) { out += c; continue; }
+            out += pool[(Math.random() * pool.length) | 0];
+          }
+          el.textContent = out;
+
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = base;
+        };
+        requestAnimationFrame(tick);
+      }
+
+      function applyLang(lang){
+        document.body.classList.add("is-i18n-switching");
+
+        try{
+          const dict = I18N[lang] || I18N[DEFAULT_LANG];
+
+          const html = document.documentElement;
+          html.lang = lang;
+          html.dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
+
+          const switchEl = document.getElementById("lang-switch");
+          switchEl?.classList.remove("is-open");
+          switchEl?.classList.remove("open-right");
+
+          const railEl = document.getElementById("lang-rail");
+          if (railEl){
+            railEl.querySelectorAll(".lang-pill").forEach(btn => {
+              const l = btn.getAttribute("data-lang");
+              btn.hidden = (l === lang);
+            });
+            railEl.scrollLeft = 0;
+          }
+
+          const nodes = Array.from(document.querySelectorAll("[data-i18n]"));
+          nodes.forEach(el => el.classList.add("mx-i18n-out"));
+
+          setTimeout(() => {
+            nodes.forEach(el => {
+              const key = el.getAttribute("data-i18n");
+              if (!key) return;
+              const val = dict[key] ?? I18N[DEFAULT_LANG][key];
+              if (typeof val !== "string") return;
+
+              scrambleSmart(el, val, 220, lang);
+
+              el.classList.remove("mx-i18n-out");
+              el.classList.add("mx-i18n-in");
+            });
+
+            const gear = document.getElementById("cookiePreferencesGear");
+            if (gear){
+              const tip = dict["cookie.prefs"] ?? I18N[DEFAULT_LANG]["cookie.prefs"];
+              gear.setAttribute("data-tip", tip);
+              gear.setAttribute("aria-label", tip);
+            }
+
+            setTimeout(() => nodes.forEach(el => el.classList.remove("mx-i18n-in")), 220);
+          }, 160);
+
+        } finally {
+          setTimeout(() => document.body.classList.remove("is-i18n-switching"), 260);
+        }
+      }
+
+      window.__mxApplyLang = applyLang;
+      applyLang(getLang());
+    })();
+  </script>
 </body>
 </html>
