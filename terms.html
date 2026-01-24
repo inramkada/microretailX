@@ -377,6 +377,9 @@
     }
 
     .tool-pill{
+      min-width:34px;
+      font-weight:600;
+    
       position:relative;
       display:inline-flex;
       align-items:center;
@@ -405,6 +408,9 @@
     }
 
     .tools-switch.is-open .tool-pill{
+      min-width:34px;
+      font-weight:600;
+    
       transform: translateX(0);
       opacity: 1;
     }
@@ -1016,7 +1022,12 @@ footer{
       .mx-btn{ flex:1 1 auto; text-align:center; }
       .mx-cmp-row{ flex-direction:column; align-items:flex-start; }
     }
-  </style>
+  
+    .tool-audio .icon-pause{ display:none; }
+    body.mx-audio-playing .tool-audio .icon-play{ display:none; }
+    body.mx-audio-playing .tool-audio .icon-pause{ display:inline; }
+</style>
+
 
   <style id="mx-print">
     @media print{
@@ -1081,10 +1092,19 @@ footer{
               <button class="tool-pill" data-action="readable" data-label="Regulatory font" type="button">FONT</button>
               <button class="tool-pill" data-action="contrast" data-label="High contrast" type="button">HC</button>
               <button class="tool-pill" data-action="lightbg" data-label="Light reader" type="button">LIGHT</button>
-              <button class="tool-pill" data-action="audio" data-label="Play / Pause" type="button">PLAY</button>
+              
+<button class="tool-pill tool-audio" data-action="audio" data-label="Play / Pause audio" type="button">
+  <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M8 5v14l11-7z"/>
+  </svg>
+  <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+  </svg>
+</button>
+
               <button class="tool-pill" data-action="pdf" data-label="Download PDF" type="button">PDF</button>
-              <button class="tool-pill" data-action="top" data-label="Scroll to top" type="button">TOP</button>
-              <button class="tool-pill" data-action="bottom" data-label="Scroll to bottom" type="button">BOTTOM</button>
+              <button class="tool-pill" data-action="top" data-label="Scroll to top" type="button"><span aria-hidden="true">↑</span></button>
+              <button class="tool-pill" data-action="bottom" data-label="Scroll to bottom" type="button"><span aria-hidden="true">↓</span></button>
 
               <button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
             </div>
@@ -2441,7 +2461,7 @@ legal@microretailx.com
         if (!window.speechSynthesis) return;
 
         if (mxSpeaking){
-          window.speechSynthesis.pause();
+          window.speechSynthesis.pause(); document.body.classList.remove('mx-audio-playing');
           mxSpeaking = false;
           return;
         }
@@ -2457,8 +2477,8 @@ legal@microretailx.com
         mxUtterance.rate = 0.95;
         mxUtterance.pitch = 1;
 
-        mxUtterance.onend = () => { mxSpeaking = false; };
-        mxSpeaking = true;
+        mxUtterance.onend = () => { mxSpeaking = false; document.body.classList.remove('mx-audio-playing'); };
+        mxSpeaking = true; document.body.classList.add('mx-audio-playing');
         window.speechSynthesis.speak(mxUtterance);
       }
 
