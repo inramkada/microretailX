@@ -394,7 +394,7 @@
       text-align:left;
     }
 
-    /* ✅ NEW: multi-line legal text renders nicely */
+    /* ✅ multi-line legal text renders nicely */
     .legalcopy{
       white-space: pre-wrap;
       margin: 0;
@@ -771,7 +771,7 @@
 
     <main>
       <section class="card">
-        <!-- ✅ CHANGED: this is now the long legal text key -->
+        <!-- ✅ long legal text key -->
         <p class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</p>
       </section>
     </main>
@@ -792,7 +792,7 @@
               data-tip="Cookie Preferences"
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.4.12-.61l-1.92-3.32c-.11-.2-.36-.28-.57-.2l-2.39.96c-.5-.38-1.04-.7-1.64-.94l-.36-2.54A.49.49 0 0 0 13.9 1h-3.8c-.24 0-.44.17-.48.41l-.36 2.54c-.6.24-1.14.56-1.64.94l-2.39-.96c-.21-.08-.46 0-.57.2L1.74 7.45c-.11.21-.06.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23-.4-.12.61l1.92 3.32c.11.2.36.28.57.2l2.39-.96c.5.38 1.04.7 1.64.94l.36 2.54c.04.24.24.41.48.41h3.8c.24 0 .44-.17.48-.41l.36-2.54c.6-.24 1.14-.56 1.64-.94l2.39.96c.21.08.46 0 .57-.2l1.92-3.32c.11-.2.06-.47-.12-.61l-2.03-1.58zM12 15.2A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4z"/>
+                <path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.4.12-.61l-1.92-3.32c-.11-.2-.36-.28-.57-.2l-2.39.96c-.5-.38-1.04-.7-1.64-.94l-.36-2.54A.49.49 0 0 0 13.9 1h-3.8c-.24 0-.44.17-.48.41l-.36 2.54c-.6.24-1.14.56-1.64.94l-2.39-.96c-.21-.08-.46 0-.57.2L1.74 7.45c-.11.21-.06.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.4-.12.61l1.92 3.32c.11.2.36.28.57.2l2.39-.96c.5.38 1.04.7 1.64.94l.36 2.54c.04.24.24.41.48.41h3.8c.24 0 .44-.17.48-.41l.36-2.54c.6-.24 1.14-.56 1.64-.94l2.39.96c.21.08.46 0 .57-.2l1.92-3.32c.11-.2.06-.47-.12-.61l-2.03-1.58zM12 15.2A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4z"/>
               </svg>
             </button>
           </span>
@@ -996,17 +996,16 @@
 
     (function(){
       const I18N = {
-        
         en: {
-  "nav.about": "About",
-  "nav.verticals": "Verticals",
-  "nav.contact": "Contact",
-  "footer.terms": "Terms",
-  "footer.privacy": "Privacy",
-  "footer.cookies": "Cookies",
-  "footer.legal": "Legal",
+          "nav.about": "About",
+          "nav.verticals": "Verticals",
+          "nav.contact": "Contact",
+          "footer.terms": "Terms",
+          "footer.privacy": "Privacy",
+          "footer.cookies": "Cookies",
+          "footer.legal": "Legal",
 
-  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
+          "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
 
 MICRORETAILX LLC (Delaware, USA)
 MICRORETAILX GROUP – Global Operations Framework
@@ -1103,22 +1102,20 @@ If any provision is invalid, the remainder remains in effect. These Terms consti
 26. CONTACT
 Legal and compliance notices: legal@microretailx.com`,
 
-  "cookie.prefs": "Cookie Preferences",
-  "cmp.title": "Privacy & Cookies",
-  "cmp.desc": "We respect your privacy. This site does not use advertising or tracking cookies. Necessary cookies are always on for security.",
-  "cmp.necessary": "Necessary",
-  "cmp.necessary.desc": "Security and core functionality.",
-  "cmp.analytics": "Analytics",
-  "cmp.analytics.desc": "Optional, anonymous usage metrics to improve the site.",
-  "cmp.marketing": "Marketing",
-  "cmp.marketing.desc": "Optional personalization.",
-  "cmp.reject": "Reject all",
-  "cmp.accept": "Accept all",
-  "cmp.save": "Save"
-}
+          "cookie.prefs": "Cookie Preferences",
+          "cmp.title": "Privacy & Cookies",
+          "cmp.desc": "We respect your privacy. This site does not use advertising or tracking cookies. Necessary cookies are always on for security.",
+          "cmp.necessary": "Necessary",
+          "cmp.necessary.desc": "Security and core functionality.",
+          "cmp.analytics": "Analytics",
+          "cmp.analytics.desc": "Optional, anonymous usage metrics to improve the site.",
+          "cmp.marketing": "Marketing",
+          "cmp.marketing.desc": "Optional personalization.",
+          "cmp.reject": "Reject all",
+          "cmp.accept": "Accept all",
+          "cmp.save": "Save"
+        },  /* ✅ FIX: comma here was missing */
 
-
-        /* ✅ You already have ES: paste your full Spanish block here */
         es: {
           "nav.about": "Info",
           "nav.verticals": "Verticales",
@@ -1127,10 +1124,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "Privacidad",
           "footer.cookies": "Cookies",
           "footer.legal": "Legal",
-
-          /* ✅ PASTE TERMS TEXT HERE (ES) */
           "card.terms": `PASTE TERMS TEXT HERE (ES)`,
-
           "cookie.prefs": "Preferencias de Cookies",
           "cmp.title": "Privacidad y Cookies",
           "cmp.desc": "Respetamos su privacidad. Este sitio no utiliza cookies publicitarias ni de seguimiento. Las cookies necesarias están siempre activas por seguridad.",
@@ -1153,10 +1147,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "Privacitat",
           "footer.cookies": "Cookies",
           "footer.legal": "Legal",
-
-          /* ✅ PASTE TERMS TEXT HERE (CA) */
           "card.terms": `PASTE TERMS TEXT HERE (CA)`,
-
           "cookie.prefs": "Preferències de cookies",
           "cmp.title": "Privacitat i cookies",
           "cmp.desc": "Respectem la vostra privacitat. Aquest lloc no utilitza cookies publicitàries ni de seguiment. Les cookies necessàries sempre estan activades per seguretat i funcionament bàsic. Podeu acceptar o rebutjar cookies opcionals.",
@@ -1179,10 +1170,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "Prib.",
           "footer.cookies": "Cookies",
           "footer.legal": "Lege-oharra",
-
-          /* ✅ PASTE TERMS TEXT HERE (EU) */
           "card.terms": `PASTE TERMS TEXT HERE (EU)`,
-
           "cookie.prefs": "Cookie ezarpenak",
           "cmp.title": "Pribatutasuna eta cookieak",
           "cmp.desc": "Zure pribatutasuna errespetatzen dugu. Gune honek ez du publizitateko edo jarraipeneko cookierik erabiltzen. Beharrezko cookieak beti aktibo daude segurtasunerako eta oinarrizko funtziorako. Aukerako cookieak onartu edo baztertu ditzakezu.",
@@ -1205,10 +1193,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "Conf.",
           "footer.cookies": "Cookies",
           "footer.legal": "Légal",
-
-          /* ✅ PASTE TERMS TEXT HERE (FR) */
           "card.terms": `PASTE TERMS TEXT HERE (FR)`,
-
           "cookie.prefs": "Préférences cookies",
           "cmp.title": "Confidentialité et cookies",
           "cmp.desc": "Nous respectons votre vie privée. Ce site n’utilise pas de cookies publicitaires ou de suivi. Les cookies nécessaires sont toujours activés pour la sécurité et le fonctionnement de base. Vous pouvez accepter ou refuser les cookies optionnels.",
@@ -1231,10 +1216,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "Конф.",
           "footer.cookies": "Cookies",
           "footer.legal": "Право",
-
-          /* ✅ PASTE TERMS TEXT HERE (RU) */
           "card.terms": `PASTE TERMS TEXT HERE (RU)`,
-
           "cookie.prefs": "Настройки cookies",
           "cmp.title": "Конфиденциальность и cookies",
           "cmp.desc": "Мы уважаем вашу конфиденциальность. Этот сайт не использует рекламные или отслеживающие cookies. Необходимые cookies всегда включены для безопасности и базовой работы. Вы можете принять или отклонить необязательные cookies.",
@@ -1257,10 +1239,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "隐私",
           "footer.cookies": "Cookies",
           "footer.legal": "法律",
-
-          /* ✅ PASTE TERMS TEXT HERE (ZH) */
           "card.terms": `PASTE TERMS TEXT HERE (ZH)`,
-
           "cookie.prefs": "Cookie 偏好设置",
           "cmp.title": "隐私与 Cookies",
           "cmp.desc": "我们尊重您的隐私。本网站不使用广告或追踪 Cookies。为安全与基本功能所必需的 Cookies 始终启用。您可以接受或拒绝可选 Cookies。",
@@ -1283,10 +1262,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "गोपनीयता",
           "footer.cookies": "Cookies",
           "footer.legal": "कानूनी",
-
-          /* ✅ PASTE TERMS TEXT HERE (HI) */
           "card.terms": `PASTE TERMS TEXT HERE (HI)`,
-
           "cookie.prefs": "कुकी प्राथमिकताएँ",
           "cmp.title": "गोपनीयता और कुकीज़",
           "cmp.desc": "हम आपकी गोपनीयता का सम्मान करते हैं। यह साइट विज्ञापन या ट्रैकिंग कुकीज़ का उपयोग नहीं करती। सुरक्षा और मूल कार्यक्षमता के लिए आवश्यक कुकीज़ हमेशा चालू रहती हैं। आप वैकल्पिक कुकीज़ स्वीकार या अस्वीकार कर सकते हैं।",
@@ -1309,10 +1285,7 @@ Legal and compliance notices: legal@microretailx.com`,
           "footer.privacy": "الخصوصية",
           "footer.cookies": "الكوكيز",
           "footer.legal": "قانوني",
-
-          /* ✅ PASTE TERMS TEXT HERE (AR) */
           "card.terms": `PASTE TERMS TEXT HERE (AR)`,
-
           "cookie.prefs": "تفضيلات الكوكيز",
           "cmp.title": "الخصوصية وملفات تعريف الارتباط",
           "cmp.desc": "نحن نحترم خصوصيتك. هذا الموقع لا يستخدم ملفات تعريف ارتباط إعلانية أو للتتبع. ملفات تعريف الارتباط الضرورية تكون مفعّلة دائمًا للأمان والوظائف الأساسية. يمكنك قبول أو رفض الملفات الاختيارية.",
