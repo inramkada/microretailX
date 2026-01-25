@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>microretailX</title>
+  <meta name="description" content="MICRORETAILX global terms of use and legal framework." />
+
 
   <meta name="referrer" content="no-referrer" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
@@ -1124,6 +1126,31 @@ footer{
   .legalcopy[dir="rtl"] .legal-body{
     unicode-bidi: plaintext;
   }
+
+  /* Print / Save as PDF: clean white paper, no ink-killer backgrounds */
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #fff !important; color: #000 !important; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    /* Hide UI controls / floating elements */
+    .tools-rail, .mx-float-scroll, .lang-rail, .audio-btn, #downloadPdf, #lang-switch, #lang-rail {
+      display: none !important;
+    }
+    /* Ensure the reading container prints cleanly */
+    .card, .sheet, main, #app-root {
+      background: #fff !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      border-color: #ddd !important;
+      filter: none !important;
+    }
+    .legalcopy, .legalcopy * {
+      color: #000 !important;
+      text-shadow: none !important;
+      filter: none !important;
+    }
+    a { color: #000 !important; text-decoration: underline !important; }
+  }
 </style>
 
 
@@ -1275,6 +1302,22 @@ body.mx-a11y-high-contrast .card{
 body.mx-a11y-high-contrast .legalcopy{
   color:#fff !important;
 }
+
+  /* Print fallback (hard override) */
+  @media print {
+    body, .page, .card {
+      background: #fff !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    .tools-switch, .lang-switch, .mx-float-scroll, .topbar, .audio-fab,
+    .tools-rail, .lang-rail, .audio-btn, #downloadPdf, #lang-switch, #lang-rail {
+      display: none !important;
+    }
+    a { text-decoration: underline !important; color: #000 !important; }
+  }
+
 </style>
 </head>
 
@@ -1473,7 +1516,8 @@ body.mx-a11y-high-contrast .legalcopy{
       }
 
       function readConsent(){
-        const v = localStorage.getItem(CONSENT_KEY);
+        let v = null;
+        try { v = localStorage.getItem(CONSENT_KEY); } catch(e) { v = null; }
         const obj = safeParse(v);
         if (!obj || typeof obj !== "object") return null;
         if (obj.v !== CMP_VER) return null;
@@ -3248,6 +3292,30 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
       const RTL_LANGS = new Set(["ar"]);
       const DEFAULT_LANG = "en";
       const storageKey = "mx_lang";
+      const TITLE_MAP = {
+        en: "MICRORETAILX — Global Terms of Use",
+        es: "MICRORETAILX — Términos de uso globales",
+        ca: "MICRORETAILX — Termes d’ús globals",
+        fr: "MICRORETAILX — Conditions d’utilisation globales",
+        ar: "MICRORETAILX — شروط الاستخدام العالمية",
+        ru: "MICRORETAILX — Глобальные условия использования",
+        hi: "MICRORETAILX — वैश्विक उपयोग की शर्तें",
+        zh: "MICRORETAILX — 全球使用条款",
+        eu: "MICRORETAILX — Erabilera-baldintza globalak"
+      };
+
+      const DESC_MAP = {
+        en: "MICRORETAILX global terms of use and legal framework.",
+        es: "Términos de uso globales y marco legal de MICRORETAILX.",
+        ca: "Termes d’ús globals i marc legal de MICRORETAILX.",
+        fr: "Conditions d’utilisation globales et cadre juridique de MICRORETAILX.",
+        ar: "شروط الاستخدام العالمية والإطار القانوني لـ MICRORETAILX.",
+        ru: "Глобальные условия использования и правовая рамка MICRORETAILX.",
+        hi: "MICRORETAILX की वैश्विक उपयोग शर्तें और कानूनी ढांचा।",
+        zh: "MICRORETAILX 全球使用条款与法律框架。",
+        eu: "MICRORETAILXen erabilera-baldintza globalak eta lege-esparrua."
+      };
+
 
       // ✅ NEW: Detect preferred language from the browser (first-visit only)
       function detectBrowserLang(){
@@ -3266,7 +3334,8 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
 
       // ✅ Updated: storage -> browser -> fallback (applies to ALL languages)
       function getLang(){
-        const saved = localStorage.getItem(storageKey);
+        let saved = null;
+        try { saved = localStorage.getItem(storageKey); } catch(e) { saved = null; }
         if (saved && I18N[saved]) return saved;
 
         const detected = detectBrowserLang();
@@ -3275,7 +3344,7 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         return DEFAULT_LANG;
       }
 
-      function setLang(lang){ localStorage.setItem(storageKey, lang); }
+      function setLang(lang){ try { localStorage.setItem(storageKey, lang); } catch(e) { /* storage unavailable */ } }
 
       const POOL_LATIN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       const POOL_CYR   = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ0123456789";
@@ -3374,6 +3443,11 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
 
         try{
           const dict = I18N[lang] || I18N[DEFAULT_LANG];
+
+          // SEO/UX: keep title/description aligned with the active language
+          document.title = (TITLE_MAP[lang] || TITLE_MAP[DEFAULT_LANG]);
+          const metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute("content", (DESC_MAP[lang] || DESC_MAP[DEFAULT_LANG]));
 
           const html = document.documentElement;
           html.lang = lang;
@@ -3476,7 +3550,7 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         if (!btn) return;
 
         const KEY = "mx_reader_immersive";
-        const saved = localStorage.getItem(KEY);
+        let saved = null; try { saved = localStorage.getItem(KEY); } catch(e) { saved = null; }
         if (saved === "1") document.body.classList.add("mx-immersive");
 
         btn.addEventListener("click", (e) => {
