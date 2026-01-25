@@ -1033,17 +1033,19 @@ body.light .legalcopy, body.light .legalcopy p, body.light .legalcopy span, body
 body.light .muted, body.light .subtle { color: #333 !important; }
 
 
-.legalcopy strong{font-weight:700;}
-
-
-/* Legal formatting helpers (premium separators) */
-.legalcopy .mx-h{ font-weight:700; display:block; margin-top:16px; letter-spacing:.02em; }
+/* === Legal: premium headings + separators (no scramble) === */
+.legalcopy .mx-h{
+  display:block;
+  font-weight:700;
+  letter-spacing:.03em;
+  margin-top:18px;
+}
 .legalcopy .mx-sep{
   display:block;
   height:1px;
   margin:10px 0 16px;
   background: linear-gradient(90deg, transparent, currentColor, transparent);
-  opacity:.25;
+  opacity:.22;
   filter: blur(.15px);
 }
 .legalcopy .mx-sep::after{
@@ -1052,7 +1054,19 @@ body.light .muted, body.light .subtle { color: #333 !important; }
   height:1px;
   margin-top:6px;
   background: linear-gradient(90deg, transparent, currentColor, transparent);
-  opacity:.12;
+  opacity:.10;
+}
+
+/* Soft, professional entrance for legal content */
+.legalcopy.mx-legal-in{
+  animation: mxLegalIn 420ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes mxLegalIn{
+  from{ opacity:0; transform: translateY(6px); filter: blur(1.2px); }
+  to{ opacity:1; transform: translateY(0); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .legalcopy.mx-legal-in{ animation:none; }
 }
 
 </style>
@@ -2190,7 +2204,15 @@ legal@microretailx.com
         const isArabic = (lang === "ar");
         const isLegal = el.classList.contains("legalcopy");
 
-        const auto = isLegal
+        
+        // ✅ No scramble for legal text (keep it professional and readable)
+        if (isLegal){
+          el.innerHTML = formatLegalHTML(base);
+          el.classList.remove("mx-i18n-out");
+          el.classList.add("mx-i18n-in","mx-legal-in");
+          return;
+        }
+const auto = isLegal
           ? Math.min(8000, Math.max(3200, Math.round(base.length * 0.45)))
           : Math.min(2200, Math.max(320, Math.round(base.length * 1.8)));
 
@@ -2959,79 +2981,6 @@ legal@microretailx.com
     <button class="mx-float-btn" id="mx-scroll-top" type="button" aria-label="Scroll to top">↑</button>
     <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
-
-
-<script>
-(() => {
-  const escapeHtml = (s) => String(s)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-  const renderLegal = () => {
-    document.querySelectorAll(".legalcopy").forEach((el) => {
-      const raw = el.textContent || "";
-      if (!raw || raw.includes("(loading") ) return;
-
-      let safe = escapeHtml(raw);
-
-      // Premium numbered headings: **1. TITLE** (works even if not isolated on a line)
-      safe = safe.replace(/\*\*\s*(\d+\.\s+.+?)\s*\*\*/g,
-        '<strong class="mx-h">$1</strong><span class="mx-sep" aria-hidden="true"></span>'
-      );
-
-      // Preserve line breaks
-      safe = safe.replace(/\r?\n/g, "<br>");
-
-      el.innerHTML = safe;
-    });
-  };
-
-  const attachClicks = () => {
-    // Re-render after any UI interaction that may change language / content
-    document.addEventListener("click", (e) => {
-      const t = e.target;
-      if (!t) return;
-      // language buttons / globe menu / footer nav often re-apply i18n
-      if (t.closest && (t.closest("[data-lang]") || t.closest(".lang") || t.closest(".lang-menu") || t.closest("#lang-menu") || t.closest(".lang-trigger"))) {
-        setTimeout(renderLegal, 0);
-        setTimeout(renderLegal, 50);
-      }
-    }, true);
-  };
-
-  const wrapApplyLang = () => {
-    if (typeof window.__mxApplyLang === "function" && !window.__mxApplyLang.__mxWrapped) {
-      const orig = window.__mxApplyLang;
-      const wrapped = function() {
-        const r = orig.apply(this, arguments);
-        try { renderLegal(); } catch (_) {}
-        return r;
-      };
-      wrapped.__mxWrapped = true;
-      window.__mxApplyLang = wrapped;
-    }
-  };
-
-  const retryRender = () => {
-    // Retry a few times because i18n may populate after DOMContentLoaded
-    for (let i = 0; i < 40; i++) {
-      setTimeout(renderLegal, i * 100);
-    }
-  };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    try { wrapApplyLang(); } catch (_) {}
-    try { attachClicks(); } catch (_) {}
-    try { renderLegal(); } catch (_) {}
-    try { retryRender(); } catch (_) {}
-  });
-})();
-</script>
-
-
 </body>
 
 </html>
