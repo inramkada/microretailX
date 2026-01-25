@@ -1026,6 +1026,16 @@ footer{
     .tool-audio .icon-pause{ display:none; }
     body.mx-audio-playing .tool-audio .icon-play{ display:none; }
     body.mx-audio-playing .tool-audio .icon-pause{ display:inline; }
+
+/* === FIX: Light mode text visibility (legal + general) === */
+body.light, body.light .shell, body.light .card, body.light .glass { color: #111 !important; }
+body.light .legalcopy, body.light .legalcopy p, body.light .legalcopy span, body.light .legalcopy a { color: #111 !important; }
+body.light .muted, body.light .subtle { color: #333 !important; }
+
+/* Headings rendered by post-processor */
+.legalcopy strong { font-weight: 700; }
+.legalcopy a{ text-decoration: underline; }
+
 </style>
 
 
@@ -1158,6 +1168,18 @@ footer{
     z-index: 2147483000 !important;
     pointer-events: auto !important;
   }
+</style>
+<style>
+body.mx-a11y-high-contrast {
+  background:#000 !important;
+}
+body.mx-a11y-high-contrast .card{
+  background:#000 !important;
+  border-color:#fff !important;
+}
+body.mx-a11y-high-contrast .legalcopy{
+  color:#fff !important;
+}
 </style>
 </head>
 
@@ -2923,6 +2945,7 @@ legal@microretailx.com
       const box = document.querySelector('.mx-float-scroll');
       if (box) box.classList.add('is-visible');
     }
+  })();
 </script>
 
   <!-- Floating quick scroll buttons -->
@@ -2930,19 +2953,43 @@ legal@microretailx.com
     <button class="mx-float-btn" id="mx-scroll-top" type="button" aria-label="Scroll to top">↑</button>
     <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
+
+<script>
+(function(){
+  // Convert markdown-style bold markers (**...**) into <strong>...</strong> safely.
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+  function renderLegal(el){
+    if(!el) return;
+    // If it already contains <strong>, don't double-process.
+    if (el.querySelector && el.querySelector("strong")) return;
+    const raw = el.textContent || "";
+    // Escape first, then replace **...** on standalone lines (your headings are on their own line)
+    let safe = escapeHtml(raw);
+    safe = safe.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
+    // Preserve newlines as <br>
+    safe = safe.replace(/\n/g, "<br>");
+    el.innerHTML = safe;
+  }
+
+  function renderAll(){
+    document.querySelectorAll(".legalcopy").forEach(renderLegal);
+  }
+
+  // Run after load and after any language switch updates textContent
+  document.addEventListener("DOMContentLoaded", () => {
+    renderAll();
+    // Observe changes inside legalcopy blocks (language toggles typically rewrite textContent)
+    const obs = new MutationObserver(() => { renderAll(); });
+    document.querySelectorAll(".legalcopy").forEach((el) => {
+      obs.observe(el, { childList:true, characterData:true, subtree:true });
+    });
+  });
+})();
+</script>
+
 </body>
 
-</html>
 
-<style>
-body.mx-a11y-high-contrast {
-  background:#000 !important;
-}
-body.mx-a11y-high-contrast .card{
-  background:#000 !important;
-  border-color:#fff !important;
-}
-body.mx-a11y-high-contrast .legalcopy{
-  color:#fff !important;
-}
-</style>
+</html>
