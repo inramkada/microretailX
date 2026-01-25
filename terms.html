@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MICRORETAILX GLOBAL TERMS V3 01-01-2026</title>
+  <title>microretailX</title>
 
   <meta name="referrer" content="no-referrer" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
@@ -599,6 +599,63 @@
       opacity:.9;
     }
 
+
+    /* --- Premium: avoid i18n placeholder flash (legal only) --- */
+    .legalcopy[data-i18n="card.terms"]{ visibility:hidden; }
+    html.i18n-ready .legalcopy[data-i18n="card.terms"]{ visibility:visible; }
+
+    /* --- Premium: subtle reveal for legal text (no scramble) --- */
+    .legalcopy.mx-legal-fadein{
+      animation: mxLegalIn 680ms cubic-bezier(.2,.8,.2,1) both;
+      will-change: opacity, transform, filter;
+    }
+    @keyframes mxLegalIn{
+      from{ opacity:0; transform: translateY(10px); filter: blur(3px); }
+      to  { opacity:1; transform: translateY(0);  filter: blur(0); }
+    }
+    .legalcopy.mx-legal-fadein .legal-sep{
+      animation: mxSepIn 900ms cubic-bezier(.2,.8,.2,1) both;
+      transform-origin: center;
+    }
+    @keyframes mxSepIn{
+      from{ opacity:0; transform: scaleX(.75); filter: blur(1.5px); }
+      to  { opacity:.9; transform: scaleX(1);   filter: blur(0); }
+    }
+
+    /* --- Mobile: always-visible Play/Pause (outside tools rail) --- */
+    .audio-fab{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      padding: 0;
+      border-radius: 999px;
+      display: none; /* enabled on mobile */
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 12px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .audio-fab svg{ width: 22px; height: 22px; display:block; }
+    body.mx-audio-playing .audio-fab .icon-play{ display:none; }
+    body:not(.mx-audio-playing) .audio-fab .icon-pause{ display:none; }
+
+    @media (max-width: 640px){
+      .audio-fab{ display:flex; }
+    }
+
+    /* --- Footer visibility: avoid "ghost" effect on some mobiles --- */
+    .footer-links{ opacity:.88; }
+    .copyright{ opacity:.78; }
+
+
     /* Slightly nicer typography for legal content */
     .legalcopy{
       margin:0;
@@ -811,19 +868,6 @@ footer{
       opacity:1;
       transform: translateY(0);
       filter: blur(0);
-    }
-
-    /* ✅ Premium legal appearance (no scramble) */
-    .legalcopy.mx-legal-in{
-      animation: mxLegalReveal 720ms cubic-bezier(.2,.8,.2,1) both;
-      will-change: opacity, transform, filter;
-    }
-    @keyframes mxLegalReveal{
-      from{ opacity:0; transform: translateY(10px); filter: blur(3px); }
-      to{ opacity:1; transform: translateY(0); filter: blur(0); }
-    }
-    @media (prefers-reduced-motion: reduce){
-      .legalcopy.mx-legal-in{ animation: none !important; }
     }
 
     [dir="rtl"] .topbar{ flex-direction:row-reverse; }
@@ -1263,7 +1307,7 @@ footer{
     <main>
       <section class="card">
         
-        <div class="legalcopy" data-i18n="card.terms">MICRORETAILX — GLOBAL TERMS OF USE (loading…)</div>
+        <div class="legalcopy" data-i18n="card.terms"></div>
       </section>
     </main>
 
@@ -1497,7 +1541,7 @@ en: {
   "footer.cookies": "Cookies",
   "footer.legal": "Legal",
 
-  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE 01-01-2026 (ENGLISH)
+  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
 
 MICRORETAILX LLC (Delaware, United States)
 MICRORETAILX GROUP – Global Operating Framework
@@ -1667,7 +1711,7 @@ Legal and compliance communications: legal@microretailx.com
   "footer.cookies": "Cookies",
   "footer.legal": "法律",
 
-  "card.terms": `MICRORETAILX – 全球使用条款 01-01-2026 (CHINESE)
+  "card.terms": `MICRORETAILX – 全球使用条款
 
 MICRORETAILX LLC（美国特拉华州）
 MICRORETAILX GROUP – 全球运营框架
@@ -3295,23 +3339,20 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
               if (typeof val !== "string") return;
 
               const isLegal = el.classList.contains("legalcopy");
-              const dur = isLegal
-                ? Math.min(8000, Math.max(3200, Math.floor(String(val).length * 0.45)))
-                : Math.min(2200, Math.max(320, Math.floor(String(val).length * 0.14)));
-              if (el.classList && el.classList.contains("legalcopy")) {
-                // Premium legal reveal (no scramble): subtle fade + micro-translate + blur
-                el.textContent = String(val ?? "");
-                el.classList.remove("mx-i18n-out");
-                el.classList.remove("mx-i18n-in");
-                el.classList.remove("mx-legal-in");
-                // restart animation
+              if (isLegal){
+                el.innerHTML = formatLegalHTML(val);
+                // Premium subtle reveal (no scramble)
+                el.classList.remove("mx-legal-fadein");
+                // force reflow
                 void el.offsetWidth;
-                el.classList.add("mx-legal-in");
+                el.classList.add("mx-legal-fadein");
               } else {
+                const dur = Math.min(2200, Math.max(320, Math.floor(String(val).length * 0.14)));
                 scrambleSmart(el, val, dur, lang);
-                el.classList.remove("mx-i18n-out");
-                el.classList.add("mx-i18n-in");
               }
+
+              el.classList.remove("mx-i18n-out");
+              el.classList.add("mx-i18n-in");
             });
 
             const gear = document.getElementById("cookiePreferencesGear");
@@ -3346,6 +3387,7 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
 
 }
 
+            document.documentElement.classList.add('i18n-ready');
             setTimeout(() => nodes.forEach(el => el.classList.remove("mx-i18n-in")), 220);
           }, 160);
 
