@@ -573,9 +573,13 @@
 
 
     /* Header line separator inside legal text */
-    .legal-head, .legal-body{
-      white-space: pre-wrap;
-    }
+    .legal-head{
+  font-weight:700;
+  white-space: pre-wrap;
+}
+.legal-body{
+  white-space: pre-wrap;
+}
     .legal-sep{
       height:1px;
       margin: 14px 0 16px;
@@ -2951,6 +2955,7 @@ body.mx-a11y-high-contrast .card{
   border-color:#fff !important;
 }
 body.mx-a11y-high-contrast .legalcopy{
-  color:#fff !important;
+  font-size: calc(clamp(11px, 1.15vw, 13px) * var(--a11y-font-scale));
+color:#fff !important;
 }
 </style>
