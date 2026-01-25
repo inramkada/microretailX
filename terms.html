@@ -1035,9 +1035,25 @@ body.light .muted, body.light .subtle { color: #333 !important; }
 
 .legalcopy strong{font-weight:700;}
 
-/* Legal formatting helpers */
-.legalcopy strong{ font-weight:700; display:block; margin-top:14px; }
-.legalcopy .mx-sep{ display:block; height:1px; background: currentColor; opacity:.22; margin:10px 0 14px; }
+
+/* Legal formatting helpers (premium separators) */
+.legalcopy .mx-h{ font-weight:700; display:block; margin-top:16px; letter-spacing:.02em; }
+.legalcopy .mx-sep{
+  display:block;
+  height:1px;
+  margin:10px 0 16px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity:.25;
+  filter: blur(.15px);
+}
+.legalcopy .mx-sep::after{
+  content:"";
+  display:block;
+  height:1px;
+  margin-top:6px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity:.12;
+}
 
 </style>
 
@@ -2958,10 +2974,10 @@ legal@microretailx.com
       const raw = el.textContent || "";
       let safe = escapeHtml(raw);
 
-      // Headings: lines that are only **...** (allow surrounding whitespace) → bold + separator
-      safe = safe.replace(/^\s*\*\*(.+?)\*\*\s*$/gm, '<strong>$1</strong><span class="mx-sep"></span>');
+      // Headings: numbered section titles like **1. DEFINITIONS** (robust across whitespace/line endings)
+      safe = safe.replace(/^\s*\*\*(\d+\.\s+.+?)\*\*\s*$/gm, '<strong class="mx-h">$1</strong><span class="mx-sep" aria-hidden="true"></span>');
 
-      // Inline bold (optional): **...** anywhere else
+      // Optional inline bold anywhere else
       safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 
       // Preserve line breaks
