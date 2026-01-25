@@ -813,6 +813,19 @@ footer{
       filter: blur(0);
     }
 
+    /* ✅ Premium legal appearance (no scramble) */
+    .legalcopy.mx-legal-in{
+      animation: mxLegalReveal 720ms cubic-bezier(.2,.8,.2,1) both;
+      will-change: opacity, transform, filter;
+    }
+    @keyframes mxLegalReveal{
+      from{ opacity:0; transform: translateY(10px); filter: blur(3px); }
+      to{ opacity:1; transform: translateY(0); filter: blur(0); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .legalcopy.mx-legal-in{ animation: none !important; }
+    }
+
     [dir="rtl"] .topbar{ flex-direction:row-reverse; }
     [dir="rtl"] nav{ flex-direction:row-reverse; }
     [dir="rtl"] .navlink::after{ transform-origin:right; }
@@ -1484,7 +1497,7 @@ en: {
   "footer.cookies": "Cookies",
   "footer.legal": "Legal",
 
-  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE
+  "card.terms": `MICRORETAILX – GLOBAL TERMS OF USE 01-01-2026 (ENGLISH)
 
 MICRORETAILX LLC (Delaware, United States)
 MICRORETAILX GROUP – Global Operating Framework
@@ -1654,7 +1667,7 @@ Legal and compliance communications: legal@microretailx.com
   "footer.cookies": "Cookies",
   "footer.legal": "法律",
 
-  "card.terms": `MICRORETAILX – 全球使用条款
+  "card.terms": `MICRORETAILX – 全球使用条款 01-01-2026 (CHINESE)
 
 MICRORETAILX LLC（美国特拉华州）
 MICRORETAILX GROUP – 全球运营框架
@@ -3285,10 +3298,20 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
               const dur = isLegal
                 ? Math.min(8000, Math.max(3200, Math.floor(String(val).length * 0.45)))
                 : Math.min(2200, Math.max(320, Math.floor(String(val).length * 0.14)));
-              scrambleSmart(el, val, dur, lang);
-
-              el.classList.remove("mx-i18n-out");
-              el.classList.add("mx-i18n-in");
+              if (el.classList && el.classList.contains("legalcopy")) {
+                // Premium legal reveal (no scramble): subtle fade + micro-translate + blur
+                el.textContent = String(val ?? "");
+                el.classList.remove("mx-i18n-out");
+                el.classList.remove("mx-i18n-in");
+                el.classList.remove("mx-legal-in");
+                // restart animation
+                void el.offsetWidth;
+                el.classList.add("mx-legal-in");
+              } else {
+                scrambleSmart(el, val, dur, lang);
+                el.classList.remove("mx-i18n-out");
+                el.classList.add("mx-i18n-in");
+              }
             });
 
             const gear = document.getElementById("cookiePreferencesGear");
