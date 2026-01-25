@@ -2960,6 +2960,7 @@ legal@microretailx.com
     <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
 
+
 <script>
 (() => {
   const escapeHtml = (s) => String(s)
@@ -2972,19 +2973,33 @@ legal@microretailx.com
   const renderLegal = () => {
     document.querySelectorAll(".legalcopy").forEach((el) => {
       const raw = el.textContent || "";
+      if (!raw || raw.includes("(loading") ) return;
+
       let safe = escapeHtml(raw);
 
-      // Headings: numbered section titles like **1. DEFINITIONS** (robust across whitespace/line endings)
-      safe = safe.replace(/^\s*\*\*(\d+\.\s+.+?)\*\*\s*$/gm, '<strong class="mx-h">$1</strong><span class="mx-sep" aria-hidden="true"></span>');
-
-      // Optional inline bold anywhere else
-      safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      // Premium numbered headings: **1. TITLE** (works even if not isolated on a line)
+      safe = safe.replace(/\*\*\s*(\d+\.\s+.+?)\s*\*\*/g,
+        '<strong class="mx-h">$1</strong><span class="mx-sep" aria-hidden="true"></span>'
+      );
 
       // Preserve line breaks
-      safe = safe.replace(/\n/g, "<br>");
+      safe = safe.replace(/\r?\n/g, "<br>");
 
       el.innerHTML = safe;
     });
+  };
+
+  const attachClicks = () => {
+    // Re-render after any UI interaction that may change language / content
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (!t) return;
+      // language buttons / globe menu / footer nav often re-apply i18n
+      if (t.closest && (t.closest("[data-lang]") || t.closest(".lang") || t.closest(".lang-menu") || t.closest("#lang-menu") || t.closest(".lang-trigger"))) {
+        setTimeout(renderLegal, 0);
+        setTimeout(renderLegal, 50);
+      }
+    }, true);
   };
 
   const wrapApplyLang = () => {
@@ -3000,12 +3015,22 @@ legal@microretailx.com
     }
   };
 
+  const retryRender = () => {
+    // Retry a few times because i18n may populate after DOMContentLoaded
+    for (let i = 0; i < 40; i++) {
+      setTimeout(renderLegal, i * 100);
+    }
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
     try { wrapApplyLang(); } catch (_) {}
+    try { attachClicks(); } catch (_) {}
     try { renderLegal(); } catch (_) {}
+    try { retryRender(); } catch (_) {}
   });
 })();
 </script>
+
 
 </body>
 
