@@ -562,31 +562,15 @@
       padding:22px var(--px);
     }
 
-    .card{
-      width:min(720px,100%);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:var(--radius);
-      background:rgba(0,0,0,.55);
-      padding:clamp(16px,2.5vw,24px);
-      font-weight:400;
-      text-align:left;
-    }
+    /* (deduped .card) */
+
 
     
 
     
     /* ✅ Premium wide container */
-    .card{
-      width: min(1040px, 100%);
-      border:1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,.06), transparent 55%),
-        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.045), transparent 60%),
-        rgba(0,0,0,.56);
-      box-shadow:
-        0 18px 60px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.06);
-    }
+    /* (deduped .card) */
+
 
     /* Header line separator inside legal text */
     .legal-head, .legal-body{
@@ -602,8 +586,7 @@
     /* Slightly nicer typography for legal content */
     .legalcopy{
       margin:0;
-      font-size: clamp(11.5px, 1.15vw, 13.5px);
-      line-height: 1.62;
+line-height: 1.62;
       color: rgba(255,255,255,.90);
       letter-spacing: .012em;
     }
@@ -638,15 +621,10 @@
       padding-top: 28px;
       place-items: start center;
     }
-    body.mx-immersive .card{
-      width: min(1100px, 100%);
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 55%),
-        rgba(0,0,0,.48);
-    }
+    body.mx-immersive /* (deduped .card) */
+
     body.mx-immersive .legalcopy{
-      font-size: clamp(13px, 1.25vw, 15px);
-      line-height: 1.78;
+line-height: 1.78;
       color: rgba(255,255,255,.92);
       letter-spacing: .015em;
     }
@@ -655,18 +633,15 @@
     main{
       padding: clamp(16px, 2.6vw, 26px) var(--px);
     }
-    .card{
-      width: min(1100px, calc(100vw - (2 * var(--px))));
-      padding: clamp(14px, 2.4vw, 26px);
-    }
+    /* (deduped .card) */
+
     @media (max-width: 900px){
-      .card{ width: min(980px, calc(100vw - (2 * var(--px)))); }
+      /* (deduped .card) */
+
     }
     @media (max-width: 640px){
-      .card{
-        width: calc(100vw - (2 * var(--px)));
-        border-radius: 16px;
-      }
+      /* (deduped .card) */
+
       .reader-bar{ justify-content:space-between; }
     }
 
@@ -677,10 +652,8 @@
     }
 
         body.mx-a11y-readable{
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      text-rendering: optimizeLegibility;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+text-rendering: optimizeLegibility;
     }
     body.mx-a11y-readable .legalcopy{
       font-family: inherit;
@@ -694,11 +667,9 @@
     }
 
     .legalcopy{
-      font-size: calc(clamp(11.5px, 1.15vw, 13.5px) * var(--a11y-font-scale));
-    }
+}
     body.mx-immersive .legalcopy{
-      font-size: calc(clamp(13px, 1.25vw, 15px) * var(--a11y-font-scale));
-    }
+}
 
 body.mx-immersive header, body.mx-immersive footer{
       opacity: .92;
@@ -707,8 +678,7 @@ body.mx-immersive header, body.mx-immersive footer{
     .legalcopy{
       white-space: pre-wrap;
       margin: 0;
-      font-size: clamp(11px, 1.15vw, 13px);
-      line-height: 1.55;
+line-height: 1.55;
       color: rgba(255,255,255,.90);
       letter-spacing: .01em;
     }
@@ -1080,13 +1050,8 @@ body.light .muted, body.light .subtle { color: #333 !important; }
       body{ background:#fff !important; color:#000 !important; }
       .page::before{ display:none !important; }
       main{ padding: 0 !important; }
-      .card{
-        width: 100% !important;
-        border: none !important;
-        box-shadow: none !important;
-        background: transparent !important;
-        padding: 0 !important;
-      }
+      /* (deduped .card) */
+
       .legalcopy{ color:#000 !important; font-size: 12pt !important; line-height: 1.5 !important; }
       .legal-sep{ background: #000 !important; opacity: .2 !important; }
     }
@@ -1162,13 +1127,8 @@ body.light .muted, body.light .subtle { color: #333 !important; }
   }
   body.mx-a11y-lightbg .navlink{ color: rgba(0,0,0,.78); }
   body.mx-a11y-lightbg .navlink:hover{ color:#000; }
-  body.mx-a11y-lightbg .card{
-    background:
-      radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
-      rgba(255,255,255,.94) !important;
-    border-color: rgba(0,0,0,.14) !important;
-    box-shadow: 0 18px 60px rgba(0,0,0,.12);
-  }
+  body.mx-a11y-lightbg /* (deduped .card) */
+
   body.mx-a11y-lightbg .legalcopy{ color: rgba(0,0,0,.88) !important; }
   body.mx-a11y-lightbg .legal-sep{ background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent) !important; }
 </style>
@@ -1183,13 +1143,8 @@ body.light .muted, body.light .subtle { color: #333 !important; }
     background: inherit !important;
     color: inherit !important;
   }
-  body.mx-a11y-lightbg .card{
-    background:
-      radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
-      rgba(255,255,255,.96) !important;
-    border-color: rgba(0,0,0,.14) !important;
-    box-shadow: 0 18px 60px rgba(0,0,0,.12);
-  }
+  body.mx-a11y-lightbg /* (deduped .card) */
+
   body.mx-a11y-lightbg .legalcopy{
     color: rgba(0,0,0,.88) !important;
   }
