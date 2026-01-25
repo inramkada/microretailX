@@ -410,6 +410,33 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+
+    /* Icon-only pills (e.g., Download) */
+    .tool-pill.tool-icon{
+      min-width:34px;
+      padding: 0 8px;
+    }
+    .tool-pill .dl-ico{
+      width: 16px;
+      height: 16px;
+      display:block;
+      transform: translateY(0);
+      transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 220ms cubic-bezier(.2,.8,.2,1);
+      opacity: .92;
+    }
+    .tool-pill:hover .dl-ico{
+      transform: translateY(2px);
+      opacity: 1;
+    }
+    .tool-pill:active .dl-ico{
+      transform: translateY(3px);
+    }
+
+    @media (max-width: 768px){
+      .tool-pill.tool-icon{ min-width:40px; padding: 0 10px; }
+      .tool-pill .dl-ico{ width: 18px; height: 18px; }
+    }
+
     .tools-switch.is-open .tool-pill{
       min-width:34px;
       font-weight:600;
@@ -1309,7 +1336,11 @@ body.mx-a11y-high-contrast .legalcopy{
   </svg>
 </button>
 
-              <button class="tool-pill" data-action="pdf" data-label="Download PDF" type="button">PDF</button>
+              <button class="tool-pill tool-icon" data-action="pdf" data-label="Download PDF" type="button" aria-label="Download PDF" title="Download PDF">
+      <svg class="dl-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M5 20h14v-2H5v2zm7-18v10.17l3.59-3.58L17 10l-5 5-5-5 1.41-1.41L11 12.17V2h1z"/>
+      </svg>
+    </button>
 <button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
             </div>
           </div>
