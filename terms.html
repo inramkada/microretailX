@@ -2940,51 +2940,41 @@ legal@microretailx.com
   </div>
 
 <script>
-(function(){
-  function escapeHtml(s){
-    return String(s)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-  }
-  function renderLegal(){
-    document.querySelectorAll(".legalcopy").forEach((el)=>{
-      // keep the latest raw text (post-i18n) and render it
-      const raw = (el.dataset && el.dataset.mxRaw) ? el.dataset.mxRaw : (el.textContent || "");
-      // If i18n just updated textContent, refresh mxRaw from current textContent
-      // (when innerHTML was used previously, textContent can lose blank lines; so prefer updating when we see "**" markers)
-      const current = el.textContent || "";
-      if (current.includes("**") || !raw) {
-        if (el.dataset) el.dataset.mxRaw = current;
-      }
-      const src = (el.dataset && el.dataset.mxRaw) ? el.dataset.mxRaw : current;
+(() => {
+  const escapeHtml = (s) => String(s)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-      let safe = escapeHtml(src);
+  const renderLegal = () => {
+    document.querySelectorAll(".legalcopy").forEach((el) => {
+      const raw = el.textContent || "";
+      let safe = escapeHtml(raw);
       safe = safe.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
       safe = safe.replace(/\n/g, "<br>");
       el.innerHTML = safe;
     });
-  }
+  };
 
-  function hook(){
-    // Wrap language apply function if exposed
-    if (window.__mxApplyLang && !window.__mxApplyLang.__mxWrapped){
+  const wrapApplyLang = () => {
+    if (typeof window.__mxApplyLang === "function" && !window.__mxApplyLang.__mxWrapped) {
       const orig = window.__mxApplyLang;
-      const wrapped = function(){
+      const wrapped = function() {
         const r = orig.apply(this, arguments);
-        try{ renderLegal(); }catch(_){}
+        try { renderLegal(); } catch (_) {}
         return r;
       };
       wrapped.__mxWrapped = true;
       window.__mxApplyLang = wrapped;
     }
-    // Initial render
-    try{ renderLegal(); }catch(_){}
-  }
+  };
 
-  document.addEventListener("DOMContentLoaded", hook);
+  document.addEventListener("DOMContentLoaded", () => {
+    try { wrapApplyLang(); } catch (_) {}
+    try { renderLegal(); } catch (_) {}
+  });
 })();
 </script>
 
