@@ -2186,11 +2186,7 @@ legal@microretailx.com
             const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
             el.textContent = shown + hidden;
             if (p < 1) requestAnimationFrame(tick);
-            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else if (el.classList && el.classList.contains("legalcopy")) {
-          el.innerHTML = __mxRenderLegalMarkdown(base);
-        } else {
-          el.textContent = base;
-        } }
+            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
             return;
           }
 
@@ -2237,26 +2233,7 @@ legal@microretailx.com
 
           const railEl = document.getElementById("lang-rail");
           if (railEl){
-            railEl.
-      // === Safe legal renderer: allows **HEADINGS** as <strong> in .legalcopy without breaking i18n ===
-      function __mxEscapeHtml(s){
-        return String(s)
-          .replace(/&/g,"&amp;")
-          .replace(/</g,"&lt;")
-          .replace(/>/g,"&gt;")
-          .replace(/"/g,"&quot;")
-          .replace(/'/g,"&#039;");
-      }
-      function __mxRenderLegalMarkdown(s){
-        let out = __mxEscapeHtml(s);
-        // Headings are standalone lines: **...**
-        out = out.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
-        // Preserve line breaks
-        out = out.replace(/\n/g, "<br>");
-        return out;
-      }
-
-      querySelectorAll(".lang-pill").forEach(btn => {
+            railEl.querySelectorAll(".lang-pill").forEach(btn => {
               const l = btn.getAttribute("data-lang");
               btn.hidden = (l === lang);
             });
@@ -2961,6 +2938,56 @@ legal@microretailx.com
     <button class="mx-float-btn" id="mx-scroll-top" type="button" aria-label="Scroll to top">↑</button>
     <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">↓</button>
   </div>
+
+<script>
+(function(){
+  function escapeHtml(s){
+    return String(s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+  function renderLegal(){
+    document.querySelectorAll(".legalcopy").forEach((el)=>{
+      // keep the latest raw text (post-i18n) and render it
+      const raw = (el.dataset && el.dataset.mxRaw) ? el.dataset.mxRaw : (el.textContent || "");
+      // If i18n just updated textContent, refresh mxRaw from current textContent
+      // (when innerHTML was used previously, textContent can lose blank lines; so prefer updating when we see "**" markers)
+      const current = el.textContent || "";
+      if (current.includes("**") || !raw) {
+        if (el.dataset) el.dataset.mxRaw = current;
+      }
+      const src = (el.dataset && el.dataset.mxRaw) ? el.dataset.mxRaw : current;
+
+      let safe = escapeHtml(src);
+      safe = safe.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
+      safe = safe.replace(/\n/g, "<br>");
+      el.innerHTML = safe;
+    });
+  }
+
+  function hook(){
+    // Wrap language apply function if exposed
+    if (window.__mxApplyLang && !window.__mxApplyLang.__mxWrapped){
+      const orig = window.__mxApplyLang;
+      const wrapped = function(){
+        const r = orig.apply(this, arguments);
+        try{ renderLegal(); }catch(_){}
+        return r;
+      };
+      wrapped.__mxWrapped = true;
+      window.__mxApplyLang = wrapped;
+    }
+    // Initial render
+    try{ renderLegal(); }catch(_){}
+  }
+
+  document.addEventListener("DOMContentLoaded", hook);
+})();
+</script>
+
 </body>
 
 </html>
