@@ -1034,6 +1034,11 @@ body.light .muted, body.light .subtle { color: #333 !important; }
 
 
 .legalcopy strong{font-weight:700;}
+
+/* Legal formatting helpers */
+.legalcopy strong{ font-weight:700; display:block; margin-top:14px; }
+.legalcopy .mx-sep{ display:block; height:1px; background: currentColor; opacity:.22; margin:10px 0 14px; }
+
 </style>
 
 
@@ -2952,8 +2957,16 @@ legal@microretailx.com
     document.querySelectorAll(".legalcopy").forEach((el) => {
       const raw = el.textContent || "";
       let safe = escapeHtml(raw);
-      safe = safe.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
+
+      // Headings: lines that are only **...** (allow surrounding whitespace) → bold + separator
+      safe = safe.replace(/^\s*\*\*(.+?)\*\*\s*$/gm, '<strong>$1</strong><span class="mx-sep"></span>');
+
+      // Inline bold (optional): **...** anywhere else
+      safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+      // Preserve line breaks
       safe = safe.replace(/\n/g, "<br>");
+
       el.innerHTML = safe;
     });
   };
