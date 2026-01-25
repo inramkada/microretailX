@@ -1032,6 +1032,8 @@ body.light, body.light .shell, body.light .card, body.light .glass { color: #111
 body.light .legalcopy, body.light .legalcopy p, body.light .legalcopy span, body.light .legalcopy a { color: #111 !important; }
 body.light .muted, body.light .subtle { color: #333 !important; }
 
+
+.legalcopy strong{font-weight:700;}
 </style>
 
 
@@ -2184,7 +2186,11 @@ legal@microretailx.com
             const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
             el.textContent = shown + hidden;
             if (p < 1) requestAnimationFrame(tick);
-            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
+            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else if (el.classList && el.classList.contains("legalcopy")) {
+          el.innerHTML = __mxRenderLegalMarkdown(base);
+        } else {
+          el.textContent = base;
+        } }
             return;
           }
 
@@ -2231,7 +2237,26 @@ legal@microretailx.com
 
           const railEl = document.getElementById("lang-rail");
           if (railEl){
-            railEl.querySelectorAll(".lang-pill").forEach(btn => {
+            railEl.
+      // === Safe legal renderer: allows **HEADINGS** as <strong> in .legalcopy without breaking i18n ===
+      function __mxEscapeHtml(s){
+        return String(s)
+          .replace(/&/g,"&amp;")
+          .replace(/</g,"&lt;")
+          .replace(/>/g,"&gt;")
+          .replace(/"/g,"&quot;")
+          .replace(/'/g,"&#039;");
+      }
+      function __mxRenderLegalMarkdown(s){
+        let out = __mxEscapeHtml(s);
+        // Headings are standalone lines: **...**
+        out = out.replace(/^\*\*(.+?)\*\*$/gm, "<strong>$1</strong>");
+        // Preserve line breaks
+        out = out.replace(/\n/g, "<br>");
+        return out;
+      }
+
+      querySelectorAll(".lang-pill").forEach(btn => {
               const l = btn.getAttribute("data-lang");
               btn.hidden = (l === lang);
             });
