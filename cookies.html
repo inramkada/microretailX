@@ -1,631 +1,4123 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UNDER MAINTENANCE</title>
+  <title>microretailX</title>
+  <meta name="description" content="MICRORETAILX global terms of use and legal framework." />
 
-  <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Permissions-Policy"
-        content="geolocation=(), microphone=(), camera=(), payment=(), usb=()">
+
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MICRORETAILX">
+  <meta property="og:description" content="Advanced biotech and creative technology platforms.">
+  <meta property="og:url" content="https://www.microretailx.com">
+  <meta property="og:image" content="https://www.microretailx.com/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MICRORETAILX">
+  <meta name="twitter:description" content="Advanced biotech and creative technology platforms.">
+  <meta name="twitter:image" content="https://www.microretailx.com/og-image.jpg">
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-      color: #fff;
+  /* Keep document scrollbar on the right even for RTL languages */
+  html, body { direction: ltr; }
+
+    :root{
+      --bg:#000;
+      --fg:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.62);
+      --hair:rgba(255,255,255,.12);
+      --glass:rgba(0,0,0,.78);
+
+      --px:clamp(12px, 2vw, 18px);
+      --py:10px;
+
+      --brand-size:clamp(12px, 1.2vw, 13px);
+      --brand-track:0.20em;
+
+      --nav-size:clamp(12px, 1.15vw, 12.5px);
+      --nav-track:0.12em;
+
+      --copy-size:clamp(6.5px, 1.1vw, 7px);
+      --copy-track:0.06em;
+
+      --radius:14px;
+      --blur:10px;
+
+      --menu-bg: rgba(0,0,0,.86);
+      --menu-border: rgba(255,255,255,.14);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
                    "Liberation Mono", "Courier New", monospace;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      font-weight:400;
+      transition: opacity 0.18s ease-in-out;
     }
-    canvas { display:block; width:100vw; height:100vh; }
+    body.is-i18n-switching{ opacity:0.92; }
 
-    .ui-layer { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+    .page{
+      min-height:100%;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      isolation:isolate;
+    }
 
-    .top-bar {
-      position: absolute; top: 0; left: 0; right: 0;
-      padding: 14px 18px;
-      display: flex; justify-content: flex-start;
-      background: rgba(0,0,0,0.78);
-      border-bottom: 1px solid rgba(255,255,255,0.10);
+    .page::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.045;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.07), transparent 46%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.05), transparent 44%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.025), rgba(255,255,255,.025) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode:screen;
+      z-index:-1;
+    }
+
+    header, footer{
+      background:var(--glass);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      overflow: visible;
+    }
+
+    header{
+      padding: var(--py) var(--px);
+      border-bottom: 1px solid var(--hair);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .brand{
+      font-size: var(--brand-size);
+      font-weight: 400;
+      letter-spacing: var(--brand-track);
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1;
+      opacity:.97;
+      text-shadow: 0 0 10px rgba(255,255,255,.10), 0 0 2px rgba(255,255,255,.18);
+      mix-blend-mode:difference;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .navlink{
+      color:rgba(255,255,255,.82);
+      text-decoration:none;
+      font-size:var(--nav-size);
+      font-weight:400;
+      letter-spacing:var(--nav-track);
+      text-transform:uppercase;
+      padding:5px 2px;
+      position:relative;
+    }
+    .navlink:hover{ color:rgba(255,255,255,.96); }
+    .navlink::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:1px;
+      background:rgba(255,255,255,.22);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform 150ms ease;
+    }
+    .navlink:hover::after{ transform:scaleX(1); }
+
+    .verticals{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      cursor:pointer;
+    }
+    .verticals > span{ pointer-events:none; }
+
+    .verticals-menu{
+      position:absolute;
+      top:100%;
+      left:0;
+      margin-top:10px;
+
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+
+      padding:0;
+      padding-top:2px;
+      border:0;
+      background:transparent;
+      border-radius:0;
+
+      opacity:0;
+      pointer-events:none;
+      transform: translateY(6px);
+      transition: opacity 160ms ease, transform 160ms ease;
+
+      white-space:nowrap;
+      z-index:50;
+    }
+
+    .verticals-menu .v-item:first-child{ margin-top:2px; }
+
+    .verticals.is-open .verticals-menu{
+      opacity:1;
+      pointer-events:auto;
+      transform: translateY(0);
+    }
+
+    .v-item{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      text-decoration:none;
+      padding:2px 0;
+    }
+
+    .v-main{
+      color:rgba(255,255,255,.92);
+      font-size:12px;
+      font-weight:400;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      line-height:1.05;
+    }
+
+    .v-sub{
+      margin-top:3px;
+      color:rgba(255,255,255,.55);
+      font-size:10px;
+      font-weight:400;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      line-height:1.05;
+    }
+
+    .v-item:hover .v-main{ color:#fff; }
+    .v-item:hover .v-sub{ color:rgba(255,255,255,.72); }
+
+    .lang-switch{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .lang-trigger{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      background:none;
+      border:0;
+      cursor:pointer;
+      padding:0;
+      color:#fff;
+      line-height:1;
+      border-radius:10px;
+      -webkit-user-select:none;
+      user-select:none;
+    }
+    .lang-trigger:hover{ background: rgba(255,255,255,.06); }
+    .lang-trigger:focus{ outline:none; }
+    .globe{ width:18px; height:18px; display:block; }
+
+    .lang-rail{
+      --rail-shift: 0px;
+
+      position:absolute;
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) translateX(var(--rail-shift));
+
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      padding:6px 8px;
+      border:1px solid var(--menu-border);
+      background: var(--menu-bg);
+      border-radius: 999px;
+
+      max-width: min(780px, calc(100vw - (2 * var(--px)) - 80px));
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+
+      direction:ltr;
+      unicode-bidi:isolate;
+
+      opacity:0;
+      pointer-events:none;
+
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      transition: opacity 0.4s ease, transform 0.2s ease;
+
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
     }
 
-    .brand {
-      font-size: 12px;
-      letter-spacing: 4px;
-      font-weight: 900;
-      opacity: 0.92;
-      color: rgba(255,255,255,0.92);
-      mix-blend-mode: difference;
-      text-shadow: none;
+    .lang-rail::-webkit-scrollbar{ height:0; }
+    .lang-rail{ scrollbar-width:none; -ms-overflow-style:none; }
+
+    .lang-switch.is-open .lang-rail{
+      opacity:1;
+      pointer-events:auto;
     }
 
-    .footer-bar {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 14px 18px 12px;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 8px;
-      background: rgba(0,0,0,0.78);
-      border-top: 1px solid rgba(255,255,255,0.10);
+    .lang-switch.open-right .lang-rail{
+      right:auto;
+      left: calc(100% + 10px);
+    }
+
+    /* ✅ Accessibility / Tools rail (same behavior as language rail) */
+    .tools-switch{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+    .tools-trigger{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      background:none;
+      border:0;
+      cursor:pointer;
+      padding:0;
+      color:#fff;
+      line-height:1;
+      border-radius:10px;
+      -webkit-user-select:none;
+      user-select:none;
+    }
+    .tools-trigger:hover{ background: rgba(255,255,255,.06); }
+    .tools-trigger:focus{ outline:none; }
+    .tools-icon{ width:18px; height:18px; display:block; }
+
+    .tools-rail{
+      --rail-shift: 0px;
+      position:absolute;
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) translateX(var(--rail-shift));
+
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      padding:6px 8px;
+      border:1px solid var(--menu-border);
+      background: var(--menu-bg);
+      border-radius: 999px;
+
+      max-width: min(920px, calc(100vw - (2 * var(--px)) - 120px));
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+
+      direction:ltr;
+      unicode-bidi:isolate;
+
+      opacity:0;
+      pointer-events:none;
+
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
       backdrop-filter: blur(10px);
-      pointer-events: auto;
+      -webkit-backdrop-filter: blur(10px);
+
+      transition: opacity 0.4s ease, transform 0.2s ease;
+
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
     }
 
-    .footer-links {
-      display: flex; gap: 22px;
-      font-size: 11px; letter-spacing: 2px;
-      opacity: 0.65;
-    }
-    .footer-links a {
-      color:#fff; text-decoration:none;
-      opacity:0.75; pointer-events:auto;
-    }
-    .footer-links a:hover { opacity:1; text-decoration: underline; }
+    .tools-rail::-webkit-scrollbar{ height:0; }
+    .tools-rail{ scrollbar-width:none; -ms-overflow-style:none; }
 
-    .copyright {
-      font-size: 9px; letter-spacing: 1px;
-      opacity: 0.45; text-align: center;
+    .tools-switch.is-open .tools-rail{
+      opacity:1;
+      pointer-events:auto;
     }
 
-    .brand-link,
-    .brand-link:visited,
-    .brand-link:hover,
-    .brand-link:active,
-    .brand-link:focus {
-      color: inherit;
-      text-decoration: none;
-      outline: none;
+    .tools-switch.open-right .tools-rail{
+      right:auto;
+      left: calc(100% + 10px);
     }
 
-    @media (max-width: 600px) {
-      .brand { font-size: 11px; letter-spacing: 3px; }
-      .footer-links { flex-wrap: wrap; justify-content:center; gap: 14px; }
+    [dir="rtl"] .tools-switch.open-right .tools-rail{
+      left:auto;
+      right: calc(100% + 10px);
+    }
+
+    .tool-pill{
+      min-width:34px;
+      font-weight:600;
+    
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.30);
+      color: rgba(255,255,255,.86);
+
+      height:26px;
+      padding: 0 10px;
+      border-radius: 999px;
+
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+
+      cursor:pointer;
+      user-select:none;
+
+      transform: translateX(10px);
+      opacity: 0;
+      transition: transform 220ms ease, opacity 220ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    /* Icon-only pills (e.g., Download) */
+    .tool-pill.tool-icon{
+      min-width:34px;
+      padding: 0 8px;
+    }
+    .tool-pill .dl-ico{
+      width: 16px;
+      height: 16px;
+      display:block;
+      transform: translateY(0);
+      transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 220ms cubic-bezier(.2,.8,.2,1);
+      opacity: .92;
+    }
+    .tool-pill:hover .dl-ico{
+      transform: translateY(2px);
+      opacity: 1;
+    }
+    .tool-pill:active .dl-ico{
+      transform: translateY(3px);
+    }
+
+    @media (max-width: 768px){
+      .tool-pill.tool-icon{ min-width:40px; padding: 0 10px; }
+      .tool-pill .dl-ico{ width: 18px; height: 18px; }
+    }
+
+    .tools-switch.is-open .tool-pill{
+      min-width:34px;
+      font-weight:600;
+    
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .tools-switch.is-open .tool-pill:nth-child(1)  { transition-delay:  0ms; }
+    .tools-switch.is-open .tool-pill:nth-child(2)  { transition-delay: 18ms; }
+    .tools-switch.is-open .tool-pill:nth-child(3)  { transition-delay: 36ms; }
+    .tools-switch.is-open .tool-pill:nth-child(4)  { transition-delay: 54ms; }
+    .tools-switch.is-open .tool-pill:nth-child(5)  { transition-delay: 72ms; }
+    .tools-switch.is-open .tool-pill:nth-child(6)  { transition-delay: 90ms; }
+    .tools-switch.is-open .tool-pill:nth-child(7)  { transition-delay:108ms; }
+    .tools-switch.is-open .tool-pill:nth-child(8)  { transition-delay:126ms; }
+    .tools-switch.is-open .tool-pill:nth-child(9)  { transition-delay:144ms; }
+    .tools-switch.is-open .tool-pill:nth-child(10) { transition-delay:162ms; }
+    .tools-switch.is-open .tool-pill:nth-child(11) { transition-delay:180ms; }
+
+    .tool-pill:hover{
+      color:#fff;
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
+    }
+
+    .tool-pill::after{
+      content: attr(data-label);
+      position:absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+
+      background: rgba(0,0,0,.90);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 6px 8px;
+
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+
+      opacity:0;
+      pointer-events:none;
+      white-space: nowrap;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .tool-pill:hover::after{ opacity:1; }
+
+    @media (max-width: 640px){
+      .tools-rail{
+        right:auto;
+        left:0;
+        top:100%;
+        transform: translateY(10px) translateX(var(--rail-shift));
+        max-width: min(92vw, 520px);
+      }
+      [dir="rtl"] .tools-rail{ left:auto; right:0; }
+    }
+
+
+    [dir="rtl"] .lang-switch.open-right .lang-rail{
+      left:auto;
+      right: calc(100% + 10px);
+    }
+
+    .lang-pill{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.30);
+      color: rgba(255,255,255,.86);
+
+      height:26px;
+      padding: 0 10px;
+      border-radius: 999px;
+
+      font-size: clamp(12px, 1.2vw, 14px);
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+
+      cursor:pointer;
+      user-select:none;
+
+      transform: translateX(10px);
+      opacity: 0;
+      transition: transform 220ms ease, opacity 220ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .lang-pill:focus{ outline:none; }
+    .lang-pill[hidden]{ display:none !important; }
+
+    .lang-switch.is-open .lang-pill{
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .lang-switch.is-open .lang-pill:nth-child(1)  { transition-delay:  0ms; }
+    .lang-switch.is-open .lang-pill:nth-child(2)  { transition-delay: 18ms; }
+    .lang-switch.is-open .lang-pill:nth-child(3)  { transition-delay: 36ms; }
+    .lang-switch.is-open .lang-pill:nth-child(4)  { transition-delay: 54ms; }
+    .lang-switch.is-open .lang-pill:nth-child(5)  { transition-delay: 72ms; }
+    .lang-switch.is-open .lang-pill:nth-child(6)  { transition-delay: 90ms; }
+    .lang-switch.is-open .lang-pill:nth-child(7)  { transition-delay:108ms; }
+    .lang-switch.is-open .lang-pill:nth-child(8)  { transition-delay:126ms; }
+    .lang-switch.is-open .lang-pill:nth-child(9)  { transition-delay:144ms; }
+
+    .lang-pill:hover{
+      color:#fff;
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
+    }
+
+    .lang-pill::after{
+      content: attr(data-label);
+      position:absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+
+      background: rgba(0,0,0,.90);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 6px 8px;
+
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+
+      opacity:0;
+      pointer-events:none;
+      white-space: nowrap;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .lang-pill:hover::after{ opacity:1; }
+
+    main{
+      display:grid;
+      place-items:center;
+      padding:22px var(--px);
+    }
+
+    .card{
+      width:min(720px,100%);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--radius);
+      background:rgba(0,0,0,.55);
+      padding:clamp(16px,2.5vw,24px);
+      font-weight:400;
+      text-align:left;
+    }
+
+    
+
+    
+    /* ✅ Premium wide container */
+    .card{
+      width: min(1040px, 100%);
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,.06), transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.045), transparent 60%),
+        rgba(0,0,0,.56);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    /* Header line separator inside legal text */
+    .legal-head, .legal-body{
+      white-space: pre-wrap;
+    }
+    .legal-sep{
+      height:1px;
+      margin: 14px 0 16px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      opacity:.9;
+    }
+
+
+    /* --- Premium: avoid i18n placeholder flash (legal only) --- */
+    .legalcopy[data-i18n="card.terms"]{ visibility:hidden; }
+    html.i18n-ready .legalcopy[data-i18n="card.terms"]{ visibility:visible; }
+
+    /* --- Premium: subtle reveal for legal text (no scramble) --- */
+    .legalcopy.mx-legal-fadein{
+      animation: mxLegalIn 680ms cubic-bezier(.2,.8,.2,1) both;
+      will-change: opacity, transform, filter;
+    }
+    @keyframes mxLegalIn{
+      from{ opacity:0; transform: translateY(10px); filter: blur(3px); }
+      to  { opacity:1; transform: translateY(0);  filter: blur(0); }
+    }
+    .legalcopy.mx-legal-fadein .legal-sep{
+      animation: mxSepIn 900ms cubic-bezier(.2,.8,.2,1) both;
+      transform-origin: center;
+    }
+    @keyframes mxSepIn{
+      from{ opacity:0; transform: scaleX(.75); filter: blur(1.5px); }
+      to  { opacity:.9; transform: scaleX(1);   filter: blur(0); }
+    }
+
+    /* --- Mobile: always-visible Play/Pause (outside tools rail) --- */
+    .audio-fab{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      padding: 0;
+      border-radius: 999px;
+      display: none; /* enabled on mobile */
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 12px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .audio-fab svg{ width: 22px; height: 22px; display:block; }
+    body.mx-audio-playing .audio-fab .icon-play{ display:none; }
+    body:not(.mx-audio-playing) .audio-fab .icon-pause{ display:none; }
+
+    @media (max-width: 640px){
+      .audio-fab{ display:flex; }
+    }
+
+    /* --- Footer visibility: avoid "ghost" effect on some mobiles --- */
+    .footer-links{ opacity:.88; }
+    .copyright{ opacity:.78; }
+
+
+    /* Slightly nicer typography for legal content */
+    .legalcopy{
+      margin:0;
+      font-size: clamp(11.5px, 1.15vw, 13.5px);
+      line-height: 1.62;
+      color: rgba(255,255,255,.90);
+      letter-spacing: .012em;
+    }
+
+    /* Immersive reader mode */
+    .reader-bar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .reader-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.88);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      cursor:pointer;
+      line-height:1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .reader-btn:hover{
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.07);
+      color:#fff;
+    }
+    body.mx-immersive main{
+      padding-top: 28px;
+      place-items: start center;
+    }
+    body.mx-immersive .card{
+      width: min(1100px, 100%);
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 55%),
+        rgba(0,0,0,.48);
+    }
+    body.mx-immersive .legalcopy{
+      font-size: clamp(13px, 1.25vw, 15px);
+      line-height: 1.78;
+      color: rgba(255,255,255,.92);
+      letter-spacing: .015em;
+    }
+    
+    /* ✅ Responsive: adapt container by device */
+    main{
+      padding: clamp(16px, 2.6vw, 26px) var(--px);
+    }
+    .card{
+      width: min(1100px, calc(100vw - (2 * var(--px))));
+      padding: clamp(14px, 2.4vw, 26px);
+    }
+    @media (max-width: 900px){
+      .card{ width: min(980px, calc(100vw - (2 * var(--px)))); }
+    }
+    @media (max-width: 640px){
+      .card{
+        width: calc(100vw - (2 * var(--px)));
+        border-radius: 16px;
+      }
+      .reader-bar{ justify-content:space-between; }
+    }
+
+    /* ✅ Accessibility variables */
+    :root{
+      --a11y-font-scale: 1;
+      --a11y-contrast: 0;
+    }
+
+        body.mx-a11y-readable{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      text-rendering: optimizeLegibility;
+    }
+    body.mx-a11y-readable .legalcopy{
+      font-family: inherit;
+      letter-spacing: .005em;
+    }
+
+    body.mx-a11y-underline a{
+      text-decoration: underline !important;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+    }
+
+    .legalcopy{
+      font-size: calc(clamp(11.5px, 1.15vw, 13.5px) * var(--a11y-font-scale));
+    }
+    body.mx-immersive .legalcopy{
+      font-size: calc(clamp(13px, 1.25vw, 15px) * var(--a11y-font-scale));
+    }
+
+body.mx-immersive header, body.mx-immersive footer{
+      opacity: .92;
+    }
+/* ✅ Multi-line legal text */
+    .legalcopy{
+      white-space: pre-wrap;
+      margin: 0;
+      font-size: clamp(11px, 1.15vw, 13px);
+      line-height: 1.55;
+      color: rgba(255,255,255,.90);
+      letter-spacing: .01em;
+    }
+footer{
+      padding:10px var(--px) 12px;
+      border-top:1px solid var(--hair);
+    }
+
+    .footer-inner{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:10.5px;
+      font-weight:400;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      opacity:.75;
+      align-items:center;
+    }
+
+    .footer-links a{
+      color:rgba(255,255,255,.85);
+      text-decoration:none;
+    }
+    .footer-links a:hover{ color:#fff; }
+
+    .copyright{
+      font-size:var(--copy-size);
+      letter-spacing:var(--copy-track);
+      opacity:.58;
+      text-align:center;
+      line-height:1.3;
+      font-weight:400;
+    }
+
+    .cookie-gear{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:22px;
+      height:22px;
+      margin-left:6px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      cursor:pointer;
+      position:relative;
+      vertical-align:middle;
+    }
+    .cookie-gear:hover{
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.05);
+    }
+    .cookie-gear svg{
+      width:14px;
+      height:14px;
+      display:block;
+      color: rgba(255,255,255,.88);
+    }
+    .cookie-gear::after{
+      content: attr(data-tip);
+      position:absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.90);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+      opacity:0;
+      pointer-events:none;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .cookie-gear:hover::after{ opacity:1; }
+
+    [data-i18n]{
+      transition: opacity 160ms ease, transform 160ms ease, filter 160ms ease;
+      will-change: opacity, transform, filter;
+    }
+    [data-i18n].mx-i18n-out{
+      opacity:0;
+      transform: translateY(2px);
+      filter: blur(1px);
+    }
+    [data-i18n].mx-i18n-in{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    [dir="rtl"] .topbar{ flex-direction:row-reverse; }
+    [dir="rtl"] nav{ flex-direction:row-reverse; }
+    [dir="rtl"] .navlink::after{ transform-origin:right; }
+    [dir="rtl"] .footer-links{ flex-direction:row-reverse; }
+
+    [dir="rtl"] .verticals-menu{
+      left:auto;
+      right:0;
+      align-items:flex-end;
+      text-align:right;
+    }
+    [dir="rtl"] .v-item{ align-items:flex-end; }
+
+    @media (max-width: 640px){
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      nav{ width:100%; gap:10px; }
+
+      .lang-rail{
+        right:auto;
+        left:0;
+        top:100%;
+        transform: translateY(10px) translateX(var(--rail-shift));
+        max-width: min(92vw, 520px);
+      }
+
+      [dir="rtl"] .lang-rail{
+        left:auto;
+        right:0;
+      }
+    }
+
+    html[dir="rtl"], body{ overflow-x: hidden; }
+    [dir="rtl"] .page{ overflow-x: clip; }
+
+    body.mx-consent-locked{
+      overflow:hidden;
+      touch-action:none;
+    }
+
+    body.mx-consent-locked #app-root{
+      pointer-events:none;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+
+    .mx-cmp{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+               max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .mx-cmp.is-open{ display:flex; }
+
+    .mx-cmp-panel{
+      width:min(560px, 100%);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(0,0,0,.88);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+
+    .mx-cmp-head{
+      padding: 14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .mx-cmp-title{
+      margin:0;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      opacity:.92;
+      line-height:1.25;
+    }
+
+    .mx-cmp-sub{
+      margin:10px 0 0;
+      font-size:11px;
+      letter-spacing:.02em;
+      line-height:1.35;
+      color:rgba(255,255,255,.70);
+    }
+
+    .mx-cmp-body{
+      padding: 12px 16px 14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .mx-cmp-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .mx-cmp-row strong{
+      display:block;
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.90);
+    }
+
+    .mx-cmp-row p{
+      margin:6px 0 0;
+      font-size:11px;
+      color:rgba(255,255,255,.65);
+      line-height:1.35;
+    }
+
+    .mx-switch{
+      width:44px;
+      height:24px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      position:relative;
+      cursor:pointer;
+      flex:0 0 auto;
+      padding:0;
+    }
+
+    .mx-switch::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:3px;
+      width:18px;
+      height:18px;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      transition: left 150ms ease, opacity 150ms ease;
+      opacity:.92;
+    }
+
+    .mx-switch[data-on="1"]{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .mx-switch[data-on="1"]::after{ left:23px; }
+
+    .mx-switch[aria-disabled="true"]{
+      cursor:not-allowed;
+      opacity:.55;
+    }
+
+    .mx-cmp-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      padding: 12px 16px 14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      flex-wrap:wrap;
+    }
+
+    .mx-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.88);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: clamp(12px, 1.2vw, 14px);
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      cursor:pointer;
+      line-height:1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mx-btn:hover{
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.07);
+      color:#fff;
+    }
+
+    .mx-btn.primary{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .mx-btn.primary:hover{
+      background: rgba(255,255,255,.14);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    @media (max-width: 560px){
+      .mx-cmp-actions{ justify-content:stretch; }
+      .mx-btn{ flex:1 1 auto; text-align:center; }
+      .mx-cmp-row{ flex-direction:column; align-items:flex-start; }
+    }
+  
+    .tool-audio .icon-pause{ display:none; }
+    body.mx-audio-playing .tool-audio .icon-play{ display:none; }
+    body.mx-audio-playing .tool-audio .icon-pause{ display:inline; }
+
+  /* RTL: apply only to the legal content block (avoid moving the document scrollbar) */
+  .legalcopy[dir="rtl"]{
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: plaintext;
+  }
+  .legalcopy[dir="rtl"] .legal-head,
+  .legalcopy[dir="rtl"] .legal-body{
+    unicode-bidi: plaintext;
+  }
+
+  /* Print / Save as PDF: clean white paper, no ink-killer backgrounds */
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #fff !important; color: #000 !important; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    /* Hide UI controls / floating elements */
+    .tools-rail, .mx-float-scroll, .lang-rail, .audio-btn, #downloadPdf, #lang-switch, #lang-rail {
+      display: none !important;
+    }
+    /* Ensure the reading container prints cleanly */
+    .card, .sheet, main, #app-root {
+      background: #fff !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      border-color: #ddd !important;
+      filter: none !important;
+    }
+    .legalcopy, .legalcopy * {
+      color: #000 !important;
+      text-shadow: none !important;
+      filter: none !important;
+    }
+    a { color: #000 !important; text-decoration: underline !important; }
+  }
+</style>
+
+
+  <style id="mx-print">
+    @media print{
+      header, footer, .lang-switch, .tools-switch, .reader-bar, .mx-cmp{ display:none !important; }
+      body{ background:#fff !important; color:#000 !important; }
+      .page::before{ display:none !important; }
+      main{ padding: 0 !important; }
+      .card{
+        width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      .legalcopy{ color:#000 !important; font-size: 12pt !important; line-height: 1.5 !important; }
+      .legal-sep{ background: #000 !important; opacity: .2 !important; }
     }
   </style>
+
+<style id="mx-float-scroll-css">
+  .mx-float-scroll{
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+  .mx-float-scroll.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mx-float-btn{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.38);
+    color: rgba(255,255,255,.92);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mx-float-btn:hover{
+    border-color: rgba(255,255,255,.26);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+  }
+  @media (max-width: 640px){
+    .mx-float-scroll{ right: 10px; bottom: 10px; }
+    .mx-float-btn{ width: 46px; height: 46px; border-radius: 16px; }
+  }
+  body.mx-a11y-lightbg .mx-float-btn{
+    border-color: rgba(0,0,0,.16);
+    background: rgba(255,255,255,.72);
+    color: rgba(0,0,0,.85);
+    box-shadow: 0 14px 40px rgba(0,0,0,.18);
+  }
+  body.mx-a11y-lightbg .mx-float-btn:hover{
+    border-color: rgba(0,0,0,.24);
+    background: rgba(255,255,255,.90);
+    color: #000;
+  }
+
+  .mx-float-btn svg{ width:22px; height:22px; display:block; }
+  @media (max-width: 768px){
+    .mx-float-scroll{ right: 12px; bottom: 12px; }
+    .mx-float-btn{ width:56px; height:56px; }
+    .mx-float-btn svg{ width:24px; height:24px; }
+  }
+  /* If an audio button exists in the same corner, lift the scroll controls a bit */
+  #audioBtn + .mx-float-scroll, .audio-btn ~ .mx-float-scroll{ bottom: 78px; }
+</style>
+
+<style id="mx-a11y-fix">
+  :root{ --a11y-font-scale: 1; }
+  .legalcopy{ font-size: calc(clamp(11.5px, 1.15vw, 13.5px) * var(--a11y-font-scale)) !important; }
+  body.mx-immersive .legalcopy{ font-size: calc(clamp(13px, 1.25vw, 15px) * var(--a11y-font-scale)) !important; }
+  body.mx-a11y-lightbg .card{
+    background:
+      radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
+      rgba(255,255,255,.94) !important;
+    border-color: rgba(0,0,0,.14) !important;
+    box-shadow: 0 18px 60px rgba(0,0,0,.12);
+  }
+  body.mx-a11y-lightbg .legalcopy{ color: rgba(0,0,0,.88) !important; }
+  body.mx-a11y-lightbg .legal-sep{ background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent) !important; }
+</style>
+
+<style id="mx-light-container-only">
+  body.mx-a11y-lightbg{
+    background: inherit !important;
+    color: inherit !important;
+  }  body.mx-a11y-lightbg .card{
+    background:
+      radial-gradient(1200px 700px at 50% 0%, rgba(0,0,0,.035), transparent 55%),
+      rgba(255,255,255,.96) !important;
+    border-color: rgba(0,0,0,.14) !important;
+    box-shadow: 0 18px 60px rgba(0,0,0,.12);
+  }
+  body.mx-a11y-lightbg .legalcopy{
+    color: rgba(0,0,0,.88) !important;
+  }
+  body.mx-a11y-lightbg .legal-sep{
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent) !important;
+  }
+
+  /* Light reader: keep header/nav in dark style (container-only). */
+  body.mx-a11y-lightbg header,
+  body.mx-a11y-lightbg footer{
+    background: rgba(0,0,0,.55) !important;
+    border-color: rgba(255,255,255,.12) !important;
+  }
+  body.mx-a11y-lightbg .navlink{
+    color: rgba(255,255,255,.80) !important;
+  }
+  body.mx-a11y-lightbg .navlink:hover{
+    color: #fff !important;
+  }
+
+</style>
+
+<style id="mx-float-fix">
+  .mx-float-scroll{
+    z-index: 2147483000 !important;
+    pointer-events: auto !important;
+  }
+</style>
+<style>
+body.mx-a11y-high-contrast {
+  background:#000 !important;
+}
+body.mx-a11y-high-contrast .card{
+  background:#000 !important;
+  border-color:#fff !important;
+}
+body.mx-a11y-high-contrast .legalcopy{
+  color:#fff !important;
+}
+
+  /* Print fallback (hard override) */
+  @media print {
+    body, .page, .card {
+      background: #fff !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    .tools-switch, .lang-switch, .mx-float-scroll, .topbar, .audio-fab,
+    .tools-rail, .lang-rail, .audio-btn, #downloadPdf, #lang-switch, #lang-rail {
+      display: none !important;
+    }
+    a { text-decoration: underline !important; color: #000 !important; }
+  }
+
+</style>
 </head>
 
+
+
+
+
+
 <body>
-  <canvas id="view"></canvas>
+  <div class="page" id="app-root">
+    <header id="mx-header">
+      <div class="topbar">
+        <div class="brand">MICRORETAILX</div>
 
-  <div class="ui-layer">
-    <div class="top-bar">
-      <div class="brand">UNDER MAINTENANCE</div>
-    </div>
+        <nav>
+          <div class="lang-switch" id="lang-switch">
+            <button class="lang-trigger" aria-label="Language selector" type="button">
+              <svg class="globe" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M3 12h18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 3c3 3 3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </button>
 
-<footer class="footer-bar">
-  <div class="copyright">
-    © 2023–2026
-    <!-- CAMBIO ÚNICO: sin target="_blank" ni rel -->
-    <a class="brand-link" href="https://www.microretailx.com">MICRORETAILX</a>
-    LLC — ALL RIGHTS RESERVED
+            <div class="lang-rail" id="lang-rail" aria-label="Languages">
+              <button class="lang-pill" data-lang="en" data-label="English" type="button">EN</button>
+              <button class="lang-pill" data-lang="es" data-label="Español" type="button">ES</button>
+              <button class="lang-pill" data-lang="ca" data-label="Català" type="button">CA</button>
+              <button class="lang-pill" data-lang="eu" data-label="Euskara" type="button">EU</button>
+              <button class="lang-pill" data-lang="zh" data-label="中文 (Chinese)" type="button">ZH</button>
+              <button class="lang-pill" data-lang="hi" data-label="हिंदी (Hindi)" type="button">HI</button>
+              <button class="lang-pill" data-lang="ar" data-label="العربية (Arabic)" type="button">AR</button>
+              <button class="lang-pill" data-lang="ru" data-label="Русский" type="button">RU</button>
+              <button class="lang-pill" data-lang="fr" data-label="Français" type="button">FR</button>
+            </div>
+          </div>
+          <div class="tools-switch" id="tools-switch">
+            <button class="tools-trigger" aria-label="Accessibility & tools" type="button">
+              <svg class="tools-icon" viewBox="0 0 24 24" aria-hidden="true">
+         <path fill="currentColor" d="M12 5C6.5 5 2.1 8.4 1 12c1.1 3.6 5.5 7 11 7s9.9-3.4 11-7c-1.1-3.6-5.5-7-11-7zm0 11a4 4 0 1 1 0-8a4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4a2 2 0 0 0 0-4z"/>
+       </svg>
+            </button>
+
+            
+            <div class="tools-rail" id="tools-rail" aria-label="Accessibility and tools">
+              <button class="tool-pill" data-action="font-up" data-label="Increase text" type="button">A+</button>
+              <button class="tool-pill" data-action="font-down" data-label="Decrease text" type="button">A-</button>
+              <button class="tool-pill" data-action="readable" data-label="Regulatory font" type="button">FONT</button>
+              <button class="tool-pill" data-action="contrast" data-label="High contrast" type="button">HC</button>
+              <button class="tool-pill" data-action="lightbg" data-label="Light reader" type="button">LIGHT</button>
+              
+<button class="tool-pill tool-audio" data-action="audio" data-label="Play / Pause audio" type="button">
+  <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M8 5v14l11-7z"/>
+  </svg>
+  <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+  </svg>
+</button>
+
+              <button class="tool-pill tool-icon" data-action="pdf" data-label="Download PDF" type="button" aria-label="Download PDF" title="Download PDF">
+      <svg class="dl-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M5 20h14v-2H5v2zm7-18v10.17l3.59-3.58L17 10l-5 5-5-5 1.41-1.41L11 12.17V2h1z"/>
+      </svg>
+    </button>
+<button class="tool-pill" data-action="reset" data-label="Reset" type="button">RESET</button>
+            </div>
+          </div>
+
+
+
+          <a class="navlink" href="#/about" data-i18n="nav.about">About</a>
+
+          <div class="navlink verticals" id="verticals" role="button" aria-haspopup="true" aria-expanded="false">
+            <span data-i18n="nav.verticals">Verticals</span>
+            <div class="verticals-menu" aria-label="Verticals">
+              <a class="v-item" href="https://www.microlabsx.com">
+                <span class="v-main">BIOTECH</span>
+                <span class="v-sub">MICROLABSX</span>
+              </a>
+              <a class="v-item" href="https://www.microstudiox.com">
+                <span class="v-main">STUDIO</span>
+                <span class="v-sub">MICROSTUDIOX</span>
+              </a>
+            </div>
+          </div>
+
+          <a class="navlink" href="mailto:info@microretailx.com" data-i18n="nav.contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        
+        <div class="legalcopy" data-i18n="card.terms"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="terms.html" data-i18n="footer.terms">Terms</a>
+          <a href="privacy.html" data-i18n="footer.privacy">Privacy</a>
+
+          <span style="display:inline-flex; align-items:center;">
+            <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            <button
+              type="button"
+              class="cookie-gear"
+              id="cookiePreferencesGear"
+              aria-label="Cookie Preferences"
+              data-tip="Cookie Preferences"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.4.12-.61l-1.92-3.32c-.11-.2-.36-.28-.57-.2l-2.39.96c-.5-.38-1.04-.7-1.64-.94l-.36-2.54A.49.49 0 0 0 13.9 1h-3.8c-.24 0-.44.17-.48.41l-.36 2.54c-.6.24-1.14.56-1.64.94l-2.39-.96c-.21-.08-.46 0-.57.2L1.74 7.45c-.11.21-.06.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.4-.12.61l1.92 3.32c.11.2.36.28.57.2l2.39-.96c.5.38 1.04.7 1.64.94l.36 2.54c.04.24.24.41.48.41h3.8c.24 0 .44-.17.48-.41l.36-2.54c.6-.24 1.14-.56 1.64-.94l2.39.96c.21.08.46 0 .57-.2l1.92-3.32c.11-.2.06-.47-.12-.61l-2.03-1.58zM12 15.2A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4z"/>
+              </svg>
+            </button>
+          </span>
+
+          <a href="legal.html" data-i18n="footer.legal">Legal</a>
+        </div>
+
+        <div class="copyright">
+          © 2023–2026 MICRORETAILX LLC — ALL RIGHTS RESERVED
+        </div>
+      </div>
+    </footer>
   </div>
-</footer>
 
+  <div class="mx-cmp" id="mx-cmp" role="dialog" aria-modal="true" aria-labelledby="mx-cmp-title">
+    <div class="mx-cmp-panel">
+      <div class="mx-cmp-head">
+        <h2 class="mx-cmp-title" id="mx-cmp-title" data-i18n="cmp.title">Privacy & Cookies</h2>
+        <p class="mx-cmp-sub" id="mx-cmp-desc" data-i18n="cmp.desc">We respect your privacy. This site does not use advertising or tracking cookies. Necessary cookies are always on for security and basic functionality. You can accept or reject optional cookies.</p>
+      </div>
 
-<script>
+      <div class="mx-cmp-body">
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.necessary">Necessary</strong>
+            <p data-i18n="cmp.necessary.desc">Security & core functionality.</p>
+          </div>
+          <div>
+            <div class="mx-switch" id="mx-tg-necessary" data-on="1" aria-disabled="true" aria-label="Necessary cookies"></div>
+          </div>
+        </div>
 
-(() => {
-  "use strict";
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.analytics">Analytics</strong>
+            <p data-i18n="cmp.analytics.desc">Optional, anonymous usage insights to improve the site.</p>
+          </div>
+          <div>
+            <button class="mx-switch" id="mx-tg-analytics" type="button" data-on="0" aria-label="Analytics cookies"></button>
+          </div>
+        </div>
 
-  const view = document.getElementById("view");
-  const vctx = view.getContext("2d", { alpha: false });
+        <div class="mx-cmp-row">
+          <div>
+            <strong data-i18n="cmp.marketing">Marketing</strong>
+            <p data-i18n="cmp.marketing.desc">Optional personalization and campaign measurement.</p>
+          </div>
+          <div>
+            <button class="mx-switch" id="mx-tg-marketing" type="button" data-on="0" aria-label="Marketing cookies"></button>
+          </div>
+        </div>
+      </div>
 
-  const simCanvas = document.createElement("canvas");
-  const sctx = simCanvas.getContext("2d", { willReadFrequently: true });
+      <div class="mx-cmp-actions">
+        <button class="mx-btn" id="mx-btn-reject" type="button" data-i18n="cmp.reject">Reject all</button>
+        <button class="mx-btn primary" id="mx-btn-accept" type="button" data-i18n="cmp.accept">Accept all</button>
+        <button class="mx-btn" id="mx-btn-save" type="button" data-i18n="cmp.save">Save preferences</button>
+      </div>
+    </div>
+  </div>
 
-  const UA = navigator.userAgent || "";
-  const IS_IOS =
-    /iPhone|iPad|iPod/i.test(UA) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  const IS_MOBILE = /Mobi|Android|iPhone|iPad/i.test(UA);
+  <script>
+    (function(){
+      const CONSENT_KEY = "mx_consent";
+      const CMP_VER = 1;
 
-  const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
-  const lerp  = (a,b,t)=> a + (b-a)*t;
-  const ease  = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
-  const easeInOut = t => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+      const cmpEl = document.getElementById("mx-cmp");
+      const appRoot = document.getElementById("app-root");
 
-  const DPR_CAP = IS_IOS ? 1.6 : 2;
-  let dpr = Math.min(DPR_CAP, window.devicePixelRatio || 1);
+      const tgAnalytics = document.getElementById("mx-tg-analytics");
+      const tgMarketing = document.getElementById("mx-tg-marketing");
 
-  let W=0, H=0;
-  let simW=0, simH=0;
+      const btnAccept = document.getElementById("mx-btn-accept");
+      const btnReject = document.getElementById("mx-btn-reject");
+      const btnSave   = document.getElementById("mx-btn-save");
 
-  let trailA, trailB;
-  let xField;
-  let imgData, img8;
-  let agents = [];
-  let foods = [];
-  let tPrev = performance.now();
-  let frame = 0;
-
-  const INTRO = {
-    start: performance.now(),
-    durIn: 1800,      
-    durFlash: 320,   
-    durOut: 900,      
-    get active() {
-      const t = performance.now() - this.start;
-      return t < (this.durIn + this.durFlash + this.durOut);
-    }
-  };
-
-  let lastMouseFoodAt = 0;
-
-  const CFG = {
-    gridMax: IS_MOBILE ? 540 : 820,
-
-    agentCount: IS_MOBILE ? 6000 : 12000,
-    step: IS_MOBILE ? 0.90 : 1.05,
-
-    sensorDist: IS_MOBILE ? 6.2 : 7.8,
-    sensorAngle: 0.55,
-    turnSpeed: 0.34,
-
-    deposit: 0.94,
-    decay: IS_MOBILE ? 0.973 : 0.979,
-    diffuseEvery: 2,
-    diffuseMix: 0.42,
-
-    xBias: 0.82,
-    xWidthPx: IS_MOBILE ? 3.6 : 4.6,
-
-    foodRadius: IS_MOBILE ? 18 : 22,
-    foodStrength: 1.55,
-    foodLifeMs: 1300,
-    mouseFoodEveryMs: IS_MOBILE ? 42 : 28,
-
-    xInk: 0.42,
-
-    crush: 0.030,
-  };
-
-  function resize() {
-    dpr = Math.min(DPR_CAP, window.devicePixelRatio || 1);
-    W = window.innerWidth | 0;
-    H = window.innerHeight | 0;
-
-    view.width  = (W * dpr) | 0;
-    view.height = (H * dpr) | 0;
-    view.style.width  = W + "px";
-    view.style.height = H + "px";
-    vctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const maxSide = CFG.gridMax;
-    const aspect = W / Math.max(1, H);
-    if (W >= H) {
-      simW = maxSide;
-      simH = Math.max(160, (maxSide / aspect) | 0);
-    } else {
-      simH = maxSide;
-      simW = Math.max(160, (maxSide * aspect) | 0);
-    }
-
-    simCanvas.width = simW;
-    simCanvas.height = simH;
-
-    const n = simW * simH;
-    trailA = new Float32Array(n);
-    trailB = new Float32Array(n);
-    xField = new Float32Array(n);
-
-    imgData = sctx.createImageData(simW, simH);
-    img8 = imgData.data;
-
-    buildXField();
-    seedAgents(true);
-
-    inkXLine(CFG.xInk);
-  }
-
-  window.addEventListener("resize", resize);
-
-  function idx(x, y) { return x + y * simW; }
-
-  function buildXField() {
-    const w = simW, h = simH;
-    const a = (h - 1) / Math.max(1, (w - 1));
-    const inv = 1 / Math.sqrt(1 + a*a);
-
-    const sigma = CFG.xWidthPx;
-    const sigma2 = sigma * sigma;
-
-    for (let y=0; y<h; y++) {
-      for (let x=0; x<w; x++) {
-        const d1 = Math.abs(a*x - y) * inv;
-        const d2 = Math.abs(a*x + y - (h - 1)) * inv;
-        const d = Math.min(d1, d2);
-        const v = Math.exp(-(d*d) / (2*sigma2));
-        xField[idx(x,y)] = v;
+      function safeParse(json){
+        try{ return JSON.parse(json); } catch(_){ return null; }
       }
-    }
-  }
 
-  function seedAgents(resetTrails=false) {
-    if (resetTrails) { trailA.fill(0); trailB.fill(0); }
-    agents.length = 0;
-
-    const n = CFG.agentCount;
-    for (let i=0; i<n; i++) {
-      let x, y, tries=0;
-      while (true) {
-        x = (Math.random() * simW) | 0;
-        y = (Math.random() * simH) | 0;
-        const xf = xField[idx(x,y)];
-        if (Math.random() < 0.18 + 0.82*xf || tries++ > 10) break;
+      function readConsent(){
+        let v = null;
+        try { v = localStorage.getItem(CONSENT_KEY); } catch(e) { v = null; }
+        const obj = safeParse(v);
+        if (!obj || typeof obj !== "object") return null;
+        if (obj.v !== CMP_VER) return null;
+        if (!obj.choices || typeof obj.choices !== "object") return null;
+        return obj;
       }
-      agents.push({ x: x + Math.random(), y: y + Math.random(), a: Math.random() * Math.PI * 2 });
-    }
-  }
 
-  function depositAt(f, x, y, amt) {
-    const xi = x | 0, yi = y | 0;
-    if (xi < 0 || yi < 0 || xi >= simW || yi >= simH) return;
-    const k = idx(xi, yi);
-    f[k] = Math.min(1.0, f[k] + amt);
-  }
-
-  function sampleField(f, x, y) {
-    const xi = x | 0, yi = y | 0;
-    if (xi < 0 || yi < 0 || xi >= simW || yi >= simH) return 0;
-    return f[idx(xi, yi)];
-  }
-
-  function diffuse(src, dst, mix) {
-    const w=simW, h=simH;
-    for (let y=1; y<h-1; y++) {
-      const row = y*w;
-      for (let x=1; x<w-1; x++) {
-        const k = row + x;
-        const v =
-          src[k] +
-          src[k-1] + src[k+1] +
-          src[k-w] + src[k+w] +
-          src[k-w-1] + src[k-w+1] +
-          src[k+w-1] + src[k+w+1];
-        const blur = v / 9;
-        dst[k] = src[k]*(1-mix) + blur*mix;
+      function writeConsent(choices){
+        const payload = {
+          v: CMP_VER,
+          ts: Date.now(),
+          choices: {
+            necessary: true,
+            analytics: !!choices.analytics,
+            marketing: !!choices.marketing
+          }
+        };
+        localStorage.setItem(CONSENT_KEY, JSON.stringify(payload));
+        return payload;
       }
-    }
-    for (let x=0; x<w; x++) { dst[x] = src[x]; dst[x + (h-1)*w] = src[x + (h-1)*w]; }
-    for (let y=0; y<h; y++) { dst[y*w] = src[y*w]; dst[(w-1) + y*w] = src[(w-1) + y*w]; }
-  }
 
-  function inkXLine(amount) {
-    const w=simW, h=simH;
-    for (let y=0; y<h; y++) {
-      for (let x=0; x<w; x++) {
-        const xf = xField[idx(x,y)];
-        if (xf > 0.18) trailA[idx(x,y)] = Math.max(trailA[idx(x,y)], amount * xf);
+      function isDecided(){ return !!readConsent(); }
+
+      function lockUI(){
+        document.body.classList.add("mx-consent-locked");
+        if (appRoot) appRoot.setAttribute("aria-hidden", "true");
       }
-    }
-  }
 
-  function snapToX(x, y) {
-    const w = simW, h = simH;
-    const a = (h - 1) / Math.max(1, (w - 1));
+      function unlockUI(){
+        document.body.classList.remove("mx-consent-locked");
+        if (appRoot) appRoot.removeAttribute("aria-hidden");
+      }
 
-    const y1 = a * x;
-    const y2 = (h - 1) - a * x;
-    const d1 = Math.abs(y - y1);
-    const d2 = Math.abs(y - y2);
+      function setToggle(btn, on){
+        if (!btn) return;
+        btn.setAttribute("data-on", on ? "1" : "0");
+      }
 
-    if (d1 < d2) return { x, y: y1 };
-    return { x, y: y2 };
-  }
+      function getToggle(btn){
+        if (!btn) return 0;
+        return btn.getAttribute("data-on") === "1" ? 1 : 0;
+      }
 
-  function addMouseFood(clientX, clientY) {
-    const now = performance.now();
-    if (now - lastMouseFoodAt < CFG.mouseFoodEveryMs) return;
-    lastMouseFoodAt = now;
+      function toggle(btn){
+        const on = getToggle(btn);
+        setToggle(btn, on ? 0 : 1);
+      }
 
-    const el = document.elementFromPoint(clientX, clientY);
-    const a = el && el.closest ? el.closest("a") : null;
-    if (a) return;
+      function openCMP(forceLock){
+        if (!cmpEl) return;
 
-    let fx = clamp((clientX / W) * simW, 0, simW-1);
-    let fy = clamp((clientY / H) * simH, 0, simH-1);
+        const existing = readConsent();
+        setToggle(tgAnalytics, existing?.choices?.analytics ? 1 : 0);
+        setToggle(tgMarketing, existing?.choices?.marketing ? 1 : 0);
 
-    const s = snapToX(fx, fy);
-    fx = clamp(s.x, 0, simW-1);
-    fy = clamp(s.y, 0, simH-1);
+        cmpEl.classList.add("is-open");
+        if (forceLock) lockUI();
+        else unlockUI();
+      }
 
-    foods.push({ x: fx, y: fy, life: CFG.foodLifeMs, amp: 1.0 });
+      function closeCMP(){
+        if (!cmpEl) return;
+        cmpEl.classList.remove("is-open");
+        unlockUI();
+      }
 
-    depositAt(trailA, fx, fy, 0.55);
-  }
+      function acceptAll(){
+        writeConsent({ analytics:true, marketing:true });
+        closeCMP();
+      }
 
-  window.addEventListener("pointermove", (e) => {
-    addMouseFood(e.clientX, e.clientY);
-  }, { passive:true });
+      function rejectAll(){
+        writeConsent({ analytics:false, marketing:false });
+        closeCMP();
+      }
 
-  window.addEventListener("pointerdown", (e) => {
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    const a = el && el.closest ? el.closest("a") : null;
-    if (a) return;
+      function savePrefs(){
+        writeConsent({
+          analytics: !!getToggle(tgAnalytics),
+          marketing: !!getToggle(tgMarketing)
+        });
+        closeCMP();
+      }
 
-    let fx = clamp((e.clientX / W) * simW, 0, simW-1);
-    let fy = clamp((e.clientY / H) * simH, 0, simH-1);
-    const s = snapToX(fx, fy);
-    fx = clamp(s.x, 0, simW-1);
-    fy = clamp(s.y, 0, simH-1);
+      tgAnalytics?.addEventListener("click", (e) => { e.preventDefault(); toggle(tgAnalytics); });
+      tgMarketing?.addEventListener("click", (e) => { e.preventDefault(); toggle(tgMarketing); });
 
-    foods.push({ x: fx, y: fy, life: CFG.foodLifeMs * 1.8, amp: 1.0 });
-    depositAt(trailA, fx, fy, 0.9);
-  }, { passive:true });
+      btnAccept?.addEventListener("click", (e) => { e.preventDefault(); acceptAll(); });
+      btnReject?.addEventListener("click", (e) => { e.preventDefault(); rejectAll(); });
+      btnSave?.addEventListener("click", (e) => { e.preventDefault(); savePrefs(); });
 
-  function stepSim(dtMs) {
-    for (let i=foods.length-1; i>=0; i--) {
-      foods[i].life -= dtMs;
-      if (foods[i].life <= 0) foods.splice(i, 1);
-      else foods[i].amp = foods[i].life / (CFG.foodLifeMs * 1.0);
-    }
+      const gear = document.getElementById("cookiePreferencesGear");
+      gear?.addEventListener("click", (e) => {
+        e.preventDefault();
+        openCMP(false);
+      });
 
-    const step = CFG.step;
-    const sDist = CFG.sensorDist;
-    const sAng  = CFG.sensorAngle;
-    const turn  = CFG.turnSpeed;
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        if (!isDecided() && cmpEl?.classList.contains("is-open")) return;
+        if (cmpEl?.classList.contains("is-open")) closeCMP();
+      });
 
-    const xBias = CFG.xBias;
-    const foodStr = CFG.foodStrength;
+      window.__mxConsent = {
+        isDecided,
+        getConsent: () => readConsent(),
+        open: () => openCMP(false),
+        openLocked: () => openCMP(true),
+        acceptAll,
+        rejectAll,
+        savePrefs,
+        reset: () => { localStorage.removeItem(CONSENT_KEY); openCMP(true); }
+      };
 
-    for (let i=0; i<agents.length; i++) {
-      const p = agents[i];
+      if (!isDecided()){
+        openCMP(true);
+      }
+    })();
 
-      const ca = Math.cos(p.a), sa = Math.sin(p.a);
-      const la = p.a - sAng, ra = p.a + sAng;
+    (function(){
+      const I18N = {
 
-      const fx = p.x + ca * sDist, fy = p.y + sa * sDist;
-      const lx = p.x + Math.cos(la) * sDist, ly = p.y + Math.sin(la) * sDist;
-      const rx = p.x + Math.cos(ra) * sDist, ry = p.y + Math.sin(ra) * sDist;
+en: {
+  "nav.about": "Info",
+  "nav.verticals": "Verticals",
+  "nav.contact": "Contact",
+  "footer.terms": "Terms",
+  "footer.privacy": "Privacy",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Legal",
 
-      let fF = sampleField(trailA, fx, fy);
-      let fL = sampleField(trailA, lx, ly);
-      let fR = sampleField(trailA, rx, ry);
+  "card.terms": `MICRORETAILX — COOKIE POLICY
 
-      fF += xBias * sampleField(xField, fx, fy);
-      fL += xBias * sampleField(xField, lx, ly);
-      fR += xBias * sampleField(xField, rx, ry);
+MICRORETAILX LLC (Delaware, United States)
+MICRORETAILX GROUP – Global Operations Framework
 
-      if (foods.length) {
-        let addF=0, addL=0, addR=0;
-        const rr = CFG.foodRadius;
-        const rr2 = 2*rr*rr;
-        for (let j=0; j<foods.length; j++) {
-          const fd = foods[j];
-          const amp = fd.amp;
+Last updated: 01-01-2026
+Effective date: 01-01-2026
 
-          const dxF = fx - fd.x, dyF = fy - fd.y;
-          const dxL = lx - fd.x, dyL = ly - fd.y;
-          const dxR = rx - fd.x, dyR = ry - fd.y;
+Registered Office and Registered Agent:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+United States of America
 
-          addF += Math.exp(-(dxF*dxF + dyF*dyF) / rr2) * amp;
-          addL += Math.exp(-(dxL*dxL + dyL*dyL) / rr2) * amp;
-          addR += Math.exp(-(dxR*dxR + dyR*dyR) / rr2) * amp;
+
+1. SCOPE AND PURPOSE
+
+This Cookie Policy explains how cookies and similar technical identifiers may be used in connection with this Website, operated by MICRORETAILX LLC (“MICRORETAILX”, “we”, “us”, “our”).
+
+This Website is strictly informational and conceptual in nature and must be read in conjunction with the Privacy Policy and the Global Terms of Use, which together constitute the Website’s legal framework.
+
+
+2. ZERO DATA STRATEGY
+
+This Website is intentionally designed and operated under a Zero Data Strategy.
+
+MICRORETAILX LLC does not use cookies or similar technologies to:
+• identify individual users
+• create user profiles
+• perform behavioral or interest-based tracking
+• deliver advertising or marketing
+• monetize personal data
+
+The Website does not offer user accounts, registration systems, or interactive services requiring personal data.
+
+
+3. STRICTLY NECESSARY COOKIES AND TECHNICAL IDENTIFIERS
+
+By default, the Website relies exclusively on strictly necessary cookies and/or equivalent technical identifiers required for its core infrastructure, security, and availability.
+
+Such identifiers may be set or processed by:
+• content delivery networks (CDNs)
+• DNS and hosting providers
+• security, integrity, and availability layers
+
+These identifiers are used exclusively for purposes such as:
+• load balancing and traffic distribution
+• abuse prevention and rate limiting
+• bot mitigation and automated access protection
+• secure and reliable content delivery
+
+These cookies and identifiers are essential for the proper functioning of the Website and cannot be disabled without impairing its security or availability.
+
+
+4. NO ANALYTICS; NO MARKETING; NO TRACKING
+
+The Website does not implement:
+• analytics or audience measurement tools
+• marketing or advertising cookies
+• personalization or recommendation systems
+• cross-site or cross-service tracking mechanisms
+
+MICRORETAILX LLC does not perform automated decision-making or profiling based on Website access.
+
+
+5. OPTIONAL TECHNOLOGIES AND CONSENT
+
+Optional cookies or similar technologies are not enabled by default.
+
+Where optional technologies may be introduced in the future, they will only be activated:
+• after explicit user consent, and
+• where such consent is required by applicable law.
+
+Where applicable, consent preferences are managed through the Website’s consent interface.
+
+
+6. TECHNICAL METADATA AND LOG DATA
+
+As is standard for internet services, limited technical metadata may be processed incidentally when accessing the Website, such as IP addresses, request headers, timestamps, or protocol-level information.
+
+Such metadata is processed strictly for technical and security purposes, including:
+• infrastructure protection and abuse prevention
+• detection and mitigation of automated or malicious activity
+• ensuring availability, integrity, and resilience of the Website
+
+This metadata is not used for identification, profiling, analytics, or marketing purposes and is retained only for the minimum duration necessary.
+
+
+7. INTERNATIONAL CONTEXT AND INFRASTRUCTURE
+
+The Website may be accessed globally and relies on distributed technical infrastructure.
+
+Where technical metadata is processed through globally distributed systems, such processing may involve international data transfers.
+
+Any such transfers are conducted under appropriate technical and organizational safeguards and, where applicable, rely on recognized international data transfer mechanisms.
+
+
+8. NO TARGETING; NO JURISDICTIONAL INTENT
+
+MICRORETAILX LLC does not actively target users or audiences in any specific jurisdiction.
+
+Mere accessibility of the Website from any jurisdiction does not constitute targeting, establishment, licensing, authorization, or regulated activity in that jurisdiction.
+
+
+9. CHANGES TO THIS COOKIE POLICY
+
+MICRORETAILX LLC may update this Cookie Policy from time to time. Any changes will become effective upon publication on the Website.
+
+
+10. GOVERNING LAW AND LANGUAGE
+
+This Cookie Policy is governed by the laws of the State of Delaware, United States of America.
+
+The English version shall prevail. Translations are provided for informational convenience only and have no legal effect.
+
+
+11. CONTACT
+
+For cookie, privacy, or compliance-related inquiries:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Cookie Preferences",
+  "cmp.title": "Privacy & Cookies",
+  "cmp.desc": "We respect your privacy. This website does not use advertising or tracking cookies. Necessary cookies are always enabled for security and essential functionality.",
+  "cmp.necessary": "Necessary",
+  "cmp.necessary.desc": "Security and essential functionality.",
+  "cmp.analytics": "Analytics",
+  "cmp.analytics.desc": "Optional anonymous usage metrics to improve the website.",
+  "cmp.marketing": "Marketing",
+  "cmp.marketing.desc": "Optional personalization and campaign measurement.",
+  "cmp.reject": "Reject all",
+  "cmp.accept": "Accept all",
+  "cmp.save": "Save preferences"
+},
+
+        zh: {
+  "nav.about": "信息",
+  "nav.verticals": "垂直领域",
+  "nav.contact": "联系",
+
+  "footer.terms": "条款",
+  "footer.privacy": "隐私",
+  "footer.cookies": "Cookies",
+  "footer.legal": "法律",
+
+  "card.terms": `MICRORETAILX — 隐私政策
+
+MICRORETAILX LLC（特拉华州，美国）
+MICRORETAILX GROUP —— 全球运营框架
+
+最后更新日期：01-01-2026  
+生效日期：01-01-2026  
+
+注册办公地址及注册代理：
+Corporation Trust Center  
+1209 Orange Street  
+Wilmington, DE 19801  
+United States of America  
+
+
+1. 适用范围与目的
+
+本隐私政策说明 MICRORETAILX LLC（以下简称“MICRORETAILX”、“我们”）如何从数据保护与隐私角度设计和运营本网站。
+
+本网站仅用于信息性和概念性展示，不提供用户账户、不要求注册，亦不提供任何产品或服务的销售。
+
+
+2. 零数据策略（隐私保护即设计）
+
+本网站在设计之初即被明确构建为“零数据”环境。
+
+MICRORETAILX LLC 不会主动收集、请求、要求、存储、变现或利用访问者的个人数据。不会创建任何用户画像、身份标识或行为数据集。
+
+隐私保护原则以“默认即保护”的方式内嵌于系统设计中，包括数据最小化、目的限制、透明性、安全性与责任制。
+
+
+3. 无用户账户；无注册机制
+
+本网站不提供用户账户、登录区域、注册表单或会员系统。
+
+访问者无需提交任何个人数据即可访问本网站内容。
+
+
+4. 无画像分析；无追踪；无广告
+
+本网站不实施以下行为：
+
+• 行为或兴趣画像分析  
+• 广告或营销技术  
+• 分析平台或访问量统计工具  
+• 跨网站或跨服务追踪机制  
+
+MICRORETAILX LLC 不进行任何自动化决策、用户画像或行为分析。
+
+
+5. 技术元数据与日志信息
+
+与大多数互联网服务类似，在访问本网站时，可能会附带性处理有限的技术元数据，例如 IP 地址、请求头、时间戳或协议级信息。
+
+此类技术元数据仅用于以下技术与安全目的：
+
+• 确保内容安全、稳定地交付  
+• 防止滥用、自动化访问及攻击  
+• 维护网络完整性与可用性  
+
+上述技术元数据不会用于身份识别、画像分析、营销或统计目的，并仅在必要的最短期限内保留。
+
+
+6. 第三方基础设施服务提供方
+
+本网站通过第三方基础设施服务提供，包括内容分发网络（CDN）、DNS 服务及静态托管平台，例如 Cloudflare, Inc. 与 GitHub, Inc.。
+
+上述服务提供方可能仅在履行基础设施、安全与内容交付职能时，代表 MICRORETAILX LLC 处理有限的技术元数据。
+
+MICRORETAILX LLC 未启用任何由该等服务提供的分析、追踪、广告或行为监测功能。
+
+
+7. 国际数据传输
+
+在通过全球分布式基础设施处理技术元数据的情况下，可能涉及跨境数据传输。
+
+任何此类传输均在适当的技术与组织性保障下进行，并在适用情况下，依据标准合同条款（SCCs）或其他合法的国际数据传输机制。
+
+MICRORETAILX LLC 不会将国际数据传输用于个人数据的商业化利用。
+
+
+8. Cookie、技术标识符与基础设施安全
+
+默认情况下，本网站不使用任何营销、广告、分析、定向或行为追踪 Cookie。
+
+技术说明：本网站仅依赖于为核心基础设施与安全运营所必需的技术性标识符。该等标识符可能由内容分发网络（CDN）、DNS 服务、托管平台及安全层设置或处理。
+
+该等技术标识符仅用于以下目的：
+
+• 安全与滥用防护：运行 Web 应用防火墙（WAF）、机器人防护系统、速率限制及网络层防护措施，以防止未经授权的访问、自动化滥用及拒绝服务攻击。
+
+• 内容交付与可用性：通过全球 CDN、负载均衡及分布式基础设施，确保内容安全、高效、稳定地交付。
+
+上述技术标识符不用于用户画像、行为监测、广告或营销活动，亦不会用于跨网站或跨服务识别或追踪个人。
+
+在涉及技术元数据（如 IP 地址或请求头）的情况下，其处理严格限于安全、完整性及运营目的，并仅在必要的最短期限内进行。
+
+根据适用的数据保护与电子隐私法规，该等技术标识符通常被视为提供服务所必需，因此无需取得用户同意。
+
+
+9. 数据主体权利
+
+鉴于本网站的性质及未主动收集个人数据的事实，多数数据主体权利在实际操作中可能并不适用。
+
+在适用法律要求的情况下，个人可联系 MICRORETAILX LLC，咨询与技术访问日志相关的潜在数据处理情况。
+
+联系方式：legal@microretailx.com
+
+在法律允许的范围内，MICRORETAILX LLC 有权核实相关请求并限制回应范围。
+
+
+10. 数据安全
+
+MICRORETAILX LLC 采取适当的技术与组织性措施，以保护本网站及其基础设施免受未经授权的访问、滥用、篡改或破坏。
+
+安全措施包括但不限于传输加密、严格的安全头配置、访问控制及网络层防护。
+
+
+11. 安全即设计声明
+
+本网站在工程设计上采用以安全为先、以隐私保护为核心的架构。其技术设计旨在最小化数据暴露、降低攻击面，并防止不必要的数据处理，从而在默认状态下保护用户，而非依赖事后控制或同意机制。
+
+安全措施作为网站核心基础设施与运营模式的一部分实施，而非可选功能。
+
+
+12. 无定向；无设立
+
+MICRORETAILX LLC 不主动针对任何特定司法辖区的用户、客户、投资者或监管机构开展活动。
+
+仅因本网站在某一司法辖区可访问，并不构成在该司法辖区内的定向、设立、许可、授权或受监管活动。
+
+
+13. 儿童隐私
+
+本网站并非面向儿童，亦不会在明知的情况下收集未成年人的个人数据。
+
+
+14. 隐私政策的变更
+
+MICRORETAILX LLC 可不时更新本隐私政策。任何变更自在网站发布之日起生效。
+
+
+15. 适用法律与语言
+
+本隐私政策受美利坚合众国特拉华州法律管辖。
+
+英文版本为唯一具有法律效力的版本；其他语言版本仅为便利参考，不具有合同或法律效力。
+
+
+16. 联系方式
+
+如有隐私、法律或合规相关问题，请联系：
+legal@microretailx.com
+
+`,
+
+  "cookie.prefs": "Cookie 偏好设置",
+  "cmp.title": "隐私与 Cookies",
+  "cmp.desc": "我们尊重您的隐私。本网站不使用广告或追踪 Cookies。出于安全和基本功能需要，必要 Cookies 始终启用。",
+  "cmp.necessary": "必要",
+  "cmp.necessary.desc": "安全性和基本功能。",
+  "cmp.analytics": "分析",
+  "cmp.analytics.desc": "可选的匿名使用统计，用于改进网站。",
+  "cmp.marketing": "营销",
+  "cmp.marketing.desc": "可选的个性化和活动效果衡量。",
+  "cmp.reject": "全部拒绝",
+  "cmp.accept": "全部接受",
+  "cmp.save": "保存偏好"
+},
+
+       es: {
+  "nav.about": "Info",
+  "nav.verticals": "Verticales",
+  "nav.contact": "Contacto",
+
+  "footer.terms": "Términos",
+  "footer.privacy": "Privacidad",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Legal",
+
+  "card.terms": `MICRORETAILX — POLÍTICA DE PRIVACIDAD
+
+MICRORETAILX LLC (Delaware, Estados Unidos)
+MICRORETAILX GROUP – Marco de Operaciones Globales
+
+Última actualización: 01-01-2026
+Fecha de entrada en vigor: 01-01-2026
+
+Domicilio social y Agente Registrado:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+Estados Unidos de América
+
+
+1. ÁMBITO Y FINALIDAD
+
+La presente Política de Privacidad describe cómo MICRORETAILX LLC (“MICRORETAILX”, “nosotros”) diseña y opera este Sitio Web desde la perspectiva de la protección de datos y la privacidad.
+
+El Sitio Web es de carácter estrictamente informativo y conceptual. No ofrece cuentas de usuario, no requiere registro y no comercializa productos ni servicios.
+
+
+2. ESTRATEGIA DE CERO DATOS (PRIVACIDAD DESDE EL DISEÑO)
+
+Este Sitio Web ha sido diseñado intencionadamente como un entorno de Cero Datos.
+
+MICRORETAILX LLC no recopila, solicita, exige, almacena, monetiza ni explota de forma intencionada datos personales de los visitantes. No se crean perfiles de usuario, identificadores ni conjuntos de datos de comportamiento.
+
+Los principios de privacidad se integran desde el diseño y por defecto, incluyendo minimización de datos, limitación de la finalidad, transparencia, seguridad y responsabilidad proactiva.
+
+
+3. SIN CUENTAS DE USUARIO; SIN REGISTRO
+
+El Sitio Web no ofrece cuentas de usuario, áreas de acceso, formularios de registro ni sistemas de membresía.
+
+Los visitantes no están obligados a facilitar datos personales para acceder a los contenidos del Sitio Web.
+
+
+4. SIN PERFILADO; SIN SEGUIMIENTO; SIN PUBLICIDAD
+
+El Sitio Web no implementa:
+
+• perfilado conductual o por intereses  
+• tecnologías publicitarias o de marketing  
+• plataformas de analítica o medición de audiencias  
+• mecanismos de seguimiento entre sitios o servicios  
+
+MICRORETAILX LLC no realiza decisiones automatizadas, perfilado ni análisis de comportamiento de los visitantes.
+
+
+5. METADATOS TÉCNICOS Y REGISTROS
+
+Como ocurre en la mayoría de los servicios de Internet, al acceder al Sitio Web pueden procesarse de forma incidental determinados metadatos técnicos, tales como direcciones IP, encabezados de solicitud, marcas temporales o información a nivel de protocolo.
+
+Dichos metadatos se procesan exclusivamente con fines técnicos y de seguridad, incluyendo:
+
+• garantizar una entrega segura y fiable de los contenidos  
+• prevenir abusos, accesos automatizados y ataques  
+• mantener la integridad y disponibilidad de la red  
+
+Estos metadatos no se utilizan con fines de identificación, perfilado, marketing ni analítica, y se conservan únicamente durante el tiempo mínimo necesario.
+
+
+6. PROVEEDORES DE INFRAESTRUCTURA DE TERCEROS
+
+El Sitio Web se entrega a través de proveedores de infraestructura de terceros, incluidos redes de distribución de contenidos (CDN), servicios DNS y plataformas de alojamiento estático, tales como Cloudflare, Inc. y GitHub, Inc.
+
+Dichos proveedores pueden procesar metadatos técnicos limitados exclusivamente para desempeñar funciones de infraestructura, seguridad y entrega de contenidos en nombre de MICRORETAILX LLC.
+
+MICRORETAILX LLC no habilita funcionalidades de analítica, seguimiento, publicidad ni monitorización conductual ofrecidas por dichos proveedores.
+
+
+7. TRANSFERENCIAS INTERNACIONALES DE DATOS
+
+Cuando los metadatos técnicos se procesan a través de infraestructuras distribuidas globalmente, dicho tratamiento puede implicar transferencias internacionales.
+
+Cualquier transferencia se realiza bajo las medidas técnicas y organizativas adecuadas y, cuando resulta aplicable, sobre la base de mecanismos reconocidos de transferencia internacional de datos, tales como las cláusulas contractuales tipo (SCC) u otros marcos legales equivalentes.
+
+MICRORETAILX LLC no utiliza transferencias internacionales para la explotación comercial de datos personales.
+
+
+8. COOKIES, IDENTIFICADORES TÉCNICOS Y SEGURIDAD DE INFRAESTRUCTURA
+
+Por defecto, este Sitio Web no utiliza cookies de marketing, publicidad, analítica, segmentación ni seguimiento conductual.
+
+Divulgación técnica. El Sitio Web se apoya exclusivamente en identificadores técnicos estrictamente necesarios para las operaciones esenciales de infraestructura y seguridad. Dichos identificadores pueden ser establecidos o tratados por redes de distribución de contenidos (CDN), proveedores DNS, plataformas de alojamiento y capas de seguridad.
+
+Estos identificadores se utilizan únicamente para los siguientes fines:
+
+• Seguridad y prevención de abusos: operación de cortafuegos de aplicaciones web (WAF), sistemas de mitigación de bots, limitación de tasas y protecciones a nivel de red para evitar accesos no autorizados, abusos automatizados y ataques de denegación de servicio.
+
+• Entrega de contenidos y disponibilidad: entrega segura y eficiente de contenidos mediante CDN globales, balanceadores de carga e infraestructuras distribuidas, garantizando rendimiento, resiliencia y disponibilidad.
+
+Dichos identificadores técnicos no permiten el perfilado de usuarios, la monitorización del comportamiento ni actividades publicitarias o de marketing, ni se utilizan para identificar o rastrear a personas a través de sitios o servicios.
+
+Cuando se tratan metadatos técnicos (como direcciones IP o encabezados de solicitud), dicho tratamiento se limita estrictamente a fines de seguridad, integridad y operación, y únicamente durante el tiempo mínimo necesario.
+
+De conformidad con la normativa aplicable en materia de protección de datos y privacidad electrónica, estos identificadores suelen estar exentos de requisitos de consentimiento por ser estrictamente necesarios para la prestación, seguridad y correcto funcionamiento del Sitio Web.
+
+
+9. DERECHOS DE LAS PERSONAS INTERESADAS
+
+Dada la naturaleza del Sitio Web y la ausencia de una recopilación intencionada de datos personales, muchos de los derechos de las personas interesadas pueden no resultar aplicables en la práctica.
+
+Cuando así lo exija la normativa aplicable, las personas interesadas podrán contactar con MICRORETAILX LLC para consultar sobre posibles tratamientos relacionados con registros técnicos de acceso.
+
+Las solicitudes pueden enviarse a: legal@microretailx.com
+
+MICRORETAILX LLC se reserva el derecho de verificar las solicitudes y de limitar su respuesta en la medida permitida por la ley.
+
+
+10. SEGURIDAD DE LOS DATOS
+
+MICRORETAILX LLC aplica medidas técnicas y organizativas adecuadas para proteger el Sitio Web y su infraestructura frente a accesos no autorizados, usos indebidos, alteraciones o destrucción.
+
+Dichas medidas incluyen, entre otras, cifrado en tránsito, cabeceras de seguridad estrictas, controles de acceso y protecciones a nivel de red.
+
+
+11. DECLARACIÓN DE SEGURIDAD DESDE EL DISEÑO
+
+Este Sitio Web ha sido concebido y desarrollado con una arquitectura orientada a la seguridad y a la privacidad desde el diseño. Su planteamiento técnico tiene por objeto minimizar la exposición de datos, reducir la superficie de ataque y evitar tratamientos innecesarios de información, protegiendo a los usuarios por defecto en lugar de depender de controles posteriores o mecanismos de consentimiento.
+
+Las medidas de seguridad se integran como parte del núcleo de la infraestructura y del modelo operativo del Sitio Web, y no como funcionalidades opcionales.
+
+
+12. AUSENCIA DE SEGMENTACIÓN; AUSENCIA DE ESTABLECIMIENTO
+
+MICRORETAILX LLC no dirige activamente el Sitio Web a usuarios, clientes, inversores ni autoridades de ninguna jurisdicción específica.
+
+La mera accesibilidad del Sitio Web desde una determinada jurisdicción no constituye segmentación, establecimiento, licencia, autorización ni actividad regulada en dicha jurisdicción.
+
+
+13. PRIVACIDAD DE MENORES
+
+El Sitio Web no está dirigido a menores y MICRORETAILX LLC no recopila conscientemente datos personales de menores de edad.
+
+
+14. MODIFICACIONES DE LA POLÍTICA DE PRIVACIDAD
+
+MICRORETAILX LLC podrá actualizar esta Política de Privacidad en cualquier momento. Las modificaciones surtirán efecto desde su publicación en el Sitio Web.
+
+
+15. LEY APLICABLE E IDIOMA
+
+La presente Política de Privacidad se rige por las leyes del Estado de Delaware, Estados Unidos de América.
+
+La versión en inglés prevalece y es la única con efectos legales. Las traducciones se facilitan exclusivamente a efectos informativos y no tienen valor contractual ni jurídico.
+
+
+16. CONTACTO
+
+Para cualquier cuestión relacionada con privacidad, aspectos legales o cumplimiento normativo:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Preferencias de cookies",
+  "cmp.title": "Privacidad y Cookies",
+  "cmp.desc": "Respetamos su privacidad. Este sitio web no utiliza cookies de publicidad ni de seguimiento. Las cookies necesarias están siempre activadas por motivos de seguridad y funcionamiento esencial.",
+  "cmp.necessary": "Necesarias",
+  "cmp.necessary.desc": "Seguridad y funcionalidad esencial.",
+  "cmp.analytics": "Analítica",
+  "cmp.analytics.desc": "Métricas de uso anónimas y opcionales para mejorar el sitio web.",
+  "cmp.marketing": "Marketing",
+  "cmp.marketing.desc": "Personalización opcional y medición de campañas.",
+  "cmp.reject": "Rechazar todo",
+  "cmp.accept": "Aceptar todo",
+  "cmp.save": "Guardar preferencias"
+},
+
+
+       ca: {
+  "nav.about": "Informació",
+  "nav.verticals": "Verticals",
+  "nav.contact": "Contacte",
+
+  "footer.terms": "Termes",
+  "footer.privacy": "Privacitat",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Legal",
+
+  "reader.toggle": "Immersiu",
+  "card.test": "Hi estem treballant — torna aviat.",
+
+  "card.terms": `MICRORETAILX — POLÍTICA DE PRIVACITAT
+
+MICRORETAILX LLC (Delaware, Estats Units)
+MICRORETAILX GROUP – Marc d’Operacions Globals
+
+Darrera actualització: 01-01-2026
+Data d’entrada en vigor: 01-01-2026
+
+Domicili social i Agent Registrat:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+Estats Units d’Amèrica
+
+
+1. ÀMBIT I FINALITAT
+
+La present Política de Privacitat descriu com MICRORETAILX LLC (“MICRORETAILX”, “nosaltres”) dissenya i opera aquest Lloc Web des de la perspectiva de la protecció de dades i la privacitat.
+
+El Lloc Web és de caràcter estrictament informatiu i conceptual. No ofereix comptes d’usuari, no requereix registre i no comercialitza productes ni serveis.
+
+
+2. ESTRATÈGIA DE ZERO DADES (PRIVACITAT DES DEL DISSENY)
+
+Aquest Lloc Web ha estat dissenyat intencionadament com un entorn de Zero Dades.
+
+MICRORETAILX LLC no recopila, sol·licita, exigeix, emmagatzema, monetitza ni explota de manera intencionada dades personals dels visitants. No es creen perfils d’usuari, identificadors ni conjunts de dades de comportament.
+
+Els principis de privacitat s’integren des del disseny i per defecte, incloent-hi la minimització de dades, la limitació de la finalitat, la transparència, la seguretat i la responsabilitat proactiva.
+
+
+3. SENSE COMPTES D’USUARI; SENSE REGISTRE
+
+El Lloc Web no ofereix comptes d’usuari, àrees d’accés, formularis de registre ni sistemes de membresia.
+
+Els visitants no estan obligats a facilitar dades personals per accedir als continguts del Lloc Web.
+
+
+4. SENSE PERFILATGE; SENSE SEGUIMENT; SENSE PUBLICITAT
+
+El Lloc Web no implementa:
+
+• perfilatge conductual o per interessos  
+• tecnologies publicitàries o de màrqueting  
+• plataformes d’analítica o mesura d’audiències  
+• mecanismes de seguiment entre llocs o serveis  
+
+MICRORETAILX LLC no realitza decisions automatitzades, perfilatge ni anàlisi del comportament dels visitants.
+
+
+5. METADADES TÈCNIQUES I REGISTRES
+
+Com succeeix en la majoria de serveis d’Internet, en accedir al Lloc Web es poden tractar de manera incidental determinades metadades tècniques, com ara adreces IP, capçaleres de sol·licitud, marques temporals o informació a nivell de protocol.
+
+Aquestes metadades es tracten exclusivament amb finalitats tècniques i de seguretat, incloent-hi:
+
+• garantir una distribució segura i fiable dels continguts  
+• prevenir abusos, accessos automatitzats i atacs  
+• mantenir la integritat i la disponibilitat de la xarxa  
+
+Aquestes metadades no s’utilitzen amb finalitats d’identificació, perfilatge, màrqueting ni analítica, i es conserven únicament durant el temps mínim necessari.
+
+
+6. PROVEÏDORS D’INFRAESTRUCTURA DE TERCERS
+
+El Lloc Web es distribueix mitjançant proveïdors d’infraestructura de tercers, incloent-hi xarxes de distribució de continguts (CDN), serveis DNS i plataformes d’allotjament estàtic, com ara Cloudflare, Inc. i GitHub, Inc.
+
+Aquests proveïdors poden tractar metadades tècniques limitades exclusivament per exercir funcions d’infraestructura, seguretat i distribució de continguts en nom de MICRORETAILX LLC.
+
+MICRORETAILX LLC no habilita funcionalitats d’analítica, seguiment, publicitat ni monitorització conductual ofertes per aquests proveïdors.
+
+
+7. TRANSFERÈNCIES INTERNACIONALS DE DADES
+
+Quan les metadades tècniques es tracten mitjançant infraestructures distribuïdes globalment, aquest tractament pot implicar transferències internacionals.
+
+Qualsevol transferència es realitza sota les mesures tècniques i organitzatives adequades i, quan resulta aplicable, sobre la base de mecanismes reconeguts de transferència internacional de dades, com ara les clàusules contractuals tipus (SCC) o altres marcs legals equivalents.
+
+MICRORETAILX LLC no utilitza transferències internacionals per a l’explotació comercial de dades personals.
+
+
+8. COOKIES, IDENTIFICADORS TÈCNICS I SEGURETAT D’INFRAESTRUCTURA
+
+Per defecte, aquest Lloc Web no utilitza cookies de màrqueting, publicitat, analítica, segmentació ni seguiment conductual.
+
+Divulgació tècnica. El Lloc Web es basa exclusivament en identificadors tècnics estrictament necessaris per a les operacions essencials d’infraestructura i seguretat. Aquests identificadors poden ser establerts o tractats per xarxes de distribució de continguts (CDN), proveïdors DNS, plataformes d’allotjament i capes de seguretat.
+
+Aquests identificadors s’utilitzen únicament amb les finalitats següents:
+
+• Seguretat i prevenció d’abusos: operació de tallafocs d’aplicacions web (WAF), sistemes de mitigació de bots, limitació de taxes i proteccions a nivell de xarxa per prevenir accessos no autoritzats, abusos automatitzats i atacs de denegació de servei.
+
+• Distribució de continguts i disponibilitat: distribució segura i eficient de continguts mitjançant CDN globals, equilibradors de càrrega i infraestructures distribuïdes, garantint rendiment, resiliència i disponibilitat.
+
+Aquests identificadors tècnics no permeten el perfilatge d’usuaris, la monitorització del comportament ni activitats publicitàries o de màrqueting, ni s’utilitzen per identificar o rastrejar persones entre llocs o serveis.
+
+Quan es tracten metadades tècniques (com ara adreces IP o capçaleres de sol·licitud), aquest tractament es limita estrictament a finalitats de seguretat, integritat i operació, i únicament durant el temps mínim necessari.
+
+D’acord amb la normativa aplicable en matèria de protecció de dades i privacitat electrònica, aquests identificadors solen estar exempts de requisits de consentiment en ser estrictament necessaris per a la prestació, seguretat i correcte funcionament del Lloc Web.
+
+
+9. DRETS DE LES PERSONES INTERESSADES
+
+Atesa la naturalesa del Lloc Web i l’absència d’una recopilació intencionada de dades personals, molts dels drets de les persones interessades poden no resultar aplicables en la pràctica.
+
+Quan així ho exigeixi la normativa aplicable, les persones interessades poden contactar amb MICRORETAILX LLC per consultar sobre possibles tractaments relacionats amb registres tècnics d’accés.
+
+Les sol·licituds es poden adreçar a: legal@microretailx.com
+
+MICRORETAILX LLC es reserva el dret de verificar les sol·licituds i de limitar-ne la resposta en la mesura permesa per la llei.
+
+
+10. SEGURETAT DE LES DADES
+
+MICRORETAILX LLC aplica mesures tècniques i organitzatives adequades per protegir el Lloc Web i la seva infraestructura davant accessos no autoritzats, usos indeguts, alteracions o destruccions.
+
+Aquestes mesures inclouen, entre d’altres, xifrat en trànsit, capçaleres de seguretat estrictes, controls d’accés i proteccions a nivell de xarxa.
+
+
+11. DECLARACIÓ DE SEGURETAT DES DEL DISSENY
+
+Aquest Lloc Web ha estat concebut i desenvolupat amb una arquitectura orientada a la seguretat i a la privacitat des del disseny. El seu enfocament tècnic té per objectiu minimitzar l’exposició de dades, reduir la superfície d’atac i evitar tractaments innecessaris d’informació, protegint els usuaris per defecte en lloc de dependre de controls posteriors o mecanismes de consentiment.
+
+Les mesures de seguretat s’integren com a part del nucli de la infraestructura i del model operatiu del Lloc Web, i no com a funcionalitats opcionals.
+
+
+12. ABSÈNCIA DE SEGMENTACIÓ; ABSÈNCIA D’ESTABLIMENT
+
+MICRORETAILX LLC no dirigeix activament el Lloc Web a usuaris, clients, inversors ni autoritats de cap jurisdicció específica.
+
+La mera accessibilitat del Lloc Web des d’una determinada jurisdicció no constitueix segmentació, establiment, llicència, autorització ni activitat regulada en aquesta jurisdicció.
+
+
+13. PRIVACITAT DE MENORS
+
+El Lloc Web no està dirigit a menors i MICRORETAILX LLC no recopila conscientment dades personals de menors d’edat.
+
+
+14. MODIFICACIONS DE LA POLÍTICA DE PRIVACITAT
+
+MICRORETAILX LLC pot actualitzar aquesta Política de Privacitat en qualsevol moment. Les modificacions tindran efecte des de la seva publicació al Lloc Web.
+
+
+15. LLEI APLICABLE I IDIOMA
+
+La present Política de Privacitat es regeix per les lleis de l’Estat de Delaware, Estats Units d’Amèrica.
+
+La versió en anglès preval i és l’única amb efectes legals. Les traduccions es faciliten exclusivament amb finalitats informatives i no tenen valor contractual ni jurídic.
+
+
+16. CONTACTE
+
+Per a qualsevol qüestió relacionada amb la privacitat, aspectes legals o compliment normatiu:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Preferències de cookies",
+  "cmp.title": "Privacitat i cookies",
+  "cmp.desc": "Respectem la seva privacitat. Aquest lloc web no utilitza cookies publicitàries ni de rastreig. Les cookies necessàries estan sempre habilitades per a la seguretat i la funcionalitat essencial.",
+  "cmp.necessary": "Necessàries",
+  "cmp.necessary.desc": "Seguretat i funcionalitat essencial.",
+  "cmp.analytics": "Analítiques",
+  "cmp.analytics.desc": "Opcional: mètriques d’ús anònimes per millorar el lloc web.",
+  "cmp.marketing": "Màrqueting",
+  "cmp.marketing.desc": "Opcional: personalització i mesura de campanyes.",
+  "cmp.reject": "Rebutjar-ho tot",
+  "cmp.accept": "Acceptar-ho tot",
+  "cmp.save": "Desar preferències"
+},
+
+       eu: {
+  "nav.about": "Info",
+  "nav.verticals": "Bertikalak",
+  "nav.contact": "Kontaktua",
+
+  "footer.terms": "Baldintzak",
+  "footer.privacy": "Pribatutasuna",
+  "footer.cookies": "Cookie-ak",
+  "footer.legal": "Lege-oharra",
+
+  "card.terms": `MICRORETAILX — PRIBATUTASUN POLITIKA
+
+MICRORETAILX LLC (Delaware, Ameriketako Estatu Batuak)
+MICRORETAILX GROUP – Eragiketa Globalen Esparrua
+
+Azken eguneratzea: 01-01-2026
+Indarrean jartzeko data: 01-01-2026
+
+Egoitza soziala eta Erregistroko Agentea:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+Ameriketako Estatu Batuak
+
+
+1. ESPARRUA ETA HELBURUA
+
+Pribatutasun Politika honek MICRORETAILX LLCk (“MICRORETAILX”, “gu”) webgune hau nola diseinatzen eta ustiatzen duen azaltzen du, datuen babesaren eta pribatutasunaren ikuspegitik.
+
+Webgunea izaera informatibo eta kontzeptual hutsekoa da. Ez du erabiltzaile-konturik eskaintzen, ez du erregistrorik eskatzen, eta ez du produktu edo zerbitzurik merkaturatzen.
+
+
+2. ZERO DATU ESTRATEGIA (PRIBATUTASUNA DISEINUTIK)
+
+Webgune hau nahita diseinatu da Zero Datuen ingurune gisa.
+
+MICRORETAILX LLCk ez ditu bisitarien datu pertsonalak nahita biltzen, eskatzen, beharrezko egiten, gordetzen, monetizatzen edo ustiatzen. Ez dira erabiltzaile-profilak, identifikatzaileak edo portaera-datuen multzoak sortzen.
+
+Pribatutasunaren printzipioak diseinutik eta lehenetsiz txertatzen dira, besteak beste, datuen minimizazioa, helburuaren mugaketa, gardentasuna, segurtasuna eta erantzukizun proaktiboa.
+
+
+3. ERABILTZAILE-KONTURIK EZ; ERREGISTRORIK EZ
+
+Webguneak ez ditu erabiltzaile-kontuak, sarbide-eremuak, erregistro-inprimakiak edo bazkidetza-sistemak eskaintzen.
+
+Bisitariek ez dute datu pertsonalik eman behar Webguneko edukiak eskuratzeko.
+
+
+4. PROFILATZERIK EZ; JARRAIPENIK EZ; PUBLIZITATERIK EZ
+
+Webguneak ez ditu honako hauek inplementatzen:
+
+• portaera- edo interes-profilaketa  
+• publizitate edo marketin teknologiak  
+• analitika edo audientzia-neurketa plataformak  
+• webgune edo zerbitzuen arteko jarraipen-mekanismoak  
+
+MICRORETAILX LLCk ez du erabaki automatizaturik, profilaketarik edo bisitarien portaeraren analisiarik egiten.
+
+
+5. METADATU TEKNIKOAK ETA ERREGISTROAK
+
+Interneteko zerbitzu gehienetan bezala, Webgunea atzitzean metadatu tekniko mugatuak modu osagarrian tratatu daitezke, hala nola IP helbideak, eskaera-goiburuak, denbora-zigiluak edo protokolo mailako informazioa.
+
+Metadatu horiek helburu tekniko eta segurtasunekoetarako soilik tratatzen dira, besteak beste:
+
+• edukien banaketa segurua eta fidagarria bermatzeko  
+• abusua, sarbide automatizatuak eta erasoak prebenitzeko  
+• sarearen osotasuna eta erabilgarritasuna mantentzeko  
+
+Metadatu horiek ez dira identifikaziorako, profilaketarako, marketinerako edo analitikarako erabiltzen, eta beharrezkoa den gutxieneko denboran soilik gordetzen dira.
+
+
+6. HIRUGARRENEN AZPIEGITURA HORNITZAILEAK
+
+Webgunea hirugarrenen azpiegitura-hornitzaileen bidez banatzen da, besteak beste, edukiak banatzeko sareak (CDN), DNS zerbitzuak eta ostatatze estatikoaren plataformak, hala nola Cloudflare, Inc. eta GitHub, Inc.
+
+Hornitzaile horiek metadatu tekniko mugatuak tratatu ditzakete soilik azpiegitura, segurtasun eta eduki-banaketako funtzioak betetzeko MICRORETAILX LLCren izenean.
+
+MICRORETAILX LLCk ez du hornitzaile horiek eskaintzen dituzten analitika, jarraipen, publizitate edo portaera-monitorizazio funtzionalitaterik gaitzen.
+
+
+7. NAZIOARTEKO DATU-TRANSFERENTZIAK
+
+Metadatu teknikoak azpiegitura global banatuen bidez tratatzen direnean, baliteke nazioarteko datu-transferentziak gertatzea.
+
+Transferentzia horiek babes-neurri tekniko eta antolakuntzazko egokien pean egiten dira, eta, hala badagokio, nazioarteko datu-transferentziarako mekanismo aitortuak erabiliz, hala nola kontratu-klausula estandarrak (SCC) edo bestelako lege-esparru baliokideak.
+
+MICRORETAILX LLCk ez ditu nazioarteko transferentziak erabiltzen datu pertsonalen ustiapen komertzialerako.
+
+
+8. COOKIEAK, IDENTIFIKATZAILE TEKNIKOAK ETA AZPIEGITURAREN SEGURTASUNA
+
+Lehenespenez, Webgune honek ez ditu marketin, publizitate, analitika, segmentazio edo portaera-jarraipeneko cookieak erabiltzen.
+
+Azalpen teknikoa. Webguneak azpiegitura eta segurtasuneko oinarrizko eragiketetarako beharrezkoak diren identifikatzaile teknikoak baino ez ditu erabiltzen. Identifikatzaile horiek CDNek, DNS hornitzaileek, ostatatze-plataformek eta segurtasun-geruzek ezarri edo tratatu ditzakete.
+
+Identifikatzaile horiek honako helburuetarako soilik erabiltzen dira:
+
+• Segurtasuna eta abusuen prebentzioa: web aplikazioen suebakiak (WAF), bot-mitigazio sistemak, tasen mugaketa eta sare-mailako babesak erabiltzea, baimenik gabeko sarbideak, abusua eta zerbitzu-ukapeneko erasoak saihesteko.
+
+• Edukien banaketa eta erabilgarritasuna: CDN globalen, karga-orekatzaileen eta azpiegitura banatuen bidez edukien banaketa segurua eta eraginkorra bermatzea.
+
+Identifikatzaile tekniko horiek ez dute erabiltzaileen profilaketa, portaeraren monitorizazioa edo publizitate-jarduerarik ahalbidetzen, eta ez dira pertsonak webgune edo zerbitzuen artean identifikatzeko edo jarraitzeko erabiltzen.
+
+Metadatu teknikoak (hala nola IP helbideak edo eskaera-goiburuak) tratatzen direnean, tratamendua segurtasun, osotasun eta eragiketa-helburuetara mugatzen da zorrotz, eta beharrezkoa den gutxieneko denboran soilik egiten da.
+
+Datuen babesari eta pribatutasun elektronikoari buruzko araudi aplikagarriaren arabera, identifikatzaile horiek oro har baimen-eskakizunetatik salbuetsita daude, zerbitzua emateko, segurtasuna bermatzeko eta Webgunearen funtzionamendu egokirako beharrezkoak direlako.
+
+
+9. DATUEN TITULUEN ESKUBIDEAK
+
+Webgunearen izaera dela eta, eta datu pertsonalen bilketa nahitarik ez dagoenez, datuen titularren eskubide asko ez dira praktikan aplikagarriak izan daitezke.
+
+Lege aplikagarriak hala eskatzen duenean, interesdunek MICRORETAILX LLCrekin harremanetan jar daitezke sarbide-erregistro teknikoekin lotutako tratamenduei buruz galdetzeko.
+
+Eskaerak helbide honetara bidali daitezke: legal@microretailx.com
+
+MICRORETAILX LLCk eskaerak egiaztatzeko eta legeak baimentzen duen neurrian erantzunak mugatzeko eskubidea gordetzen du.
+
+
+10. DATUEN SEGURTASUNA
+
+MICRORETAILX LLCk neurri tekniko eta antolakuntzazko egokiak ezartzen ditu Webgunea eta haren azpiegitura baimenik gabeko sarbideen, erabilera desegokien, aldaketen edo suntsipenaren aurka babesteko.
+
+Neurri horien artean daude, besteak beste, transmisioaren zifratzea, segurtasun-goiburu zorrotzak, sarbide-kontrolak eta sare-mailako babesak.
+
+
+11. SEGURTASUNA DISEINUTIK ADIERAZPENA
+
+Webgune hau segurtasuna eta pribatutasuna diseinutik lehenesten dituen arkitektura batekin diseinatu eta garatu da. Ikuspegi tekniko horren helburua da datuen esposizioa minimizatzea, eraso-azalera murriztea eta beharrezkoak ez diren informazio-tratamenduak saihestea, erabiltzaileak lehenespenez babestuz, ondorengo kontrol edo baimen-mekanismoetan oinarritu beharrean.
+
+Segurtasun-neurriak Webgunearen azpiegitura nagusiaren eta eredu operatiboaren parte dira, eta ez aukerako funtzionalitateak.
+
+
+12. SEGMENTAZIORIK EZ; ESTABLEZIMENDURIK EZ
+
+MICRORETAILX LLCk ez du Webgunea aktiboki zuzentzen jurisdikzio jakin bateko erabiltzaile, bezero, inbertitzaile edo agintariei.
+
+Webgunea jurisdikzio jakin batetik eskuragarri egote hutsak ez du segmentaziorik, establezimendurik, lizentziarik, baimenik edo jarduera arauturik sortzen jurisdikzio horretan.
+
+
+13. ADINGABEEN PRIBATUTASUNA
+
+Webgunea ez dago adingabeei zuzenduta, eta MICRORETAILX LLCk ez ditu nahita adingabeen datu pertsonalak biltzen.
+
+
+14. PRIBATUTASUN POLITIKAREN ALDAKETAK
+
+MICRORETAILX LLCk Pribatutasun Politika hau edozein unetan eguneratu dezake. Aldaketak Webgunean argitaratzen diren unetik aurrera izango dira indarrean.
+
+
+15. APLIKATZEKO LEGEA ETA HIZKUNTZA
+
+Pribatutasun Politika hau Ameriketako Estatu Batuetako Delaware Estatuko legeen arabera arautzen da.
+
+Ingelesezko bertsioa da balio juridikoa duen bakarra. Beste hizkuntzetako itzulpenak informazio-helburuekin soilik eskaintzen dira, eta ez dute balio kontraktualik ez juridikorik.
+
+
+16. KONTAKTUA
+
+Pribatutasunari, gai juridikoei edo araudia betetzeari buruzko edozein kontsultarako:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Cookie-en lehentasunak",
+  "cmp.title": "Pribatutasuna eta Cookie-ak",
+  "cmp.desc": "Zure pribatutasuna errespetatzen dugu. Webgune honek ez ditu publizitate- edo jarraipen-cookie-ak erabiltzen. Beharrezko cookie-ak beti aktibatuta daude segurtasun eta funtzionaltasun funtsezkorako.",
+  "cmp.necessary": "Beharrezkoak",
+  "cmp.necessary.desc": "Segurtasuna eta funtzionaltasun funtsezkoa.",
+  "cmp.analytics": "Analitika",
+  "cmp.analytics.desc": "Webgunea hobetzeko erabilera-metrika anonimo eta aukerakoak.",
+  "cmp.marketing": "Marketina",
+  "cmp.marketing.desc": "Pertsonalizazio aukerakoa eta kanpainen neurketa.",
+  "cmp.reject": "Dena baztertu",
+  "cmp.accept": "Dena onartu",
+  "cmp.save": "Lehentasunak gorde"
+},
+
+       fr: {
+  "nav.about": "Info",
+  "nav.verticals": "Verticales",
+  "nav.contact": "Contact",
+
+  "footer.terms": "Conditions",
+  "footer.privacy": "Confidentialité",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Mentions légales",
+
+  "card.terms": `MICRORETAILX — POLITIQUE DE CONFIDENTIALITÉ
+  
+MICRORETAILX LLC (Delaware, États-Unis)
+MICRORETAILX GROUP – Cadre d’Opérations Globales
+
+Dernière mise à jour : 01-01-2026
+Date d’entrée en vigueur : 01-01-2026
+
+Siège social et Agent enregistré :
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+États-Unis d’Amérique
+
+
+1. CHAMP D’APPLICATION ET FINALITÉ
+
+La présente Politique de Confidentialité décrit la manière dont MICRORETAILX LLC (« MICRORETAILX », « nous ») conçoit et exploite ce Site Web du point de vue de la protection des données et de la vie privée.
+
+Le Site Web est de nature strictement informative et conceptuelle. Il ne propose pas de comptes utilisateurs, ne requiert aucune inscription et ne commercialise aucun produit ni service.
+
+
+2. STRATÉGIE ZÉRO DONNÉE (CONFIDENTIALITÉ DÈS LA CONCEPTION)
+
+Ce Site Web a été intentionnellement conçu comme un environnement Zéro Donnée.
+
+MICRORETAILX LLC ne collecte, ne sollicite, n’exige, ne stocke, ne monétise ni n’exploite intentionnellement des données personnelles des visiteurs. Aucun profil utilisateur, identifiant ou ensemble de données comportementales n’est créé.
+
+Les principes de protection des données sont intégrés dès la conception et par défaut, notamment la minimisation des données, la limitation des finalités, la transparence, la sécurité et la responsabilité proactive.
+
+
+3. ABSENCE DE COMPTES UTILISATEURS ; ABSENCE D’INSCRIPTION
+
+Le Site Web ne propose pas de comptes utilisateurs, d’espaces de connexion, de formulaires d’inscription ni de systèmes d’adhésion.
+
+Les visiteurs ne sont pas tenus de fournir des données personnelles pour accéder aux contenus du Site Web.
+
+
+4. ABSENCE DE PROFILAGE ; ABSENCE DE SUIVI ; ABSENCE DE PUBLICITÉ
+
+Le Site Web ne met pas en œuvre :
+
+• de profilage comportemental ou par centres d’intérêt  
+• de technologies publicitaires ou marketing  
+• de plateformes d’analyse ou de mesure d’audience  
+• de mécanismes de suivi inter-sites ou inter-services  
+
+MICRORETAILX LLC ne procède à aucune prise de décision automatisée, profilage ou analyse du comportement des visiteurs.
+
+
+5. MÉTADONNÉES TECHNIQUES ET JOURNAUX
+
+Comme pour la plupart des services Internet, certaines métadonnées techniques limitées peuvent être traitées de manière incidente lors de l’accès au Site Web, telles que les adresses IP, les en-têtes de requête, les horodatages ou des informations de niveau protocolaire.
+
+Ces métadonnées sont traitées exclusivement à des fins techniques et de sécurité, notamment pour :
+
+• assurer une diffusion sécurisée et fiable des contenus  
+• prévenir les abus, les accès automatisés et les attaques  
+• maintenir l’intégrité et la disponibilité du réseau  
+
+Ces métadonnées ne sont pas utilisées à des fins d’identification, de profilage, de marketing ou d’analyse, et ne sont conservées que pendant la durée strictement nécessaire.
+
+
+6. FOURNISSEURS D’INFRASTRUCTURE TIERS
+
+Le Site Web est diffusé via des fournisseurs d’infrastructure tiers, notamment des réseaux de diffusion de contenu (CDN), des services DNS et des plateformes d’hébergement statique, tels que Cloudflare, Inc. et GitHub, Inc.
+
+Ces fournisseurs peuvent traiter des métadonnées techniques limitées uniquement pour assurer des fonctions d’infrastructure, de sécurité et de diffusion de contenu pour le compte de MICRORETAILX LLC.
+
+MICRORETAILX LLC n’active aucune fonctionnalité d’analyse, de suivi, de publicité ou de surveillance comportementale proposée par ces fournisseurs.
+
+
+7. TRANSFERTS INTERNATIONAUX DE DONNÉES
+
+Lorsque des métadonnées techniques sont traitées via des infrastructures distribuées à l’échelle mondiale, ce traitement peut impliquer des transferts internationaux de données.
+
+Ces transferts sont effectués sous des garanties techniques et organisationnelles appropriées et, le cas échéant, sur la base de mécanismes reconnus de transfert international de données, tels que les clauses contractuelles types (CCT/SCC) ou des cadres juridiques équivalents.
+
+MICRORETAILX LLC n’utilise pas les transferts internationaux à des fins d’exploitation commerciale de données personnelles.
+
+
+8. COOKIES, IDENTIFIANTS TECHNIQUES ET SÉCURITÉ DE L’INFRASTRUCTURE
+
+Par défaut, ce Site Web n’utilise pas de cookies de marketing, de publicité, d’analyse, de ciblage ou de suivi comportemental.
+
+Divulgation technique. Le Site Web repose exclusivement sur des identifiants techniques strictement nécessaires aux opérations essentielles d’infrastructure et de sécurité. Ces identifiants peuvent être définis ou traités par des réseaux de diffusion de contenu (CDN), des fournisseurs DNS, des plateformes d’hébergement et des couches de sécurité.
+
+Ces identifiants sont utilisés uniquement aux fins suivantes :
+
+• Sécurité et prévention des abus : exploitation de pare-feux applicatifs Web (WAF), de systèmes de mitigation des bots, de limitation de débit et de protections au niveau réseau afin de prévenir les accès non autorisés, les abus automatisés et les attaques par déni de service.
+
+• Diffusion de contenu et disponibilité : diffusion sécurisée et efficace des contenus via des CDN globaux, des répartiteurs de charge et des infrastructures distribuées, garantissant performance, résilience et disponibilité.
+
+Ces identifiants techniques ne permettent ni le profilage des utilisateurs, ni la surveillance comportementale, ni des activités publicitaires ou marketing, et ne sont pas utilisés pour identifier ou suivre des personnes à travers des sites ou des services.
+
+Lorsque des métadonnées techniques (telles que les adresses IP ou les en-têtes de requête) sont traitées, ce traitement est strictement limité à des finalités de sécurité, d’intégrité et d’exploitation, et uniquement pour la durée minimale nécessaire.
+
+Conformément aux réglementations applicables en matière de protection des données et de confidentialité électronique, ces identifiants sont généralement exemptés d’exigences de consentement, car ils sont strictement nécessaires à la fourniture, à la sécurité et au bon fonctionnement du Site Web.
+
+
+9. DROITS DES PERSONNES CONCERNÉES
+
+Compte tenu de la nature du Site Web et de l’absence de collecte intentionnelle de données personnelles, de nombreux droits des personnes concernées peuvent ne pas être applicables en pratique.
+
+Lorsque la législation applicable l’exige, les personnes concernées peuvent contacter MICRORETAILX LLC afin de s’informer sur d’éventuels traitements liés aux journaux techniques d’accès.
+
+Les demandes peuvent être adressées à : legal@microretailx.com
+
+MICRORETAILX LLC se réserve le droit de vérifier les demandes et d’en limiter la réponse dans les limites autorisées par la loi.
+
+
+10. SÉCURITÉ DES DONNÉES
+
+MICRORETAILX LLC met en œuvre des mesures techniques et organisationnelles appropriées afin de protéger le Site Web et son infrastructure contre tout accès non autorisé, toute utilisation abusive, toute altération ou destruction.
+
+Ces mesures incluent notamment le chiffrement des communications, des en-têtes de sécurité stricts, des contrôles d’accès et des protections au niveau réseau.
+
+
+11. DÉCLARATION DE SÉCURITÉ DÈS LA CONCEPTION
+
+Le Site Web a été conçu et développé selon une architecture privilégiant la sécurité et la protection de la vie privée dès la conception. Son approche technique vise à minimiser l’exposition des données, à réduire la surface d’attaque et à éviter tout traitement d’information inutile, protégeant ainsi les utilisateurs par défaut plutôt que de s’appuyer sur des contrôles a posteriori ou des mécanismes de consentement.
+
+Les mesures de sécurité sont intégrées au cœur de l’infrastructure et du modèle opérationnel du Site Web, et ne constituent pas des fonctionnalités optionnelles.
+
+
+12. ABSENCE DE CIBLAGE ; ABSENCE D’ÉTABLISSEMENT
+
+MICRORETAILX LLC ne cible pas activement des utilisateurs, clients, investisseurs ou autorités d’une juridiction spécifique.
+
+La simple accessibilité du Site Web depuis une juridiction donnée ne constitue pas un ciblage, un établissement, une licence, une autorisation ni une activité réglementée dans cette juridiction.
+
+
+13. PROTECTION DES MINEURS
+
+Le Site Web n’est pas destiné aux mineurs et MICRORETAILX LLC ne collecte pas sciemment de données personnelles concernant des mineurs.
+
+
+14. MODIFICATIONS DE LA POLITIQUE DE CONFIDENTIALITÉ
+
+MICRORETAILX LLC peut mettre à jour la présente Politique de Confidentialité à tout moment. Les modifications prennent effet dès leur publication sur le Site Web.
+
+
+15. DROIT APPLICABLE ET LANGUE
+
+La présente Politique de Confidentialité est régie par les lois de l’État du Delaware, États-Unis d’Amérique.
+
+La version anglaise prévaut et est la seule version ayant une valeur juridique. Les traductions sont fournies uniquement à titre informatif et n’ont aucun effet contractuel ou juridique.
+
+
+16. CONTACT
+
+Pour toute question relative à la confidentialité, aux aspects juridiques ou à la conformité :
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Préférences de cookies",
+  "cmp.title": "Confidentialité et Cookies",
+  "cmp.desc": "Nous respectons votre vie privée. Ce site web n’utilise pas de cookies publicitaires ni de suivi. Les cookies nécessaires sont toujours activés pour des raisons de sécurité et de fonctionnement essentiel.",
+  "cmp.necessary": "Nécessaires",
+  "cmp.necessary.desc": "Sécurité et fonctionnalités essentielles.",
+  "cmp.analytics": "Analytique",
+  "cmp.analytics.desc": "Mesures d’utilisation anonymes et facultatives pour améliorer le site web.",
+  "cmp.marketing": "Marketing",
+  "cmp.marketing.desc": "Personnalisation facultative et mesure des campagnes.",
+  "cmp.reject": "Tout refuser",
+  "cmp.accept": "Tout accepter",
+  "cmp.save": "Enregistrer les préférences"
+},
+
+      ar: {
+  "nav.about": "معلومات",
+  "nav.verticals": "القطاعات",
+  "nav.contact": "اتصال",
+
+  "footer.terms": "الشروط",
+  "footer.privacy": "الخصوصية",
+  "footer.cookies": "Cookies",
+  "footer.legal": "قانوني",
+
+  "card.terms": `MICRORETAILX — سياسة الخصوصية
+
+MICRORETAILX LLC (ديلاوير، الولايات المتحدة الأمريكية)
+MICRORETAILX GROUP – إطار العمليات العالمية
+
+آخر تحديث: 01-01-2026
+تاريخ السريان: 01-01-2026
+
+المقر القانوني والوكيل المسجل:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+الولايات المتحدة الأمريكية
+
+
+1. النطاق والغرض
+
+توضح سياسة الخصوصية هذه كيفية قيام شركة MICRORETAILX LLC («MICRORETAILX»، «نحن») بتصميم وتشغيل هذا الموقع الإلكتروني من منظور حماية البيانات والخصوصية.
+
+الموقع ذو طابع معلوماتي وتصوري بحت. لا يوفر حسابات مستخدمين، ولا يتطلب التسجيل، ولا يقدم منتجات أو خدمات للبيع.
+
+
+2. استراتيجية البيانات الصفرية (الخصوصية منذ التصميم)
+
+تم تصميم هذا الموقع عمداً ليكون بيئة «بيانات صفرية».
+
+لا تقوم MICRORETAILX LLC بجمع أو طلب أو اشتراط أو تخزين أو تحقيق دخل أو استغلال البيانات الشخصية للزوار بشكل مقصود. ولا يتم إنشاء ملفات تعريف مستخدمين أو معرفات أو مجموعات بيانات سلوكية.
+
+يتم دمج مبادئ الخصوصية منذ مرحلة التصميم وبشكل افتراضي، بما في ذلك تقليل البيانات، وتحديد الغرض، والشفافية، والأمن، والمسؤولية الاستباقية.
+
+
+3. عدم وجود حسابات مستخدمين؛ عدم وجود تسجيل
+
+لا يوفر الموقع حسابات مستخدمين أو مناطق تسجيل دخول أو نماذج تسجيل أو أنظمة عضوية.
+
+ولا يُطلب من الزوار تقديم أي بيانات شخصية للوصول إلى محتوى الموقع.
+
+
+4. عدم وجود تحليل سلوكي؛ عدم وجود تتبع؛ عدم وجود إعلانات
+
+لا يقوم الموقع بتطبيق ما يلي:
+
+• التحليل السلوكي أو القائم على الاهتمامات  
+• تقنيات الإعلان أو التسويق  
+• منصات التحليلات أو قياس الجمهور  
+• آليات التتبع عبر المواقع أو الخدمات  
+
+لا تجري MICRORETAILX LLC أي قرارات آلية أو تحليل سلوكي أو إنشاء ملفات تعريف للزوار.
+
+
+5. البيانات الوصفية التقنية والسجلات
+
+كما هو الحال في معظم خدمات الإنترنت، قد تتم معالجة بعض البيانات الوصفية التقنية المحدودة بشكل عرضي عند الوصول إلى الموقع، مثل عناوين IP، أو رؤوس الطلبات، أو الطوابع الزمنية، أو معلومات على مستوى البروتوكول.
+
+يتم استخدام هذه البيانات الوصفية حصراً لأغراض تقنية وأمنية، بما في ذلك:
+
+• ضمان توصيل المحتوى بشكل آمن وموثوق  
+• منع إساءة الاستخدام، والوصول الآلي، والهجمات  
+• الحفاظ على سلامة الشبكة وتوافرها  
+
+ولا تُستخدم هذه البيانات لأغراض التعريف أو التحليل السلوكي أو التسويق أو التحليلات، ويتم الاحتفاظ بها فقط للمدة الدنيا اللازمة.
+
+
+6. مزودو البنية التحتية من الأطراف الثالثة
+
+يتم تقديم الموقع عبر مزودي بنية تحتية من أطراف ثالثة، بما في ذلك شبكات توصيل المحتوى (CDN)، وخدمات DNS، ومنصات الاستضافة الثابتة، مثل Cloudflare, Inc. وGitHub, Inc.
+
+قد يقوم هؤلاء المزودون بمعالجة بيانات وصفية تقنية محدودة فقط لأداء وظائف البنية التحتية والأمن وتوصيل المحتوى نيابةً عن MICRORETAILX LLC.
+
+ولا تقوم MICRORETAILX LLC بتمكين أي ميزات تحليلات أو تتبع أو إعلانات أو مراقبة سلوكية يقدمها هؤلاء المزودون.
+
+
+7. نقل البيانات عبر الحدود الدولية
+
+عند معالجة البيانات الوصفية التقنية من خلال بنى تحتية موزعة عالمياً، قد ينطوي ذلك على نقل بيانات عبر الحدود الدولية.
+
+يتم إجراء أي عمليات نقل ضمن الضمانات التقنية والتنظيمية المناسبة، وعند الاقتضاء، استناداً إلى آليات نقل دولي معترف بها قانوناً، مثل البنود التعاقدية القياسية (SCC) أو أطر قانونية مكافئة.
+
+ولا تستخدم MICRORETAILX LLC عمليات النقل الدولية لأغراض الاستغلال التجاري للبيانات الشخصية.
+
+
+8. ملفات تعريف الارتباط والمعرفات التقنية وأمن البنية التحتية
+
+افتراضياً، لا يستخدم هذا الموقع ملفات تعريف ارتباط للتسويق أو الإعلان أو التحليلات أو الاستهداف أو التتبع السلوكي.
+
+إيضاح تقني: يعتمد الموقع حصراً على معرفات تقنية ضرورية بشكل صارم لعمليات البنية التحتية والأمن الأساسية. وقد يتم تعيين هذه المعرفات أو معالجتها من قبل شبكات توصيل المحتوى (CDN)، ومزودي DNS، ومنصات الاستضافة، وطبقات الأمان.
+
+تُستخدم هذه المعرفات فقط للأغراض التالية:
+
+• الأمن ومنع إساءة الاستخدام: تشغيل جدران حماية تطبيقات الويب (WAF)، وأنظمة التخفيف من الروبوتات، وتحديد المعدلات، وحمايات على مستوى الشبكة لمنع الوصول غير المصرح به، وإساءة الاستخدام الآلي، وهجمات حجب الخدمة.
+
+• توصيل المحتوى والتوافر: توصيل المحتوى بشكل آمن وفعّال عبر شبكات CDN عالمية، وموازنات تحميل، وبنى تحتية موزعة لضمان الأداء والمرونة والتوافر.
+
+لا تُمكّن هذه المعرفات التقنية من إنشاء ملفات تعريف للمستخدمين أو مراقبة السلوك أو الأنشطة الإعلانية أو التسويقية، ولا تُستخدم لتحديد هوية الأفراد أو تتبعهم عبر المواقع أو الخدمات.
+
+وعند معالجة بيانات وصفية تقنية (مثل عناوين IP أو رؤوس الطلبات)، يتم ذلك حصراً لأغراض الأمن وسلامة التشغيل، ولأقصر مدة لازمة فقط.
+
+وبموجب أطر حماية البيانات والخصوصية الإلكترونية المعمول بها، تُعفى هذه المعرفات عادةً من متطلبات الموافقة نظراً لكونها ضرورية بشكل صارم لتقديم الخدمة وأمنها وحسن تشغيل الموقع.
+
+
+9. حقوق أصحاب البيانات
+
+نظراً لطبيعة الموقع وعدم وجود جمع مقصود للبيانات الشخصية، قد لا تكون العديد من حقوق أصحاب البيانات قابلة للتطبيق عملياً.
+
+وعندما يقتضي القانون المعمول به ذلك، يمكن للأفراد الاتصال بـ MICRORETAILX LLC للاستفسار عن أي معالجة محتملة تتعلق بسجلات الوصول التقنية.
+
+يمكن إرسال الطلبات إلى: legal@microretailx.com
+
+تحتفظ MICRORETAILX LLC بالحق في التحقق من الطلبات وتقييد نطاق الاستجابة بالقدر الذي يسمح به القانون.
+
+
+10. أمن البيانات
+
+تطبق MICRORETAILX LLC تدابير تقنية وتنظيمية مناسبة لحماية الموقع وبنيته التحتية من الوصول غير المصرح به أو سوء الاستخدام أو التعديل أو التدمير.
+
+وتشمل هذه التدابير، على سبيل المثال لا الحصر، التشفير أثناء النقل، ورؤوس الأمان الصارمة، وضوابط الوصول، وحمايات على مستوى الشبكة.
+
+
+11. بيان الأمن منذ التصميم
+
+تم تصميم وتطوير هذا الموقع وفق بنية تضع الأمن والخصوصية في صميم التصميم. ويهدف النهج التقني المعتمد إلى تقليل تعرض البيانات، وخفض سطح الهجوم، ومنع المعالجة غير الضرورية للمعلومات، وبذلك تتم حماية المستخدمين افتراضياً بدلاً من الاعتماد على ضوابط لاحقة أو آليات موافقة.
+
+يتم تنفيذ تدابير الأمان كجزء أساسي من البنية التحتية والنموذج التشغيلي للموقع، وليس كميزات اختيارية.
+
+
+12. عدم الاستهداف؛ عدم وجود منشأة
+
+لا تستهدف MICRORETAILX LLC بشكل نشط مستخدمين أو عملاء أو مستثمرين أو سلطات في أي ولاية قضائية محددة.
+
+ولا يشكل مجرد إمكانية الوصول إلى الموقع من ولاية قضائية معينة استهدافاً أو إنشاءً أو ترخيصاً أو تصريحاً أو نشاطاً منظماً في تلك الولاية القضائية.
+
+
+13. خصوصية القُصَّر
+
+لا يستهدف الموقع القُصَّر، ولا تقوم MICRORETAILX LLC بجمع بيانات شخصية عن القُصَّر عن علم.
+
+
+14. تعديلات سياسة الخصوصية
+
+يجوز لـ MICRORETAILX LLC تحديث سياسة الخصوصية هذه في أي وقت. وتسري التعديلات اعتباراً من تاريخ نشرها على الموقع.
+
+
+15. القانون الواجب التطبيق واللغة
+
+تخضع سياسة الخصوصية هذه لقوانين ولاية ديلاوير، الولايات المتحدة الأمريكية.
+
+وتسود النسخة الإنجليزية، وهي النسخة الوحيدة ذات الأثر القانوني. وتُقدَّم الترجمات لأغراض معلوماتية فقط ولا يترتب عليها أي أثر تعاقدي أو قانوني.
+
+
+16. التواصل
+
+لأي استفسارات تتعلق بالخصوصية أو الشؤون القانونية أو الامتثال:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "تفضيلات Cookies",
+  "cmp.title": "الخصوصية وملفات تعريف الارتباط",
+  "cmp.desc": "نحن نحترم خصوصيتك. لا يستخدم هذا الموقع ملفات تعريف ارتباط للإعلانات أو التتبع. يتم دائمًا تفعيل ملفات تعريف الارتباط الضرورية لأسباب أمنية ووظيفية أساسية.",
+  "cmp.necessary": "ضرورية",
+  "cmp.necessary.desc": "الأمن والوظائف الأساسية.",
+  "cmp.analytics": "تحليلات",
+  "cmp.analytics.desc": "مقاييس استخدام مجهولة واختيارية لتحسين الموقع.",
+  "cmp.marketing": "تسويق",
+  "cmp.marketing.desc": "تخصيص اختياري وقياس الحملات.",
+  "cmp.reject": "رفض الكل",
+  "cmp.accept": "قبول الكل",
+  "cmp.save": "حفظ التفضيلات"
+},
+
+      ru: {
+  "nav.about": "Информация",
+  "nav.verticals": "Вертикали",
+  "nav.contact": "Контакты",
+
+  "footer.terms": "Условия",
+  "footer.privacy": "Конфиденциальность",
+  "footer.cookies": "Cookies",
+  "footer.legal": "Правовая информация",
+
+  "card.terms": `MICRORETAILX — ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ
+
+MICRORETAILX LLC (Делавэр, Соединённые Штаты Америки)
+MICRORETAILX GROUP – Глобальная операционная структура
+
+Дата последнего обновления: 01-01-2026
+Дата вступления в силу: 01-01-2026
+
+Юридический адрес и зарегистрированный агент:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+Соединённые Штаты Америки
+
+
+1. ОБЛАСТЬ ПРИМЕНЕНИЯ И ЦЕЛЬ
+
+Настоящая Политика конфиденциальности описывает, каким образом компания MICRORETAILX LLC («MICRORETAILX», «мы») проектирует и эксплуатирует данный Веб-сайт с точки зрения защиты данных и конфиденциальности.
+
+Веб-сайт носит строго информационный и концептуальный характер. Он не предоставляет учетных записей пользователей, не требует регистрации и не осуществляет продажу товаров или услуг.
+
+
+2. СТРАТЕГИЯ НУЛЕВЫХ ДАННЫХ (КОНФИДЕНЦИАЛЬНОСТЬ ПО ПРОЕКТУ)
+
+Данный Веб-сайт намеренно спроектирован как среда с нулевым сбором данных.
+
+MICRORETAILX LLC не осуществляет умышленный сбор, запрос, обязательное предоставление, хранение, монетизацию или использование персональных данных посетителей. Пользовательские профили, идентификаторы или поведенческие наборы данных не создаются.
+
+Принципы конфиденциальности встроены в архитектуру сайта по умолчанию и с этапа проектирования, включая минимизацию данных, ограничение целей обработки, прозрачность, безопасность и проактивную ответственность.
+
+
+3. ОТСУТСТВИЕ УЧЕТНЫХ ЗАПИСЕЙ; ОТСУТСТВИЕ РЕГИСТРАЦИИ
+
+Веб-сайт не предоставляет учетных записей пользователей, зон входа, регистрационных форм или систем членства.
+
+Для доступа к содержимому Веб-сайта посетителям не требуется предоставлять персональные данные.
+
+
+4. ОТСУТСТВИЕ ПРОФИЛИРОВАНИЯ; ОТСУТСТВИЕ ОТСЛЕЖИВАНИЯ; ОТСУТСТВИЕ РЕКЛАМЫ
+
+На Веб-сайте не используются:
+
+• поведенческое или интересное профилирование  
+• рекламные или маркетинговые технологии  
+• аналитические платформы или системы измерения аудитории  
+• механизмы межсайтового или межсервисного отслеживания  
+
+MICRORETAILX LLC не осуществляет автоматизированное принятие решений, профилирование или анализ поведения посетителей.
+
+
+5. ТЕХНИЧЕСКИЕ МЕТАДАННЫЕ И ЖУРНАЛЫ
+
+Как и в большинстве интернет-сервисов, при доступе к Веб-сайту может происходить инцидентная обработка ограниченных технических метаданных, таких как IP-адреса, заголовки запросов, временные метки или информация протокольного уровня.
+
+Такие метаданные обрабатываются исключительно в технических и защитных целях, включая:
+
+• обеспечение безопасной и надежной доставки контента  
+• предотвращение злоупотреблений, автоматизированного доступа и атак  
+• поддержание целостности и доступности сети  
+
+Эти метаданные не используются для идентификации, профилирования, маркетинга или аналитики и хранятся только в течение минимально необходимого срока.
+
+
+6. СТОРОННИЕ ПОСТАВЩИКИ ИНФРАСТРУКТУРЫ
+
+Веб-сайт предоставляется с использованием сторонних инфраструктурных провайдеров, включая сети доставки контента (CDN), DNS-сервисы и платформы статического хостинга, такие как Cloudflare, Inc. и GitHub, Inc.
+
+Указанные провайдеры могут обрабатывать ограниченные технические метаданные исключительно для выполнения функций инфраструктуры, безопасности и доставки контента от имени MICRORETAILX LLC.
+
+MICRORETAILX LLC не активирует аналитические, отслеживающие, рекламные или поведенческие функции, предлагаемые такими провайдерами.
+
+
+7. МЕЖДУНАРОДНАЯ ПЕРЕДАЧА ДАННЫХ
+
+В случае обработки технических метаданных через глобально распределенную инфраструктуру такая обработка может включать международную передачу данных.
+
+Любые такие передачи осуществляются с применением надлежащих технических и организационных мер защиты и, при необходимости, на основании признанных механизмов международной передачи данных, включая стандартные договорные положения (SCC) или эквивалентные правовые механизмы.
+
+MICRORETAILX LLC не использует международные передачи для коммерческой эксплуатации персональных данных.
+
+
+8. COOKIE-ФАЙЛЫ, ТЕХНИЧЕСКИЕ ИДЕНТИФИКАТОРЫ И БЕЗОПАСНОСТЬ ИНФРАСТРУКТУРЫ
+
+По умолчанию данный Веб-сайт не использует cookie-файлы для маркетинга, рекламы, аналитики, таргетинга или поведенческого отслеживания.
+
+Техническое пояснение. Веб-сайт использует исключительно технические идентификаторы, строго необходимые для основных операций инфраструктуры и безопасности. Такие идентификаторы могут устанавливаться или обрабатываться сетями доставки контента (CDN), DNS-провайдерами, хостинговыми платформами и уровнями безопасности.
+
+Эти идентификаторы используются исключительно в следующих целях:
+
+• Безопасность и предотвращение злоупотреблений: эксплуатация веб-межсетевых экранов (WAF), систем защиты от ботов, ограничений частоты запросов и сетевых средств защиты для предотвращения несанкционированного доступа, автоматизированных злоупотреблений и атак типа «отказ в обслуживании».
+
+• Доставка контента и доступность: безопасная и эффективная доставка контента через глобальные CDN, балансировщики нагрузки и распределенную инфраструктуру, обеспечивающие производительность, устойчивость и доступность.
+
+Такие технические идентификаторы не позволяют осуществлять профилирование пользователей, поведенческий мониторинг, рекламную или маркетинговую деятельность и не используются для идентификации или отслеживания лиц между сайтами или сервисами.
+
+В случае обработки технических метаданных (таких как IP-адреса или заголовки запросов) такая обработка строго ограничена целями безопасности, целостности и эксплуатации и осуществляется только в течение минимально необходимого срока.
+
+В соответствии с применимыми нормативными актами в области защиты данных и электронной конфиденциальности такие идентификаторы, как правило, освобождаются от требований получения согласия, поскольку они строго необходимы для предоставления услуги, ее безопасности и корректного функционирования Веб-сайта.
+
+
+9. ПРАВА СУБЪЕКТОВ ДАННЫХ
+
+С учетом характера Веб-сайта и отсутствия умышленного сбора персональных данных многие права субъектов данных могут не применяться на практике.
+
+В случаях, предусмотренных применимым законодательством, физические лица могут обратиться в MICRORETAILX LLC с запросами относительно возможной обработки данных, связанной с техническими журналами доступа.
+
+Запросы могут направляться по адресу: legal@microretailx.com
+
+MICRORETAILX LLC оставляет за собой право проверять запросы и ограничивать объем ответа в пределах, допустимых законом.
+
+
+10. БЕЗОПАСНОСТЬ ДАННЫХ
+
+MICRORETAILX LLC применяет надлежащие технические и организационные меры для защиты Веб-сайта и его инфраструктуры от несанкционированного доступа, неправомерного использования, изменения или уничтожения.
+
+Такие меры включают, помимо прочего, шифрование при передаче данных, строгие заголовки безопасности, контроль доступа и сетевые средства защиты.
+
+
+11. ЗАЯВЛЕНИЕ О БЕЗОПАСНОСТИ С ЭТАПА ПРОЕКТИРОВАНИЯ
+
+Веб-сайт был спроектирован и разработан с использованием архитектуры, ориентированной на безопасность и конфиденциальность с этапа проектирования. Технический подход направлен на минимизацию раскрытия данных, сокращение поверхности атаки и предотвращение ненужной обработки информации, обеспечивая защиту пользователей по умолчанию, а не за счет последующих мер контроля или механизмов согласия.
+
+Меры безопасности реализуются как неотъемлемая часть основной инфраструктуры и операционной модели Веб-сайта, а не как дополнительные функции.
+
+
+12. ОТСУТСТВИЕ ТАРГЕТИНГА; ОТСУТСТВИЕ УЧРЕЖДЕНИЯ
+
+MICRORETAILX LLC не осуществляет активное таргетирование пользователей, клиентов, инвесторов или органов власти в какой-либо конкретной юрисдикции.
+
+Сам факт доступности Веб-сайта из определенной юрисдикции не образует таргетирования, учреждения, лицензирования, разрешения или регулируемой деятельности в такой юрисдикции.
+
+
+13. КОНФИДЕНЦИАЛЬНОСТЬ ДЕТЕЙ
+
+Веб-сайт не предназначен для детей, и MICRORETAILX LLC сознательно не собирает персональные данные несовершеннолетних.
+
+
+14. ИЗМЕНЕНИЯ ПОЛИТИКИ КОНФИДЕНЦИАЛЬНОСТИ
+
+MICRORETAILX LLC вправе в любое время обновлять настоящую Политику конфиденциальности. Изменения вступают в силу с момента их публикации на Веб-сайте.
+
+
+15. ПРИМЕНИМОЕ ПРАВО И ЯЗЫК
+
+Настоящая Политика конфиденциальности регулируется законодательством штата Делавэр, Соединенные Штаты Америки.
+
+Английская версия является преобладающей и единственной версией, имеющей юридическую силу. Переводы предоставляются исключительно в информационных целях и не имеют договорной или юридической силы.
+
+
+16. КОНТАКТЫ
+
+По вопросам, связанным с конфиденциальностью, юридическими аспектами или соблюдением требований:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Настройки cookies",
+  "cmp.title": "Конфиденциальность и Cookies",
+  "cmp.desc": "Мы уважаем вашу конфиденциальность. Этот веб-сайт не использует рекламные или отслеживающие cookies. Необходимые cookies всегда включены для обеспечения безопасности и базовой функциональности.",
+  "cmp.necessary": "Необходимые",
+  "cmp.necessary.desc": "Безопасность и базовая функциональность.",
+  "cmp.analytics": "Аналитика",
+  "cmp.analytics.desc": "Необязательные анонимные метрики использования для улучшения сайта.",
+  "cmp.marketing": "Маркетинг",
+  "cmp.marketing.desc": "Необязательная персонализация и измерение кампаний.",
+  "cmp.reject": "Отклонить все",
+  "cmp.accept": "Принять все",
+  "cmp.save": "Сохранить настройки"
+},
+
+hi: {
+  "nav.about": "जानकारी",
+  "nav.verticals": "वर्टिकल्स",
+  "nav.contact": "संपर्क",
+
+  "footer.terms": "शर्तें",
+  "footer.privacy": "गोपनीयता",
+  "footer.cookies": "Cookies",
+  "footer.legal": "कानूनी",
+
+  "card.terms": `MICRORETAILX — गोपनीयता नीति
+
+MICRORETAILX LLC (डेलावेयर, संयुक्त राज्य अमेरिका)
+MICRORETAILX GROUP – वैश्विक संचालन ढांचा
+
+अंतिम अद्यतन: 01-01-2026
+प्रभावी तिथि: 01-01-2026
+
+पंजीकृत कार्यालय एवं पंजीकृत एजेंट:
+Corporation Trust Center
+1209 Orange Street
+Wilmington, DE 19801
+संयुक्त राज्य अमेरिका
+
+
+1. क्षेत्र और उद्देश्य
+
+यह गोपनीयता नीति यह वर्णन करती है कि MICRORETAILX LLC (“MICRORETAILX”, “हम”) डेटा संरक्षण और गोपनीयता के दृष्टिकोण से इस वेबसाइट को कैसे डिज़ाइन और संचालित करता है।
+
+यह वेबसाइट पूर्णतः सूचनात्मक और वैचारिक प्रकृति की है। यह उपयोगकर्ता खाते प्रदान नहीं करती, पंजीकरण की आवश्यकता नहीं होती, और किसी भी प्रकार के उत्पाद या सेवाओं की बिक्री नहीं करती।
+
+
+2. शून्य डेटा रणनीति (डिज़ाइन से गोपनीयता)
+
+इस वेबसाइट को जानबूझकर एक “शून्य डेटा” वातावरण के रूप में डिज़ाइन किया गया है।
+
+MICRORETAILX LLC आगंतुकों के व्यक्तिगत डेटा को जानबूझकर एकत्र, अनुरोध, अनिवार्य, संग्रहीत, मुद्रीकृत या उपयोग नहीं करता। किसी भी प्रकार की उपयोगकर्ता प्रोफ़ाइल, पहचानकर्ता या व्यवहारिक डेटा सेट का निर्माण नहीं किया जाता।
+
+गोपनीयता सिद्धांतों को डिज़ाइन के स्तर पर और डिफ़ॉल्ट रूप से एकीकृत किया गया है, जिनमें डेटा न्यूनतमकरण, उद्देश्य की सीमा, पारदर्शिता, सुरक्षा और सक्रिय उत्तरदायित्व शामिल हैं।
+
+
+3. कोई उपयोगकर्ता खाता नहीं; कोई पंजीकरण नहीं
+
+यह वेबसाइट उपयोगकर्ता खाते, लॉगिन क्षेत्र, पंजीकरण फ़ॉर्म या सदस्यता प्रणाली प्रदान नहीं करती।
+
+वेबसाइट की सामग्री तक पहुँचने के लिए आगंतुकों को कोई व्यक्तिगत डेटा प्रदान करने की आवश्यकता नहीं है।
+
+
+4. कोई प्रोफ़ाइलिंग नहीं; कोई ट्रैकिंग नहीं; कोई विज्ञापन नहीं
+
+यह वेबसाइट निम्नलिखित का उपयोग नहीं करती:
+
+• व्यवहारिक या रुचि-आधारित प्रोफ़ाइलिंग  
+• विज्ञापन या विपणन तकनीकें  
+• विश्लेषण या दर्शक मापन प्लेटफ़ॉर्म  
+• वेबसाइटों या सेवाओं के बीच ट्रैकिंग तंत्र  
+
+MICRORETAILX LLC किसी भी प्रकार का स्वचालित निर्णय, प्रोफ़ाइलिंग या आगंतुकों के व्यवहार का विश्लेषण नहीं करता।
+
+
+5. तकनीकी मेटाडेटा और लॉग
+
+अधिकांश इंटरनेट सेवाओं की तरह, वेबसाइट तक पहुँच के दौरान सीमित तकनीकी मेटाडेटा आकस्मिक रूप से संसाधित किया जा सकता है, जैसे IP पते, अनुरोध हेडर, समय-चिह्न या प्रोटोकॉल-स्तरीय जानकारी।
+
+इस प्रकार का मेटाडेटा केवल तकनीकी और सुरक्षा उद्देश्यों के लिए संसाधित किया जाता है, जिनमें शामिल हैं:
+
+• सामग्री की सुरक्षित और विश्वसनीय डिलीवरी सुनिश्चित करना  
+• दुरुपयोग, स्वचालित पहुँच और हमलों को रोकना  
+• नेटवर्क की अखंडता और उपलब्धता बनाए रखना  
+
+इस मेटाडेटा का उपयोग पहचान, प्रोफ़ाइलिंग, विपणन या विश्लेषण के लिए नहीं किया जाता और इसे केवल न्यूनतम आवश्यक अवधि तक ही रखा जाता है।
+
+
+6. तृतीय-पक्ष अवसंरचना प्रदाता
+
+वेबसाइट को तृतीय-पक्ष अवसंरचना प्रदाताओं के माध्यम से वितरित किया जाता है, जिनमें सामग्री वितरण नेटवर्क (CDN), DNS सेवाएँ और स्थिर होस्टिंग प्लेटफ़ॉर्म शामिल हैं, जैसे Cloudflare, Inc. और GitHub, Inc.
+
+ये प्रदाता MICRORETAILX LLC की ओर से केवल अवसंरचना, सुरक्षा और सामग्री वितरण कार्यों के लिए सीमित तकनीकी मेटाडेटा संसाधित कर सकते हैं।
+
+MICRORETAILX LLC इन प्रदाताओं द्वारा प्रदान की जाने वाली किसी भी विश्लेषण, ट्रैकिंग, विज्ञापन या व्यवहारिक निगरानी सुविधा को सक्षम नहीं करता।
+
+
+7. अंतरराष्ट्रीय डेटा स्थानांतरण
+
+जब तकनीकी मेटाडेटा को वैश्विक रूप से वितरित अवसंरचना के माध्यम से संसाधित किया जाता है, तो इसमें अंतरराष्ट्रीय डेटा स्थानांतरण शामिल हो सकता है।
+
+ऐसे किसी भी स्थानांतरण को उपयुक्त तकनीकी और संगठनात्मक सुरक्षा उपायों के अंतर्गत किया जाता है और जहाँ लागू हो, मान्यता प्राप्त अंतरराष्ट्रीय डेटा स्थानांतरण तंत्रों, जैसे मानक अनुबंधीय धाराएँ (SCC), के आधार पर किया जाता है।
+
+MICRORETAILX LLC अंतरराष्ट्रीय स्थानांतरण का उपयोग व्यक्तिगत डेटा के व्यावसायिक दोहन के लिए नहीं करता।
+
+
+8. कुकीज़, तकनीकी पहचानकर्ता और अवसंरचना सुरक्षा
+
+डिफ़ॉल्ट रूप से, यह वेबसाइट विपणन, विज्ञापन, विश्लेषण, लक्षितकरण या व्यवहारिक ट्रैकिंग कुकीज़ का उपयोग नहीं करती।
+
+तकनीकी स्पष्टीकरण: वेबसाइट केवल उन तकनीकी पहचानकर्ताओं पर निर्भर करती है जो अवसंरचना और सुरक्षा संचालन के लिए सख्ती से आवश्यक हैं। ये पहचानकर्ता CDN, DNS प्रदाताओं, होस्टिंग प्लेटफ़ॉर्म और सुरक्षा परतों द्वारा सेट या संसाधित किए जा सकते हैं।
+
+इन पहचानकर्ताओं का उपयोग केवल निम्नलिखित उद्देश्यों के लिए किया जाता है:
+
+• सुरक्षा और दुरुपयोग की रोकथाम: वेब एप्लिकेशन फ़ायरवॉल (WAF), बॉट शमन प्रणालियाँ, दर-सीमा और नेटवर्क-स्तरीय सुरक्षा उपायों का संचालन, ताकि अनधिकृत पहुँच, स्वचालित दुरुपयोग और सेवा-अस्वीकार हमलों को रोका जा सके।
+
+• सामग्री वितरण और उपलब्धता: वैश्विक CDN, लोड बैलेंसर और वितरित अवसंरचना के माध्यम से सामग्री की सुरक्षित और कुशल डिलीवरी, जिससे प्रदर्शन, लचीलापन और उपलब्धता सुनिश्चित होती है।
+
+ये तकनीकी पहचानकर्ता उपयोगकर्ता प्रोफ़ाइलिंग, व्यवहारिक निगरानी या विज्ञापन/विपणन गतिविधियों को सक्षम नहीं करते और न ही व्यक्तियों को वेबसाइटों या सेवाओं के बीच पहचानने या ट्रैक करने के लिए उपयोग किए जाते हैं।
+
+जहाँ तकनीकी मेटाडेटा (जैसे IP पते या अनुरोध हेडर) संसाधित किया जाता है, वहाँ यह प्रसंस्करण केवल सुरक्षा, अखंडता और परिचालन उद्देश्यों तक सीमित होता है और केवल न्यूनतम आवश्यक अवधि के लिए किया जाता है।
+
+लागू डेटा संरक्षण और इलेक्ट्रॉनिक गोपनीयता ढाँचों के अंतर्गत, ऐसे पहचानकर्ता सामान्यतः सहमति आवश्यकताओं से मुक्त होते हैं, क्योंकि वे वेबसाइट की सेवा, सुरक्षा और उचित संचालन के लिए सख्ती से आवश्यक हैं।
+
+
+9. डेटा विषयों के अधिकार
+
+वेबसाइट की प्रकृति और व्यक्तिगत डेटा के जानबूझकर संग्रह की अनुपस्थिति को देखते हुए, कई डेटा विषय अधिकार व्यवहार में लागू नहीं हो सकते।
+
+जहाँ लागू कानून द्वारा आवश्यक हो, व्यक्ति तकनीकी एक्सेस लॉग से संबंधित संभावित डेटा प्रसंस्करण के बारे में पूछताछ के लिए MICRORETAILX LLC से संपर्क कर सकते हैं।
+
+अनुरोध इस पते पर भेजे जा सकते हैं: legal@microretailx.com
+
+MICRORETAILX LLC अनुरोधों का सत्यापन करने और कानून द्वारा अनुमत सीमा तक उत्तर सीमित करने का अधिकार सुरक्षित रखता है।
+
+
+10. डेटा सुरक्षा
+
+MICRORETAILX LLC वेबसाइट और उसकी अवसंरचना को अनधिकृत पहुँच, दुरुपयोग, परिवर्तन या विनाश से सुरक्षित रखने के लिए उपयुक्त तकनीकी और संगठनात्मक उपाय लागू करता है।
+
+इन उपायों में, अन्य के साथ, ट्रांज़िट एन्क्रिप्शन, कड़े सुरक्षा हेडर, एक्सेस नियंत्रण और नेटवर्क-स्तरीय सुरक्षा शामिल हैं।
+
+
+11. डिज़ाइन से सुरक्षा घोषणा
+
+यह वेबसाइट सुरक्षा-प्रथम और गोपनीयता-द्वारा-डिज़ाइन वास्तुकला के साथ डिज़ाइन और विकसित की गई है। इसका तकनीकी दृष्टिकोण डेटा एक्सपोज़र को न्यूनतम करने, हमले की सतह को कम करने और अनावश्यक सूचना प्रसंस्करण को रोकने का लक्ष्य रखता है, जिससे उपयोगकर्ताओं की डिफ़ॉल्ट रूप से सुरक्षा होती है, न कि पश्चात नियंत्रण या सहमति तंत्रों पर निर्भर होकर।
+
+सुरक्षा उपाय वेबसाइट की मूल अवसंरचना और परिचालन मॉडल का अभिन्न हिस्सा हैं, न कि वैकल्पिक सुविधाएँ।
+
+
+12. कोई लक्षितकरण नहीं; कोई स्थापना नहीं
+
+MICRORETAILX LLC किसी भी विशिष्ट क्षेत्राधिकार में उपयोगकर्ताओं, ग्राहकों, निवेशकों या प्राधिकरणों को सक्रिय रूप से लक्षित नहीं करता।
+
+किसी क्षेत्राधिकार से वेबसाइट की मात्र उपलब्धता उस क्षेत्राधिकार में लक्षितकरण, स्थापना, लाइसेंस, प्राधिकरण या विनियमित गतिविधि का गठन नहीं करती।
+
+
+13. बच्चों की गोपनीयता
+
+यह वेबसाइट बच्चों के लिए लक्षित नहीं है और MICRORETAILX LLC जानबूझकर नाबालिगों का व्यक्तिगत डेटा एकत्र नहीं करता।
+
+
+14. गोपनीयता नीति में परिवर्तन
+
+MICRORETAILX LLC किसी भी समय इस गोपनीयता नीति को अद्यतन कर सकता है। परिवर्तन वेबसाइट पर प्रकाशित होने के साथ ही प्रभावी होंगे।
+
+
+15. लागू कानून और भाषा
+
+यह गोपनीयता नीति डेलावेयर राज्य, संयुक्त राज्य अमेरिका के कानूनों द्वारा शासित है।
+
+अंग्रेज़ी संस्करण प्रधान है और वही एकमात्र कानूनी रूप से प्रभावी संस्करण है। अनुवाद केवल सूचना की सुविधा के लिए प्रदान किए गए हैं और उनका कोई संविदात्मक या कानूनी प्रभाव नहीं है।
+
+
+16. संपर्क
+
+गोपनीयता, कानूनी या अनुपालन संबंधी किसी भी प्रश्न के लिए:
+legal@microretailx.com
+`,
+
+  "cookie.prefs": "Cookies प्राथमिकताएँ",
+  "cmp.title": "गोपनीयता और Cookies",
+  "cmp.desc": "हम आपकी गोपनीयता का सम्मान करते हैं। यह वेबसाइट विज्ञापन या ट्रैकिंग Cookies का उपयोग नहीं करती। आवश्यक Cookies सुरक्षा और आवश्यक कार्यक्षमता के लिए हमेशा सक्षम रहती हैं।",
+  "cmp.necessary": "आवश्यक",
+  "cmp.necessary.desc": "सुरक्षा और आवश्यक कार्यक्षमता।",
+  "cmp.analytics": "एनालिटिक्स",
+  "cmp.analytics.desc": "वेबसाइट सुधार के लिए वैकल्पिक और अनाम उपयोग मेट्रिक्स।",
+  "cmp.marketing": "मार्केटिंग",
+  "cmp.marketing.desc": "वैकल्पिक वैयक्तिकरण और अभियान मापन।",
+  "cmp.reject": "सभी अस्वीकार करें",
+  "cmp.accept": "सभी स्वीकार करें",
+  "cmp.save": "प्राथमिकताएँ सहेजें"
         }
-        fF += foodStr * addF;
-        fL += foodStr * addL;
-        fR += foodStr * addR;
+      };
+
+      const RTL_LANGS = new Set(["ar"]);
+      const DEFAULT_LANG = "en";
+      const storageKey = "mx_lang";
+      const TITLE_MAP = {
+  en: "MICRORETAILX — Privacy Policy V3 01-01-2026 (ENGLISH)",
+  es: "MICRORETAILX — POLÍTICA DE PRIVACIDAD V3 01-01-2026 (CASTELLANO)",
+  ca: "MICRORETAILX — POLÍTICA DE PRIVACITAT V3 01-01-2026 (CATALÀ)",
+  fr: "MICRORETAILX — POLITIQUE DE CONFIDENTIALITÉ V3 01-01-2026 (FRANÇAIS)",
+  ar: "MICRORETAILX — سياسة الخصوصية V3 01-01-2026 (العربية)",
+  ru: "MICRORETAILX — ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ V3 01-01-2026 (РУССКИЙ)",
+  hi: "MICRORETAILX — गोपनीयता नीति V3 01-01-2026 (हिन्दी)",
+  zh: "MICRORETAILX — 隐私政策 V3 01-01-2026 (简体中文)",
+  eu: "MICRORETAILX — PRIBATUTASUN POLITIKA V3 01-01-2026 (EUSKARA)"
+      };
+
+      const DESC_MAP = {
+  en: "MICRORETAILX global privacy policy and data protection framework.",
+  es: "Política de privacidad global y marco de protección de datos de MICRORETAILX.",
+  ca: "Política de privacitat global i marc de protecció de dades de MICRORETAILX.",
+  fr: "Politique de confidentialité globale et cadre de protection des données de MICRORETAILX.",
+  ar: "سياسة الخصوصية العالمية وإطار حماية البيانات لدى MICRORETAILX.",
+  ru: "Глобальная политика конфиденциальности и рамки защиты данных MICRORETAILX.",
+  hi: "MICRORETAILX की वैश्विक गोपनीयता नीति और डेटा संरक्षण ढांचा।",
+  zh: "MICRORETAILX 全球隐私政策与数据保护框架。",
+  eu: "MICRORETAILXen pribatutasun-politika globala eta datu-babesaren esparrua."
+      };
+
+
+      // ✅ NEW: Detect preferred language from the browser (first-visit only)
+      function detectBrowserLang(){
+        const supported = new Set(Object.keys(I18N));
+        const prefs = (Array.isArray(navigator.languages) && navigator.languages.length)
+          ? navigator.languages
+          : [navigator.language || navigator.userLanguage || DEFAULT_LANG];
+
+        for (const raw of prefs){
+          if (!raw) continue;
+          const base = String(raw).toLowerCase().slice(0,2);
+          if (supported.has(base)) return base;
+        }
+        return null;
       }
 
-      if (fF > fL && fF > fR) {
+      // ✅ Updated: storage -> browser -> fallback (applies to ALL languages)
+      function getLang(){
+        let saved = null;
+        try { saved = localStorage.getItem(storageKey); } catch(e) { saved = null; }
+        if (saved && I18N[saved]) return saved;
 
-      } else if (fL > fR) {
-        p.a -= turn;
-      } else if (fR > fL) {
-        p.a += turn;
-      } else {
-        p.a += (Math.random() - 0.5) * 0.15;
+        const detected = detectBrowserLang();
+        if (detected) return detected;
+
+        return DEFAULT_LANG;
       }
 
-      p.x += Math.cos(p.a) * step;
-      p.y += Math.sin(p.a) * step;
+      function setLang(lang){ try { localStorage.setItem(storageKey, lang); } catch(e) { /* storage unavailable */ } }
 
-      if (p.x < 0) p.x += simW; else if (p.x >= simW) p.x -= simW;
-      if (p.y < 0) p.y += simH; else if (p.y >= simH) p.y -= simH;
+      const POOL_LATIN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const POOL_CYR   = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ0123456789";
+      const POOL_DEV   = "अआइईउऊएऐओऔकखगघचछजझटठडढतथदधनपफबभमयरलवशषसह०१२३४५६७८९";
+      const POOL_CJK   = "的一是在不了有人这中大为上个国我以要他时来用们生到作地于出就分对成会可主发年动同工也能下过子说产种面而方后多定行学法所民得经";
+      const POOL_AR    = "ابتثجحخدذرزسشصضطظعغفقكلمنهوي٠١٢٣٤٥٦٧٨٩";
 
-      depositAt(trailA, p.x, p.y, CFG.deposit);
-    }
-
-    const d = CFG.decay;
-    for (let k=0; k<trailA.length; k++) trailA[k] *= d;
-
-    if ((frame % CFG.diffuseEvery) === 0) {
-      diffuse(trailA, trailB, CFG.diffuseMix);
-      const tmp = trailA; trailA = trailB; trailB = tmp;
-    }
-
-    frame++;
-  }
-
-  function renderMaze() {
-    const n = simW * simH;
-
-    for (let k=0, p=0; k<n; k++, p+=4) {
-      const t = trailA[k];
-      const v = t <= 0 ? 0 : Math.pow(clamp(t, 0, 1), 0.62);
-
-      const xf = xField[k];
-      const c = clamp(v * (0.92 + 0.22*xf), 0, 1);
-
-      // AZUL CIAN MÁS INTENSO
-      const r = clamp(  8 + c*110*0.80, 0, 255) | 0;
-      const g = clamp( 35 + c*250*1.05, 0, 255) | 0;
-      const b = clamp( 55 + c*255*1.15, 0, 255) | 0;
-
-      const crush = c < CFG.crush ? 0 : 1;
-      img8[p+0] = crush ? r : 0;
-      img8[p+1] = crush ? g : 0;
-      img8[p+2] = crush ? b : 0;
-      img8[p+3] = 255;
-    }
-
-    sctx.putImageData(imgData, 0, 0);
-
-    vctx.imageSmoothingEnabled = true;
-    vctx.fillStyle = "#000";
-    vctx.fillRect(0,0,W,H);
-    vctx.drawImage(simCanvas, 0, 0, simW, simH, 0, 0, W, H);
-  }
-
-  function drawIntro(now) {
-    const t = now - INTRO.start;
-    const T1 = INTRO.durIn;
-    const T2 = INTRO.durFlash;
-    const T3 = INTRO.durOut;
-
-    vctx.fillStyle = "#000";
-    vctx.fillRect(0,0,W,H);
-
-    const cx = W/2, cy = H/2;
-
-    function strokeX(alpha, w1, w2) {
-      vctx.save();
-      vctx.globalCompositeOperation = "lighter";
-      vctx.lineCap = "round";
-
-      vctx.strokeStyle = `rgba(255,255,255,${alpha*0.35})`;
-      vctx.lineWidth = w2;
-      vctx.beginPath();
-      vctx.moveTo(0,0); vctx.lineTo(W,H);
-      vctx.moveTo(W,0); vctx.lineTo(0,H);
-      vctx.stroke();
-
-      vctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-      vctx.lineWidth = w1;
-      vctx.beginPath();
-      vctx.moveTo(0,0); vctx.lineTo(W,H);
-      vctx.moveTo(W,0); vctx.lineTo(0,H);
-      vctx.stroke();
-      vctx.restore();
-    }
-
-    const corners = [
-      {x:0,y:0}, {x:W,y:0}, {x:0,y:H}, {x:W,y:H}
-    ];
-
-    if (t < T1) {
-      const p = easeInOut(t / T1);
-
-      vctx.save();
-      vctx.globalCompositeOperation = "lighter";
-      vctx.lineCap = "round";
-
-      for (let i=0;i<corners.length;i++){
-        const o = corners[i];
-        const hx = lerp(o.x, cx, p);
-        const hy = lerp(o.y, cy, p);
-
-        const grad = vctx.createLinearGradient(o.x, o.y, hx, hy);
-        grad.addColorStop(0, `rgba(255,255,255,${0.15*p})`);
-        grad.addColorStop(0.7, `rgba(255,255,255,${0.45*p})`);
-        grad.addColorStop(1, `rgba(255,255,255,${0.75})`);
-
-        vctx.strokeStyle = grad;
-        vctx.lineWidth = IS_MOBILE ? 2.8 : 3.4;
-        vctx.beginPath();
-        vctx.moveTo(o.x,o.y);
-        vctx.lineTo(hx,hy);
-        vctx.stroke();
-      }
-      vctx.restore();
-
-      return;
-    }
-
-    const t2 = t - T1;
-    if (t2 < T2) {
-      const flashP = t2 / T2;
-      const intensity = Math.sin(flashP * Math.PI);
-
-      strokeX(0.85, IS_MOBILE ? 4.0 : 5.2, IS_MOBILE ? 14.0 : 18.0);
-
-      vctx.save();
-      vctx.globalCompositeOperation = "lighter";
-
-      const rr = Math.min(W,H) * (0.35 + 0.25*intensity);
-      const g = vctx.createRadialGradient(cx,cy,0,cx,cy,rr);
-      g.addColorStop(0, `rgba(255,255,255,${0.95*intensity})`);
-      g.addColorStop(0.15, `rgba(255,255,255,${0.75*intensity})`);
-      g.addColorStop(0.35, `rgba(255,255,255,${0.45*intensity})`);
-      g.addColorStop(0.65, `rgba(255,255,255,${0.15*intensity})`);
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      vctx.fillStyle = g;
-      vctx.beginPath();
-      vctx.arc(cx,cy,rr,0,Math.PI*2);
-      vctx.fill();
-
-      for (let i=0; i<4; i++) {
-        const corner = corners[i];
-        const rayGrad = vctx.createLinearGradient(cx, cy, corner.x, corner.y);
-        rayGrad.addColorStop(0, `rgba(255,255,255,${0.65*intensity})`);
-        rayGrad.addColorStop(0.5, `rgba(255,255,255,${0.25*intensity})`);
-        rayGrad.addColorStop(1, "rgba(255,255,255,0)");
-
-        vctx.strokeStyle = rayGrad;
-        vctx.lineWidth = (IS_MOBILE ? 2.0 : 2.8) * intensity;
-        vctx.beginPath();
-        vctx.moveTo(cx, cy);
-        vctx.lineTo(corner.x, corner.y);
-        vctx.stroke();
+      function poolForLang(lang){
+        if (lang === "ru") return POOL_CYR;
+        if (lang === "hi") return POOL_DEV;
+        if (lang === "zh") return POOL_CJK;
+        if (lang === "ar") return POOL_AR;
+        return POOL_LATIN;
       }
 
-      vctx.restore();
+      
+      function escapeHtml(s){
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
 
-      inkXLine(0.75 * intensity);
+      function formatLegalHTML(text){
+        const raw = String(text ?? "");
+        const split = raw.split(/\n\s*\n(?=1\.)/); // header vs body (starts at "1.")
+        const head = split[0] || raw;
+        const body = split.length > 1 ? split.slice(1).join("\n\n") : "";
 
-      return;
+        const headHtml = escapeHtml(head);
+        const bodyHtml = escapeHtml(body);
+
+        // Use pre-wrap in CSS; no <br> needed.
+        if (!body) return `<div class="legal-head">${headHtml}</div>`;
+        return `<div class="legal-head">${headHtml}</div><div class="legal-sep" aria-hidden="true"></div><div class="legal-body">${bodyHtml}</div>`;
+      }
+
+      function scrambleSmart(el, finalText, durationMs, lang){
+        const base = String(finalText ?? "");
+        const pool = poolForLang(lang);
+        const isArabic = (lang === "ar");
+        const isLegal = el.classList.contains("legalcopy");
+
+        const auto = isLegal
+          ? Math.min(8000, Math.max(3200, Math.round(base.length * 0.45)))
+          : Math.min(2200, Math.max(320, Math.round(base.length * 1.8)));
+
+        const dur = Number.isFinite(durationMs) ? durationMs : auto;
+
+        const start = performance.now();
+
+        const tick = (t) => {
+          const p = Math.min(1, (t - start) / dur);
+          const reveal = Math.floor(p * base.length);
+
+          if (isArabic){
+            const shown = base.slice(0, reveal);
+            const hidden = base.slice(reveal).replace(/[^\s]/g, " ");
+            el.textContent = shown + hidden;
+            if (p < 1) requestAnimationFrame(tick);
+            else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
+            return;
+          }
+
+          let out = "";
+          for (let i = 0; i < base.length; i++){
+            const c = base[i];
+
+            if (c === "\n"){ out += "\n"; continue; }
+            if (i < reveal){ out += c; continue; }
+            if (c === " "){ out += " "; continue; }
+
+            if (/[\.,!\?:;\-—–\(\)\[\]\/\&\+%#@€$£"']/.test(c)){
+              out += c;
+              continue;
+            }
+
+            out += pool[(Math.random() * pool.length) | 0];
+          }
+
+          el.textContent = out;
+
+          if (p < 1) requestAnimationFrame(tick);
+          else { if (isLegal) el.innerHTML = formatLegalHTML(base); else el.textContent = base; }
+        };
+
+        requestAnimationFrame(tick);
+      }
+
+
+
+      function applyLang(lang){
+        document.body.classList.add("is-i18n-switching");
+
+        try{
+          const dict = I18N[lang] || I18N[DEFAULT_LANG];
+
+          // SEO/UX: keep title/description aligned with the active language
+          document.title = (TITLE_MAP[lang] || TITLE_MAP[DEFAULT_LANG]);
+          const metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute("content", (DESC_MAP[lang] || DESC_MAP[DEFAULT_LANG]));
+
+          const html = document.documentElement;
+          html.lang = lang;
+          // Keep document direction LTR to avoid moving the scrollbar in RTL languages.
+          html.dir = "ltr";
+
+          const isRTL = RTL_LANGS.has(lang);
+          const appRoot = document.getElementById("app-root");
+          if (appRoot) appRoot.setAttribute("dir", isRTL ? "rtl" : "ltr");
+
+          const legal = document.querySelector('.legalcopy[data-i18n="card.terms"]');
+          if (legal) legal.setAttribute("dir", isRTL ? "rtl" : "ltr");
+
+          const switchEl = document.getElementById("lang-switch");
+          switchEl?.classList.remove("is-open");
+          switchEl?.classList.remove("open-right");
+
+          const railEl = document.getElementById("lang-rail");
+          if (railEl){
+            railEl.querySelectorAll(".lang-pill").forEach(btn => {
+              const l = btn.getAttribute("data-lang");
+              btn.hidden = (l === lang);
+            });
+            railEl.scrollLeft = 0;
+          }
+
+          const nodes = Array.from(document.querySelectorAll("[data-i18n]"));
+          nodes.forEach(el => el.classList.add("mx-i18n-out"));
+
+          setTimeout(() => {
+            nodes.forEach(el => {
+              const key = el.getAttribute("data-i18n");
+              if (!key) return;
+              const val = dict[key] ?? I18N[DEFAULT_LANG][key];
+              if (typeof val !== "string") return;
+
+              const isLegal = el.classList.contains("legalcopy");
+              if (isLegal){
+                el.innerHTML = formatLegalHTML(val);
+                // Premium subtle reveal (no scramble)
+                el.classList.remove("mx-legal-fadein");
+                // force reflow
+                void el.offsetWidth;
+                el.classList.add("mx-legal-fadein");
+              } else {
+                const dur = Math.min(2200, Math.max(320, Math.floor(String(val).length * 0.14)));
+                scrambleSmart(el, val, dur, lang);
+              }
+
+              el.classList.remove("mx-i18n-out");
+              el.classList.add("mx-i18n-in");
+            });
+
+            const gear = document.getElementById("cookiePreferencesGear");
+            if (gear){
+              const tip = dict["cookie.prefs"] ?? I18N[DEFAULT_LANG]["cookie.prefs"];
+              gear.setAttribute("data-tip", tip);
+              gear.setAttribute("aria-label", tip);
+            
+            // Tools rail tooltips (accessibility)
+            const toolMap = {
+              "font-up":"tools.fontup",
+              "font-down":"tools.fontdown",
+              "readable":"tools.readable",
+              "underline":"tools.underline",
+              "contrast":"tools.contrast",
+              "negative":"tools.negative",
+              "lightbg":"tools.light",
+              "grayscale":"tools.gray",
+              "pdf":"tools.pdf",
+              "download":"tools.download",
+              "reset":"tools.reset"
+            };
+            const toolsRail = document.getElementById("tools-rail");
+            if (toolsRail){
+              toolsRail.querySelectorAll(".tool-pill").forEach(btn => {
+                const act = btn.getAttribute("data-action");
+                const key2 = act ? toolMap[act] : null;
+                const label = key2 ? (dict[key2] ?? I18N[DEFAULT_LANG][key2] ?? btn.getAttribute("data-label")) : btn.getAttribute("data-label");
+                if (label) btn.setAttribute("data-label", label);
+              });
+            }
+
+}
+
+            document.documentElement.classList.add('i18n-ready');
+            setTimeout(() => nodes.forEach(el => el.classList.remove("mx-i18n-in")), 220);
+          }, 160);
+
+        } finally {
+          setTimeout(() => document.body.classList.remove("is-i18n-switching"), 260);
+        }
+      }
+
+      window.__mxApplyLang = applyLang;
+      applyLang(getLang());
+      // Immersive reader toggle
+      (function(){
+        const btn = document.getElementById("mx-reader-toggle");
+        if (!btn) return;
+
+        const KEY = "mx_reader_immersive";
+        let saved = null; try { saved = localStorage.getItem(KEY); } catch(e) { saved = null; }
+        if (saved === "1") document.body.classList.add("mx-immersive");
+
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.body.classList.toggle("mx-immersive");
+          localStorage.setItem(KEY, document.body.classList.contains("mx-immersive") ? "1" : "0");
+        });
+      })();
+
+
+      (function(){
+        const rail = document.getElementById("lang-rail");
+        if (!rail) return;
+
+        const isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+
+        const TAP_MOVE_PX = 14;
+        const TAP_SCROLL_PX = 6;
+
+        let startX = 0, startY = 0, startScroll = 0;
+        let dragging = false;
+        let pressedBtn = null;
+
+        function ptFromTouch(t){ return { x: t.clientX, y: t.clientY }; }
+
+        rail.addEventListener("touchstart", (e) => {
+          const targetBtn = e.target && e.target.closest ? e.target.closest(".lang-pill") : null;
+          pressedBtn = targetBtn && rail.contains(targetBtn) ? targetBtn : null;
+
+          if (!e.touches || e.touches.length === 0) return;
+          const p = ptFromTouch(e.touches[0]);
+          startX = p.x;
+          startY = p.y;
+          startScroll = rail.scrollLeft;
+          dragging = false;
+
+          if (pressedBtn){
+            e.preventDefault();
+          }
+        }, { passive:false });
+
+        rail.addEventListener("touchmove", (e) => {
+          if (!e.touches || e.touches.length === 0) return;
+
+          const p = ptFromTouch(e.touches[0]);
+          const dx = Math.abs(p.x - startX);
+          const dy = Math.abs(p.y - startY);
+          const ds = Math.abs(rail.scrollLeft - startScroll);
+
+          if (dx > TAP_MOVE_PX || dy > TAP_MOVE_PX || ds > TAP_SCROLL_PX){
+            dragging = true;
+          }
+        }, { passive:true });
+
+        rail.addEventListener("touchend", (e) => {
+          if (dragging){ pressedBtn = null; return; }
+
+          let btn = pressedBtn;
+
+          if (!btn){
+            const ct = e.changedTouches && e.changedTouches[0];
+            if (ct){
+              const p = ptFromTouch(ct);
+              const el = document.elementFromPoint(p.x, p.y);
+              const maybe = el && el.closest ? el.closest(".lang-pill") : null;
+              if (maybe && rail.contains(maybe)) btn = maybe;
+            }
+          }
+
+          if (!btn || btn.hidden){ pressedBtn = null; return; }
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          const lang = btn.getAttribute("data-lang") || DEFAULT_LANG;
+          setLang(lang);
+          window.__mxApplyLang(lang);
+
+          btn.blur();
+          if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+
+          pressedBtn = null;
+        }, { passive:false });
+
+        rail.addEventListener("touchcancel", () => {
+          dragging = false;
+          pressedBtn = null;
+        }, { passive:true });
+
+        rail.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }, true);
+
+        if (!isTouch){
+          let downX = 0, downY = 0;
+          let pDragging = false;
+
+          rail.addEventListener("pointerdown", (e) => {
+            const btn = e.target && e.target.closest ? e.target.closest(".lang-pill") : null;
+            if (btn) e.preventDefault();
+            downX = e.clientX; downY = e.clientY;
+            pDragging = false;
+          }, { passive:false });
+
+          rail.addEventListener("pointermove", (e) => {
+            if (Math.abs(e.clientX - downX) > 10 || Math.abs(e.clientY - downY) > 10) pDragging = true;
+          }, { passive:true });
+
+          rail.addEventListener("pointerup", (e) => {
+            if (pDragging) return;
+
+            const el = document.elementFromPoint(e.clientX, e.clientY);
+            const btn = el && el.closest ? el.closest(".lang-pill") : null;
+            if (!btn || !rail.contains(btn) || btn.hidden) return;
+
+            const lang = btn.getAttribute("data-lang") || DEFAULT_LANG;
+            setLang(lang);
+            window.__mxApplyLang(lang);
+
+            btn.blur();
+            if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+          }, { passive:true });
+        }
+      })();
+
+    })();
+
+    (function(){
+
+    (function(){
+      const switchEl = document.getElementById('tools-switch');
+      const railEl   = document.getElementById('tools-rail');
+      if (!switchEl || !railEl) return;
+
+      let openTimer = null;
+      let closeTimer = null;
+      let locked = false;
+
+      const OPEN_DELAY_MS  = 420;
+      const CLOSE_DELAY_MS = 3200;
+
+      let firstOpen = true;
+
+      function clearTimers(){
+        if (openTimer)  { clearTimeout(openTimer);  openTimer = null; }
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      }
+
+      function ensureStartVisibleOnce(){
+        if (!firstOpen) return;
+        railEl.scrollLeft = 0;
+        firstOpen = false;
+      }
+
+      function resetShift(){
+        railEl.style.setProperty('--rail-shift', '0px');
+      }
+
+      function clampRailIntoViewport(){
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const margin = 8;
+
+        resetShift();
+
+        const rect = railEl.getBoundingClientRect();
+        let shift = 0;
+
+        if (rect.left < margin){
+          shift = (margin - rect.left);
+        } else if (rect.right > (vw - margin)){
+          shift = - (rect.right - (vw - margin));
+        }
+
+        if (shift !== 0){
+          railEl.style.setProperty('--rail-shift', `${Math.round(shift)}px`);
+        }
+      }
+
+      function placeRailSmart(){
+        switchEl.classList.remove('open-right');
+        resetShift();
+
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const margin = 8;
+
+        let rect = railEl.getBoundingClientRect();
+
+        if (rect.left < -margin){
+          switchEl.classList.add('open-right');
+          rect = railEl.getBoundingClientRect();
+        }
+
+        if (rect.right > vw + margin){
+          switchEl.classList.remove('open-right');
+        }
+
+        clampRailIntoViewport();
+      }
+
+      function openRail(){
+        const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        requestAnimationFrame(() => window.scrollTo(0, y));
+
+        switchEl.classList.add('is-open');
+
+        requestAnimationFrame(() => {
+          ensureStartVisibleOnce();
+          placeRailSmart();
+        });
+      }
+
+      function closeRail(){
+        locked = false;
+        switchEl.classList.remove('is-open');
+        switchEl.classList.remove('open-right');
+        resetShift();
+      }
+
+      function scheduleOpen(){
+        clearTimers();
+        openTimer = setTimeout(() => openRail(), OPEN_DELAY_MS);
+      }
+      function scheduleClose(){
+        clearTimers();
+        closeTimer = setTimeout(() => closeRail(), CLOSE_DELAY_MS);
+      }
+
+      switchEl.addEventListener('pointerenter', () => {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        if (switchEl.classList.contains('is-open')) return;
+        scheduleOpen();
+      });
+
+      switchEl.addEventListener('pointerleave', () => {
+        if (!switchEl.classList.contains('is-open')) { clearTimers(); return; }
+        if (locked) return;
+        scheduleClose();
+      });
+
+      railEl.addEventListener('pointerenter', () => {
+        locked = true;
+        clearTimers();
+        openRail();
+      });
+
+      railEl.addEventListener('pointerleave', () => {
+        locked = false;
+        scheduleClose();
+      });
+
+      const trigger = switchEl.querySelector('.tools-trigger');
+      function toggleRail(){
+        clearTimers();
+        if (switchEl.classList.contains('is-open')) closeRail();
+        else openRail();
+        trigger?.blur();
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      }
+
+      // click/tap support
+      trigger?.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); toggleRail(); });
+      document.addEventListener('click', (e) => {
+        if (!switchEl.classList.contains('is-open')) return;
+        if (switchEl.contains(e.target)) return;
+        closeRail();
+      });
+
+      window.addEventListener('resize', () => {
+        if (!switchEl.classList.contains('is-open')) return;
+        requestAnimationFrame(() => placeRailSmart());
+      }, { passive:true });
+    })();
+
+    (function(){
+      const KEY = "mx_a11y";
+      const root = document.documentElement;
+
+      const state = (function(){
+        try{ return JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(_){ return {}; }
+      })();
+
+      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+      function apply(){
+        const scale = clamp(Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1, 0.9, 1.35);
+        root.style.setProperty("--a11y-font-scale", String(scale));
+
+        document.body.classList.toggle("mx-a11y-grayscale", !!state.gray);
+        document.body.classList.toggle("mx-a11y-high-contrast", !!state.hc);
+        document.body.classList.toggle("mx-a11y-lightbg", !!state.light);
+        document.body.classList.toggle("mx-a11y-readable", !!state.readable);
+        document.body.classList.toggle("mx-a11y-underline", !!state.underline);
+
+        try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){}
+      }
+
+      
+      
+      let mxUtterance = null;
+      let mxSpeaking = false;
+
+      function getBestVoice(lang){
+        const voices = speechSynthesis.getVoices();
+        const preferred = voices.filter(v =>
+          v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase())
+        );
+        return preferred.find(v => /Google|Microsoft|Natural|Premium/i.test(v.name)) || preferred[0] || voices[0];
+      }
+
+      function toggleAudio(){
+        if (!window.speechSynthesis) return;
+
+        if (mxSpeaking){
+          window.speechSynthesis.pause(); document.body.classList.remove('mx-audio-playing');
+          mxSpeaking = false;
+          return;
+        }
+
+        const el = document.querySelector('[data-i18n="card.terms"]');
+        if (!el) return;
+
+        window.speechSynthesis.cancel();
+        mxUtterance = new SpeechSynthesisUtterance(el.textContent);
+        const lang = document.documentElement.lang || "en";
+        mxUtterance.lang = lang;
+        mxUtterance.voice = getBestVoice(lang);
+        mxUtterance.rate = 0.95;
+        mxUtterance.pitch = 1;
+
+        mxUtterance.onend = () => { mxSpeaking = false; document.body.classList.remove('mx-audio-playing'); };
+        mxSpeaking = true; document.body.classList.add('mx-audio-playing');
+        window.speechSynthesis.speak(mxUtterance);
+      }
+
+      function playAudio(){
+        const el = document.querySelector('[data-i18n="card.terms"]');
+        if (!el || !window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+
+        const utter = new SpeechSynthesisUtterance(el.textContent);
+        utter.lang = document.documentElement.lang || "en";
+        utter.rate = 0.95;
+        utter.pitch = 1;
+
+        window.speechSynthesis.speak(utter);
+      }
+
+      function downloadText(){
+        const el = document.querySelector('[data-i18n="card.terms"]');
+        const txt = el ? el.textContent : document.body.innerText;
+        const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "MICRORETAILX_TERMS.txt";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }
+
+      function savePdf(){
+        // User can choose "Save as PDF" in the print dialog
+        window.print();
+      }
+
+      apply();
+
+      const rail = document.getElementById("tools-rail");
+      if (!rail) return;
+
+      rail.addEventListener("click", (e) => {
+        const btn = e.target && e.target.closest ? e.target.closest(".tool-pill") : null;
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        const act = btn.getAttribute("data-action");
+        if (!act) return;
+
+        if (act === "font-up"){ state.scale = (Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1) + 0.08; }
+        else if (act === "font-down"){ state.scale = (Number.isFinite(Number(state.scale)) ? Number(state.scale) : 1) - 0.08; }
+        else if (act === "readable"){ state.readable = !state.readable; }
+        else if (act === "underline"){ state.underline = !state.underline; }
+        else if (act === "contrast"){ state.hc = !state.hc; }
+        
+        else if (act === "lightbg"){ state.light = !state.light; state.inv = false; }
+        
+        else if (act === "audio"){ toggleAudio(); return; }
+        else if (act === "top"){ window.scrollTo({top:0, behavior:"smooth"}); return; }
+        else if (act === "bottom"){ window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"}); return; }
+        else if (act === "pdf"){ savePdf(); return; }
+        else if (act === "download"){ downloadText(); return; }
+        else if (act === "reset"){ 
+          for (const k of Object.keys(state)) delete state[k];
+          state.scale = 1;
+        }
+
+        apply();
+      }, true);
+    })();
+
+
+          const switchEl = document.getElementById('lang-switch');
+      const railEl   = document.getElementById('lang-rail');
+      if (!switchEl || !railEl) return;
+
+      let openTimer = null;
+      let closeTimer = null;
+      let locked = false;
+
+      const OPEN_DELAY_MS  = 500;
+      const CLOSE_DELAY_MS = 3000;
+
+      let firstOpen = true;
+
+      function clearTimers(){
+        if (openTimer)  { clearTimeout(openTimer);  openTimer = null; }
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      }
+
+      function ensureStartVisibleOnce(){
+        if (!firstOpen) return;
+        railEl.scrollLeft = 0;
+        firstOpen = false;
+      }
+
+      function resetShift(){
+        railEl.style.setProperty('--rail-shift', '0px');
+      }
+
+      function clampRailIntoViewport(){
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const margin = 8;
+
+        resetShift();
+
+        const rect = railEl.getBoundingClientRect();
+        let shift = 0;
+
+        if (rect.left < margin){
+          shift = (margin - rect.left);
+        } else if (rect.right > (vw - margin)){
+          shift = - (rect.right - (vw - margin));
+        }
+
+        if (shift !== 0){
+          railEl.style.setProperty('--rail-shift', `${Math.round(shift)}px`);
+        }
+      }
+
+      function placeRailSmart(){
+        switchEl.classList.remove('open-right');
+        resetShift();
+
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const margin = 8;
+
+        let rect = railEl.getBoundingClientRect();
+
+        if (rect.left < -margin){
+          switchEl.classList.add('open-right');
+          rect = railEl.getBoundingClientRect();
+        }
+
+        if (rect.right > vw + margin){
+          switchEl.classList.remove('open-right');
+        }
+
+        clampRailIntoViewport();
+      }
+
+      function openRail(){
+        const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        requestAnimationFrame(() => window.scrollTo(0, y));
+
+        switchEl.classList.add('is-open');
+
+        requestAnimationFrame(() => {
+          ensureStartVisibleOnce();
+          placeRailSmart();
+        });
+      }
+
+      function closeRail(){
+        locked = false;
+        switchEl.classList.remove('is-open');
+        switchEl.classList.remove('open-right');
+        resetShift();
+      }
+
+      function scheduleOpen(){
+        clearTimers();
+        openTimer = setTimeout(() => openRail(), OPEN_DELAY_MS);
+      }
+      function scheduleClose(){
+        clearTimers();
+        closeTimer = setTimeout(() => closeRail(), CLOSE_DELAY_MS);
+      }
+
+      switchEl.addEventListener('pointerenter', () => {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        if (switchEl.classList.contains('is-open')) return;
+        scheduleOpen();
+      });
+
+      switchEl.addEventListener('pointerleave', () => {
+        if (!switchEl.classList.contains('is-open')) { clearTimers(); return; }
+        if (locked) return;
+        scheduleClose();
+      });
+
+      railEl.addEventListener('pointerenter', () => {
+        locked = true;
+        clearTimers();
+        openRail();
+      });
+
+      railEl.addEventListener('pointerleave', () => {
+        locked = false;
+        scheduleClose();
+      });
+
+      const trigger = switchEl.querySelector('.lang-trigger');
+      let _touchHandled = false;
+
+      function toggleRail(){
+        clearTimers();
+        if (switchEl.classList.contains('is-open')) closeRail();
+        else openRail();
+
+        trigger?.blur();
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      }
+
+      trigger?.addEventListener('touchstart', (e) => {
+        _touchHandled = true;
+        e.preventDefault();
+        toggleRail();
+        setTimeout(() => { _touchHandled = false; }, 450);
+      }, { passive: false });
+
+      trigger?.addEventListener('click', (e) => {
+        if (_touchHandled) return;
+        e.preventDefault();
+        toggleRail();
+      });
+
+      window.addEventListener('resize', () => {
+        if (!switchEl.classList.contains('is-open')) return;
+        requestAnimationFrame(() => placeRailSmart());
+      });
+    })();
+
+    (function(){
+      const v = document.getElementById('verticals');
+      if (!v) return;
+
+      function setOpen(isOpen){
+        v.classList.toggle('is-open', isOpen);
+        v.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+      function isOpen(){ return v.classList.contains('is-open'); }
+
+      v.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (a) return;
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(!isOpen());
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!v.contains(e.target)) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+
+      v.querySelectorAll('a').forEach(a=>{
+        a.addEventListener('click', ()=> setOpen(false));
+      });
+    })();
+  
+
+
+    (function(){
+      const box = document.querySelector(".mx-float-scroll");
+      const topBtn = document.getElementById("mx-scroll-top");
+      const bottomBtn = document.getElementById("mx-scroll-bottom");
+      if (!box || !topBtn || !bottomBtn) return;
+
+      function update(){
+        const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (y > 80) box.classList.add("is-visible");
+        else box.classList.remove("is-visible");
+      }
+
+      topBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      bottomBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        window.scrollTo({ top: h, behavior: "smooth" });
+      });
+
+      window.addEventListener("scroll", update, { passive:true });
+      window.addEventListener("resize", update, { passive:true });
+      update();
+    })();
+
+
+    // Fallback: always show on touch devices
+    if ('ontouchstart' in window){
+      const box = document.querySelector('.mx-float-scroll');
+      if (box) box.classList.add('is-visible');
     }
-
-    const t3 = t2 - T2;
-    const p3 = ease(clamp(t3 / T3, 0, 1));
-
-    renderMaze();
-
-    const fadeAlpha = (1 - p3);
-    strokeX(fadeAlpha * 0.40, IS_MOBILE ? 3.6 : 4.4, IS_MOBILE ? 11.5 : 15.0);
-
-    if (p3 < 0.75) {
-      vctx.save();
-      vctx.globalCompositeOperation = "lighter";
-      const rr = Math.min(W,H) * 0.18 * (1-p3);
-      const g = vctx.createRadialGradient(cx,cy,0,cx,cy,rr);
-      g.addColorStop(0, `rgba(255,255,255,${0.30*(1-p3)})`);
-      g.addColorStop(0.5, `rgba(255,255,255,${0.10*(1-p3)})`);
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      vctx.fillStyle = g;
-      vctx.beginPath();
-      vctx.arc(cx,cy,rr,0,Math.PI*2);
-      vctx.fill();
-      vctx.restore();
-    }
-
-    if (p3 < 0.30) {
-      for (let k=0; k<trailA.length; k++) trailA[k] *= 0.985;
-    }
-  }
-
-  function loop(now) {
-    const dt = clamp(now - tPrev, 8, 40);
-    tPrev = now;
-
-    stepSim(dt);
-
-    if (INTRO.active) drawIntro(now);
-    else renderMaze();
-
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "r" || e.key === "R") { seedAgents(true); inkXLine(CFG.xInk); }
-  });
-
-  resize();
-  requestAnimationFrame(loop);
-})();
 </script>
+
+  <!-- Floating quick scroll buttons -->
+  <div class="mx-float-scroll" aria-label="Quick scroll">
+    <button class="mx-float-btn" id="mx-scroll-top" type="button" aria-label="Scroll to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 8l-7 7 1.4 1.4L12 10.8l5.6 5.6L19 15z"/></svg>
+    </button>
+    <button class="mx-float-btn" id="mx-scroll-bottom" type="button" aria-label="Scroll to bottom">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 16l7-7-1.4-1.4L12 13.2 6.4 7.6 5 9z"/></svg>
+    </button>
+  </div>
 </body>
+
 </html>
