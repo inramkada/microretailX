@@ -1,0 +1,8 @@
+node_modules/
+dist/
+
+# Haskell
+haskell-site/dist-newstyle/
+haskell-site/.ghc.environment.*
+haskell-site/*.hi
+haskell-site/*.o
