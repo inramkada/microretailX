@@ -46,7 +46,7 @@
   <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Created by microSTUDIOX - https://www.microstudiox.com -->
+  <!-- Created by microstudiox - https://www.microstudiox.com -->
   <style>
   
   html, body { direction: ltr; }
@@ -3475,7 +3475,6 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         eu: "MICRORETAILXen erabilera-baldintza globalak eta lege-esparrua."
       };
 
-      // ✅ NEW: Detect preferred language from the browser (first-visit only)
       function detectBrowserLang(){
         const supported = new Set(Object.keys(I18N));
         const prefs = (Array.isArray(navigator.languages) && navigator.languages.length)
@@ -3490,7 +3489,6 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         return null;
       }
 
-      // ✅ Updated: storage -> browser -> fallback (applies to ALL languages)
       function getLang(){
         let saved = null;
         try { saved = localStorage.getItem(storageKey); } catch(e) { saved = null; }
@@ -3529,14 +3527,13 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
 
       function formatLegalHTML(text){
         const raw = String(text ?? "");
-        const split = raw.split(/\n\s*\n(?=1\.)/); // header vs body (starts at "1.")
+        const split = raw.split(/\n\s*\n(?=1\.)/); 
         const head = split[0] || raw;
         const body = split.length > 1 ? split.slice(1).join("\n\n") : "";
 
         const headHtml = escapeHtml(head);
         const bodyHtml = escapeHtml(body);
 
-        // Use pre-wrap in CSS; no <br> needed.
         if (!body) return `<div class="legal-head">${headHtml}</div>`;
         return `<div class="legal-head">${headHtml}</div><div class="legal-sep" aria-hidden="true"></div><div class="legal-body">${bodyHtml}</div>`;
       }
@@ -3599,14 +3596,14 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         try{
           const dict = I18N[lang] || I18N[DEFAULT_LANG];
 
-          // SEO/UX: keep title/description aligned with the active language
+
           document.title = (TITLE_MAP[lang] || TITLE_MAP[DEFAULT_LANG]);
           const metaDesc = document.querySelector('meta[name="description"]');
           if (metaDesc) metaDesc.setAttribute("content", (DESC_MAP[lang] || DESC_MAP[DEFAULT_LANG]));
 
           const html = document.documentElement;
           html.lang = lang;
-          // Keep document direction LTR to avoid moving the scrollbar in RTL languages.
+
           html.dir = "ltr";
 
           const isRTL = RTL_LANGS.has(lang);
@@ -3662,7 +3659,6 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
               gear.setAttribute("data-tip", tip);
               gear.setAttribute("aria-label", tip);
             
-            // Tools rail tooltips (accessibility)
             const toolMap = {
               "font-up":"tools.fontup",
               "font-down":"tools.fontdown",
@@ -3699,7 +3695,7 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
 
       window.__mxApplyLang = applyLang;
       applyLang(getLang());
-      // Immersive reader toggle
+
       (function(){
         const btn = document.getElementById("mx-reader-toggle");
         if (!btn) return;
@@ -3965,7 +3961,6 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
         if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       }
 
-      // click/tap support
       trigger?.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); toggleRail(); });
       document.addEventListener('click', (e) => {
         if (!switchEl.classList.contains('is-open')) return;
@@ -4066,7 +4061,7 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
       }
 
       function savePdf(){
-        // User can choose "Save as PDF" in the print dialog
+
         window.print();
       }
 
@@ -4316,7 +4311,6 @@ MICRORETAILX LLC किसी भी समय इन शर्तों मे�
       update();
     })();
 
-    // Fallback: always show on touch devices
     if ('ontouchstart' in window){
       const box = document.querySelector('.mx-float-scroll');
       if (box) box.classList.add('is-visible');
