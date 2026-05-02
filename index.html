@@ -31,11 +31,11 @@
       --px:clamp(12px, 2vw, 18px);
       --py:10px;
 
-      --brand-size:clamp(12px, 1.2vw, 13px);
-      --brand-track:0.20em;
+      --brand-size:clamp(18px, 1.8vw, 22px);
+      --brand-track:0.22em;
 
-      --nav-size:clamp(12px, 1.15vw, 12.5px);
-      --nav-track:0.12em;
+      --nav-size:clamp(14px, 1.5vw, 17px);
+      --nav-track:0.22em;
 
       --copy-size:clamp(6.5px, 1.1vw, 7px);
       --copy-track:0.06em;
@@ -105,7 +105,7 @@
 
     .brand{
       font-size: var(--brand-size);
-      font-weight: 400;
+      font-weight: 800;
       letter-spacing: var(--brand-track);
       text-transform: uppercase;
       white-space: nowrap;
@@ -126,7 +126,7 @@
       color:rgba(255,255,255,.82);
       text-decoration:none;
       font-size:var(--nav-size);
-      font-weight:400;
+      font-weight:700;
       letter-spacing:var(--nav-track);
       text-transform:uppercase;
       padding:5px 2px;
@@ -1188,8 +1188,6 @@
       const RTL_LANGS = new Set(["ar"]);
       const DEFAULT_LANG = "en";
       const storageKey = "mx_lang";
-
-      // ✅ NEW: Detect preferred language from the browser (first-visit only)
       function detectBrowserLang(){
         const supported = new Set(Object.keys(I18N));
         const prefs = (Array.isArray(navigator.languages) && navigator.languages.length)
@@ -1203,8 +1201,6 @@
         }
         return null;
       }
-
-      // ✅ Updated: storage -> browser -> fallback (applies to ALL languages)
       function getLang(){
         const saved = localStorage.getItem(storageKey);
         if (saved && I18N[saved]) return saved;
